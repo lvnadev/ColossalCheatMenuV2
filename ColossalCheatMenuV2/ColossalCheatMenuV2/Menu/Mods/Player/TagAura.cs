@@ -6,7 +6,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.XR;
 using static Colossal.Plugin;
 
@@ -14,121 +13,69 @@ namespace Colossal.Mods {
     public class TagAura : MonoBehaviour {
         private LineRenderer radiusLine;
         private Material lineMaterial;
+
+        private int ammount;
         public void Update() {
-            if (Plugin.tagauracolossal && PhotonNetwork.InRoom) {
-                foreach (VRRig vrrig in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>()) {
-                    if (!vrrig.isMyPlayer) {
-                        float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
-                        if (distance < GorillaGameManager.instance.tagDistanceThreshold / 3 && !GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(vrrig.myPlayer.ActorNumber)) {
-                            if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(Plugin.GetPhotonViewFromVR(GorillaTagger.Instance.offlineVRRig.gameObject).Owner.ActorNumber)) {
-                                if (radiusLine == null) {
-                                    lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                                    lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
+            if(Menu.Menu.Player[6].stringsliderind != null)
+            {
+                switch (Menu.Menu.Player[6].stringsliderind)
+                {
+                    case 0:
+                        ammount = 0;
+                        break;
+                    case 1:
+                        ammount = 3;
+                        break;
+                    case 2:
+                        ammount = 2;
+                        break;
+                    case 3:
+                        ammount = 1;
+                        break;
+                }
 
-                                    GameObject lineObject = new GameObject("RadiusLine");
-                                    lineObject.transform.parent = vrrig.transform;
-                                    radiusLine = lineObject.AddComponent<LineRenderer>();
-                                    radiusLine.positionCount = 2;
-                                    radiusLine.startWidth = 0.05f;
-                                    radiusLine.endWidth = 0.05f;
-                                    radiusLine.material = lineMaterial;
-                                }
-                                GorillaLocomotion.Player.Instance.rightControllerTransform.position = vrrig.transform.position;
-                                radiusLine.SetPosition(0, vrrig.transform.position);
-                                radiusLine.SetPosition(1, GorillaTagger.Instance.transform.position);
-                                if (radiusLine.GetPosition(0) == null) {
-                                    if (radiusLine != null) {
-                                        Destroy(radiusLine);
-                                        radiusLine = null;
+                if(ammount > 0)
+                {
+                    foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
+                    {
+                        if (!vrrig.isOfflineVRRig)
+                        {
+                            float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
+                            if (distance < GorillaGameManager.instance.tagDistanceThreshold / ammount && !vrrig.mainSkin.material.name.Contains("fected"))
+                            {
+                                if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(GorillaTagger.Instance.myVRRig.Owner.ActorNumber))
+                                {
+                                    if(PluginConfig.csghostclient)
+                                    {
+                                        if (radiusLine == null)
+                                        {
+                                            lineMaterial = new Material(Shader.Find("Sprites/Default"));
+                                            lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
+
+                                            GameObject lineObject = new GameObject("RadiusLine");
+                                            lineObject.transform.parent = vrrig.transform;
+                                            radiusLine = lineObject.AddComponent<LineRenderer>();
+                                            radiusLine.positionCount = 2;
+                                            radiusLine.startWidth = 0.05f;
+                                            radiusLine.endWidth = 0.05f;
+                                            radiusLine.material = lineMaterial;
+                                        }
+                                        radiusLine.SetPosition(0, vrrig.transform.position);
+                                        radiusLine.SetPosition(1, GorillaTagger.Instance.transform.position);
+                                        if (radiusLine.GetPosition(0) == null)
+                                        {
+                                            if (radiusLine != null)
+                                            {
+                                                Destroy(radiusLine);
+                                                radiusLine = null;
+                                            }
+                                        }
                                     }
+                                    GorillaLocomotion.Player.Instance.rightControllerTransform.position = vrrig.transform.position;
                                 }
                             }
                         }
                     }
-                }
-            } else if(!Plugin.tagauraghost && !Plugin.tagaurablatant) {
-                Destroy(GorillaTagger.Instance.GetComponent<TagAura>());
-                if (radiusLine != null) {
-                    Destroy(radiusLine.gameObject);
-                    radiusLine = null;
-                }
-            }
-
-            if (Plugin.tagauraghost && PhotonNetwork.InRoom) {
-                foreach (VRRig vrrig in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>()) {
-                    if (!vrrig.isMyPlayer) {
-                        float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
-                        if (distance < GorillaGameManager.instance.tagDistanceThreshold / 2 && !GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(vrrig.myPlayer.ActorNumber)) {
-                            if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(Plugin.GetPhotonViewFromVR(GorillaTagger.Instance.offlineVRRig.gameObject).Owner.ActorNumber)) {
-                                if (radiusLine == null) {
-                                    lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                                    lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
-
-                                    GameObject lineObject = new GameObject("RadiusLine");
-                                    lineObject.transform.parent = vrrig.transform;
-                                    radiusLine = lineObject.AddComponent<LineRenderer>();
-                                    radiusLine.positionCount = 2;
-                                    radiusLine.startWidth = 0.05f;
-                                    radiusLine.endWidth = 0.05f;
-                                    radiusLine.material = lineMaterial;
-                                }
-                                GorillaLocomotion.Player.Instance.rightControllerTransform.position = vrrig.transform.position;
-                                radiusLine.SetPosition(0, vrrig.transform.position);
-                                radiusLine.SetPosition(1, GorillaTagger.Instance.transform.position);
-                                if (radiusLine.GetPosition(0) == null) {
-                                    if (radiusLine != null) {
-                                        Destroy(radiusLine);
-                                        radiusLine = null;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            } else if(!Plugin.tagaurablatant && !Plugin.tagauracolossal) {
-                Destroy(GorillaTagger.Instance.GetComponent<TagAura>());
-                if (radiusLine != null) {
-                    Destroy(radiusLine.gameObject);
-                    radiusLine = null;
-                }
-            }
-
-            if (Plugin.tagaurablatant && PhotonNetwork.InRoom) {
-                foreach (VRRig vrrig in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>()) {
-                    if (!vrrig.isMyPlayer) {
-                        float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
-                        if (distance < GorillaGameManager.instance.tagDistanceThreshold && !GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(vrrig.myPlayer.ActorNumber)) {
-                            if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(Plugin.GetPhotonViewFromVR(GorillaTagger.Instance.offlineVRRig.gameObject).Owner.ActorNumber)) {
-                                if (radiusLine == null) {
-                                    lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                                    lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
-
-                                    GameObject lineObject = new GameObject("RadiusLine");
-                                    lineObject.transform.parent = vrrig.transform;
-                                    radiusLine = lineObject.AddComponent<LineRenderer>();
-                                    radiusLine.positionCount = 2;
-                                    radiusLine.startWidth = 0.05f;
-                                    radiusLine.endWidth = 0.05f;
-                                    radiusLine.material = lineMaterial;
-                                }
-                                GorillaLocomotion.Player.Instance.rightControllerTransform.position = vrrig.transform.position;
-                                radiusLine.SetPosition(0, vrrig.transform.position);
-                                radiusLine.SetPosition(1, GorillaTagger.Instance.transform.position);
-                                if (radiusLine.GetPosition(0) == null) {
-                                    if (radiusLine != null) {
-                                        Destroy(radiusLine);
-                                        radiusLine = null;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            } else if(!Plugin.tagauracolossal && !Plugin.tagauraghost) {
-                Destroy(GorillaTagger.Instance.GetComponent<TagAura>());
-                if (radiusLine != null) {
-                    Destroy(radiusLine.gameObject);
-                    radiusLine = null;
                 }
             }
         }

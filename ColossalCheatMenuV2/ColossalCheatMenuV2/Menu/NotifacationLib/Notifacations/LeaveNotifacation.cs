@@ -9,13 +9,15 @@ using Colossal.Menu;
 using System.Collections.Generic;
 
 namespace Colossal.Menu.ClientHub.Notifacation {
-    [HarmonyPatch(typeof(MonoBehaviourPunCallbacks), "OnPlayerLeftRoom")]
-    internal class LeaveNotifacation {
+    internal class LeaveNotifacation : MonoBehaviourPunCallbacks {
         private static List<Player> notifiedPlayers = new List<Player>();
 
-        [HarmonyPrefix]
-        private static void Postfix(Player otherPlayer) {
-            if (!notifiedPlayers.Contains(otherPlayer) && Menu.noti) {
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+            base.OnPlayerLeftRoom(otherPlayer);
+
+            if (!notifiedPlayers.Contains(otherPlayer) && PluginConfig.noti)
+            {
                 notifiedPlayers.Add(otherPlayer);
                 Notifacations.SendNotification($"<color=cyan>[LEAVE]</color> Name: {otherPlayer.NickName}");
             }

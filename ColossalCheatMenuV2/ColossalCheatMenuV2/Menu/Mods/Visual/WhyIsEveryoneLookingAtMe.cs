@@ -10,10 +10,10 @@ using static Colossal.Plugin;
 namespace Colossal.Mods {
     public class WhyIsEveryoneLookingAtMe : MonoBehaviour {
         public void Update() {
-            if (Plugin.whyiseveryonelookingatme) {
-                foreach (VRRig vrrig in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>()) {
-                    if (!vrrig.isOfflineVRRig && !vrrig.isMyPlayer) {
-                        vrrig.transform.LookAt(GorillaLocomotion.Player.Instance.transform.position);
+            if (PluginConfig.whyiseveryonelookingatme) {
+                foreach (VRRig vrrig in GorillaParent.instance.vrrigs) {
+                    if (!vrrig.isOfflineVRRig) {
+                        vrrig.headConstraint.transform.LookAt(GorillaLocomotion.Player.Instance.transform.position);
                     }
                 }
             } else {

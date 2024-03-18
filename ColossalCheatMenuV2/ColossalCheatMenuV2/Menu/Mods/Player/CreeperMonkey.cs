@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColossalCheatMenuV2.Patches.MakeItFuckingWork;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +14,10 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if (Plugin.creepermonkey)
+            if (PluginConfig.creepermonkey)
             {
-                bool hand;
-                bool head;
-                InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(CommonUsages.triggerButton, out hand);
-                InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(CommonUsages.triggerButton, out head);
-                if (head)
+                bool rightTrigger = StarrySteamControllerPatch.GetRightTrigger();
+                if (StarrySteamControllerPatch.GetLeftTrigger())
                 {
                     float num = float.PositiveInfinity;
                     foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
@@ -30,26 +28,38 @@ namespace Colossal.Mods
                             if (sqrMagnitude < num)
                             {
                                 num = sqrMagnitude;
-                                GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/VR Constraints/Head Constraint").transform.LookAt(vrrig.headMesh.transform.position);
+                                foreach (VRRig vrrig2 in GorillaParent.instance.vrrigs)
+                                {
+                                    vrrig2.headConstraint.transform.LookAt(vrrig.headMesh.transform.position);
+                                }
                             }
                         }
                     }
                 }
-                if (hand)
+                if (!rightTrigger)
                 {
-                    float num = float.PositiveInfinity;
-                    foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
+                    return;
+                }
+                float num2 = float.PositiveInfinity;
+                using (List<VRRig>.Enumerator enumerator = GorillaParent.instance.vrrigs.GetEnumerator())
+                {
+                    while (enumerator.MoveNext())
                     {
-                        if (vrrig != GorillaTagger.Instance.offlineVRRig)
+                        VRRig vrrig3 = enumerator.Current;
+                        if (vrrig3 != GorillaTagger.Instance.offlineVRRig)
                         {
-                            float sqrMagnitude = (vrrig.transform.position - GorillaLocomotion.Player.Instance.transform.position).sqrMagnitude;
-                            if (sqrMagnitude < num)
+                            float sqrMagnitude2 = (vrrig3.transform.position - GorillaLocomotion.Player.Instance.transform.position).sqrMagnitude;
+                            if (sqrMagnitude2 < num2)
                             {
-                                num = sqrMagnitude;
-                                GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/VR Constraints/RightArm/Right Arm IK/TargetWrist").transform.position = vrrig.headMesh.transform.position;
+                                num2 = sqrMagnitude2;
+                                foreach (VRRig vrrig4 in GorillaParent.instance.vrrigs)
+                                {
+                                    vrrig4.rightHandTransform.position = vrrig3.headMesh.transform.position;
+                                }
                             }
                         }
                     }
+                    return;
                 }
             }
             else

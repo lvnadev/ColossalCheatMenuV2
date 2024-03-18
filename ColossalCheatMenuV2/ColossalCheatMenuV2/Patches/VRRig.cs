@@ -9,7 +9,7 @@ using Photon.Pun;
 
 namespace Colossal.Patches
 {
-    [HarmonyPatch(typeof(VRRig), "OnDisable")]
+    //[HarmonyPatch(typeof(VRRig), "OnDisable")]
     internal class SIWniwm__ : MonoBehaviour
     {
         public static bool Prefix(VRRig __instance)

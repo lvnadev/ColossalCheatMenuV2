@@ -23,7 +23,6 @@ using System.Linq;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 using static UnityEngine.UI.GridLayoutGroup;
-using static System.Net.Mime.MediaTypeNames;
 using Text = UnityEngine.UI.Text;
 using Application = UnityEngine.Application;
 using UnityEngine.UIElements;
@@ -40,9 +39,16 @@ using Colossal;
 namespace Colossal.Patches {
     [BepInPlugin("ColossusYTTV.ColossalCheatMenuV2", "ColossalCheatMenuV2", "1.0.0")]
     class BepInPatcher : BaseUnityPlugin {
+
         private static GameObject gameob = new GameObject();
-        async void Awake() {
-            using (WebClient client = new WebClient()) {
+
+        BepInPatcher()
+        {
+            new Harmony("ColossusYTTV.ColossalCheatMenuV2").PatchAll(Assembly.GetExecutingAssembly());
+        }
+
+        void Awake() {
+            /*using (WebClient client = new WebClient()) {
                 try {
                     string versiondownload = client.DownloadString("https://pastebin.com/raw/2uU6L7NZ");
                     if (versiondownload != Plugin.version) {
@@ -54,7 +60,7 @@ namespace Colossal.Patches {
                 } catch (WebException ex) {
                     CustomConsole.LogToConsole("Error: " + ex.Message);
                 }
-            }
+            }*/
 
             System.Random random = new System.Random();
             int randomNumber = random.Next(1, 51);
@@ -62,7 +68,7 @@ namespace Colossal.Patches {
                 Plugin.sussy = true;
             }
         }
-        void Update() {
+        public static void LoadModStuff() {
             if (!GameObject.Find("KmansBepInPatch")) {
                 CreateBepInPatch();
                 CreateInputPatch();
@@ -76,6 +82,10 @@ namespace Colossal.Patches {
         }
         public static void CreateBepInPatch() {
             Debug.Log("Creating Patcher");
+            if (gameob == null)
+            {
+                gameob = new GameObject();
+            }
             gameob.name = "KmansBepInPatch";
             gameob.AddComponent<Plugin>();
             UnityEngine.Object.DontDestroyOnLoad(gameob);

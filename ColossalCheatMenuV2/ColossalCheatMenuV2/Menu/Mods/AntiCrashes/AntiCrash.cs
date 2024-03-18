@@ -17,7 +17,7 @@ namespace ColossalOnevent {
     //[HarmonyPatch(typeof(PhotonNetwork), "OnEvent")]
     internal class Instantate
     {
-        private static void Prefix(ExitGames.Client.Photon.EventData photonEvent)
+        /*private static void Prefix(ExitGames.Client.Photon.EventData photonEvent)
         {
             if (PhotonNetwork.InRoom && photonEvent.Code == 202)
             {
@@ -31,6 +31,6 @@ namespace ColossalOnevent {
                 return false;
             }
             return true;
-        }
+        }*/
     }
 }

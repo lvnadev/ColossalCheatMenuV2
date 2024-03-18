@@ -1,4 +1,6 @@
-﻿using Photon.Pun;
+﻿using Colossal.Patches;
+using ColossalCheatMenuV2.Menu.Mods;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +14,57 @@ namespace Colossal.Mods
 {
     public class InvisMonkey : MonoBehaviour
     {
+        private GameObject ghost;
         public void Update()
         {
-            if (Plugin.invismonkey && PhotonNetwork.InRoom)
+            if (PluginConfig.invismonkey && PhotonNetwork.InRoom)
             {
-                bool invisL;
-                InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out invisL);
-                if (invisL)
+                if (!PluginConfig.invismonkey || !PhotonNetwork.InRoom)
                 {
-                    GorillaTagger.Instance.offlineVRRig.enabled = false;
+                    UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<InvisMonkey>());
+                    return;
+                }
+                if (ControllerInputPoller.instance.leftControllerSecondaryButton)
+                {
+                    if(ghost == null) 
+                        ghost = GhostManager.SpawnGhost(1);
+
+                    if(DisableRig.disablerig)
+                        DisableRig.disablerig = false;
+
+                    ghost.GetComponent<VRRig>().mainSkin.material.color = new Color32(204, 51, 255, 60);
+                    ghost.GetComponent<VRRig>().mainSkin.material.shader = Shader.Find("GUI/Text Shader");
+
                     GorillaTagger.Instance.offlineVRRig.transform.position = new Vector3(GorillaLocomotion.Player.Instance.headCollider.transform.position.x, -646.46466f, GorillaLocomotion.Player.Instance.headCollider.transform.position.z);
-                } else {
-                    GorillaTagger.Instance.offlineVRRig.enabled = false;
+                    if (GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
+                        GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = false;
+                    if (GorillaTagger.Instance.offlineVRRig.headMesh.active)
+                        GorillaTagger.Instance.offlineVRRig.headMesh.active = false;
+                    if (GorillaTagger.Instance.offlineVRRig.showName)
+                        GorillaTagger.Instance.offlineVRRig.showName = false;
+                    return;
+                } else
+                {
+                    if (ghost != null)
+                        GhostManager.DestroyGhost(ghost);
+                    if(!DisableRig.disablerig)
+                        DisableRig.disablerig = true;
                 }
             }
             else
             {
+                if(ghost != null)
+                    GhostManager.DestroyGhost(ghost);
+                if(!DisableRig.disablerig)
+                    DisableRig.disablerig = true;
+
+                if (!GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
+                    GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = true;
+                if(!GorillaTagger.Instance.offlineVRRig.headMesh.active)
+                    GorillaTagger.Instance.offlineVRRig.headMesh.active = true;
+                if(!GorillaTagger.Instance.offlineVRRig.showName)
+                    GorillaTagger.Instance.offlineVRRig.showName = true;
+
                 Destroy(GorillaTagger.Instance.GetComponent<InvisMonkey>());
             }
         }

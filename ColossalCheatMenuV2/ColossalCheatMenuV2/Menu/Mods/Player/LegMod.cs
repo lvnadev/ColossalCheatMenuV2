@@ -14,10 +14,10 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if (Plugin.legmod)
+            /*if (PluginConfig.legmod)
             {
                 bool inroom = false;
-                if (legmod && !inroom && PhotonNetwork.InRoom)
+                if (PluginConfig.legmod && !inroom && PhotonNetwork.InRoom)
                 {
                     if (GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/rig/body/shoulder.R/").transform.localPosition.y != 0f)
                     {
@@ -36,7 +36,7 @@ namespace Colossal.Mods
             else
             {
                 Destroy(GorillaTagger.Instance.GetComponent<LegMod>());
-            }
+            }*/
         }
     }
 }

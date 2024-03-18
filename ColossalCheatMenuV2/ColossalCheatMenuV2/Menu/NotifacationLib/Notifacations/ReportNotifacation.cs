@@ -16,7 +16,7 @@ namespace Colossal.Menu.ClientHub.Notifacation {
 
         [HarmonyPrefix]
         private static void Postfix(string susReason, string susId, string susNick) {
-            if (!notifiedPlayers.Contains(susId) && Menu.noti) {
+            if (!notifiedPlayers.Contains(susId) && PluginConfig.noti && !susReason.Contains("PlayHandTap")) {
                 notifiedPlayers.Add(susId);
                 Notifacations.SendNotification($"<color=yellow>[ANTICHEAT]</color> Name: {susNick}");
                 if(Plugin.reporttimer <= 20) {

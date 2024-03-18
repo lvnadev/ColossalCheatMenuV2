@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColossalCheatMenuV2.Patches.MakeItFuckingWork;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +14,19 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if (Plugin.tfly)
+            if (PluginConfig.tfly)
             {
-                bool stop;
-                bool right;
-                InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(CommonUsages.secondaryButton, out stop);
-                InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(CommonUsages.triggerButton, out right);
-                if (stop)
+                bool leftControllerSecondaryButton = ControllerInputPoller.instance.leftControllerSecondaryButton;
+                bool rightTrigger = StarrySteamControllerPatch.GetRightTrigger();
+                if (leftControllerSecondaryButton)
                 {
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity = new Vector3(0f, 0.01f, 0f);
                 }
-                if (right)
+                if (rightTrigger)
                 {
                     GorillaLocomotion.Player.Instance.transform.position += GorillaLocomotion.Player.Instance.leftControllerTransform.forward * 0.45f;
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity = Vector3.zero;
+                    return;
                 }
             }
             else

@@ -21,53 +21,48 @@ namespace Colossal.Mods
         private bool PlatRonce = false;
         public void Update()
         {
-            if (Plugin.platforms)
+            if (PluginConfig.platforms)
             {
-                bool platL;
-                bool platR;
-                InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out platL);
-                InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out platR);
-                if (platL)
+                bool leftGrab = ControllerInputPoller.instance.leftGrab;
+                bool rightGrab = ControllerInputPoller.instance.rightGrab;
+                if (leftGrab)
                 {
-                    if (!PlatLonce)
+                    if (!this.PlatLonce)
                     {
-                        PlatL = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        PlatL.GetComponent<Renderer>().material.color = Color.magenta;
-                        PlatL.GetComponent<Renderer>().material.mainTexture = Plugin.texture;
-                        PlatL.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                        PlatL.transform.position = GorillaLocomotion.Player.Instance.leftControllerTransform.position;
-
-                        PlatLonce = true;
+                        Platforms.PlatL = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        Platforms.PlatL.GetComponent<Renderer>().material.color = Color.magenta;
+                        Platforms.PlatL.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                        Platforms.PlatL.transform.position = GorillaLocomotion.Player.Instance.leftControllerTransform.position;
+                        this.PlatLonce = true;
                     }
                 }
-                else if (PlatLonce)
+                else if (this.PlatLonce)
                 {
-                    UnityEngine.Object.Destroy(PlatL);
-                    PlatLonce = false;
+                    UnityEngine.Object.Destroy(Platforms.PlatL);
+                    this.PlatLonce = false;
                 }
-
-                if (platR)
+                if (rightGrab)
                 {
-                    if (!PlatRonce)
+                    if (!this.PlatRonce)
                     {
-                        PlatR = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        PlatR.GetComponent<Renderer>().material.color = Color.magenta;
-                        PlatR.GetComponent<Renderer>().material.mainTexture = Plugin.texture;
-                        PlatR.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                        PlatR.transform.position = GorillaLocomotion.Player.Instance.rightControllerTransform.position;
-
-                        PlatRonce = true;
+                        Platforms.PlatR = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        Platforms.PlatR.GetComponent<Renderer>().material.color = Color.magenta;
+                        Platforms.PlatR.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                        Platforms.PlatR.transform.position = GorillaLocomotion.Player.Instance.rightControllerTransform.position;
+                        this.PlatRonce = true;
+                        return;
                     }
                 }
-                else if (PlatRonce)
+                else if (this.PlatRonce)
                 {
-                    UnityEngine.Object.Destroy(PlatR);
-                    PlatRonce = false;
+                    UnityEngine.Object.Destroy(Platforms.PlatR);
+                    this.PlatRonce = false;
+                    return;
                 }
             }
             else
             {
-                Destroy(GorillaTagger.Instance.GetComponent<Platform>());
+                Destroy(GorillaTagger.Instance.GetComponent<Platforms>());
             }
         }
     }

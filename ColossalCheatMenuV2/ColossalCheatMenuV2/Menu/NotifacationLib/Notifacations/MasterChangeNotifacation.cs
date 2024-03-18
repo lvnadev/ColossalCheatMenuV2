@@ -11,16 +11,20 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Colossal.Menu.ClientHub.Notifacation {
-    [HarmonyPatch(typeof(MonoBehaviourPunCallbacks), "OnMasterClientSwitched")]
-    internal class MasterChangeNotifacation {
-        private static List<Player> notifiedPlayers = new List<Player>();
-        [HarmonyPrefix]
-        private static void Postfix(Player newMasterClient) {
-            if (!notifiedPlayers.Contains(newMasterClient) && Menu.noti) {
-                notifiedPlayers.Add(newMasterClient);
-                Notifacations.SendNotification($"<color=greem>[MASTER]</color> Changed, Name: {newMasterClient.NickName}");
-                if (Plugin.mastertimer <= 20) {
-                    notifiedPlayers.Remove(newMasterClient);
+    internal class MasterChangeNotifacation : MonoBehaviourPunCallbacks {
+
+        private static string mastername;
+
+        public override void OnMasterClientSwitched(Player newMasterClient)
+        {
+            base.OnMasterClientSwitched(newMasterClient);
+
+            if (PluginConfig.noti)
+            {
+                if (mastername != newMasterClient.NickName)
+                {
+                    Notifacations.SendNotification($"<color=greem>[MASTER]</color> Changed, Name: {newMasterClient.NickName}");
+                    mastername = newMasterClient.NickName;
                 }
             }
         }

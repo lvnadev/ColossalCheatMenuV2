@@ -9,13 +9,16 @@ using Colossal.Menu;
 using System.Collections.Generic;
 
 namespace Colossal.Menu.ClientHub.Notifacation {
-    [HarmonyPatch(typeof(MonoBehaviourPunCallbacks), "OnPlayerEnteredRoom")]
-    internal class JoinNotifacation {
+    internal class JoinNotifacation : MonoBehaviourPunCallbacks
+    {
         private static List<Player> notifiedPlayers = new List<Player>();
 
-        [HarmonyPrefix]
-        private static void Prefix(Player newPlayer) {
-            if (!notifiedPlayers.Contains(newPlayer) && Menu.noti) {
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            base.OnPlayerEnteredRoom(newPlayer);
+
+            if (!notifiedPlayers.Contains(newPlayer) && PluginConfig.noti)
+            {
                 notifiedPlayers.Add(newPlayer);
                 Notifacations.SendNotification($"<color=cyan>[JOIN]</color> Name: {newPlayer.NickName}");
             }

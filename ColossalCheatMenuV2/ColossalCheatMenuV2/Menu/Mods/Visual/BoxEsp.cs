@@ -2,11 +2,8 @@
 using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.XR;
@@ -21,20 +18,15 @@ namespace Colossal.Mods
 
         public void Update()
         {
-            if (Plugin.boxesp && PhotonNetwork.InRoom)
+            if (PluginConfig.boxesp && PhotonNetwork.InRoom)
             {
-                ThrowableBug[] bug = GameObject.FindObjectsOfType<ThrowableBug>();
-                foreach (ThrowableBug bugthing in bug) {
-                    GameObject parentObject = bugthing.GetComponentInParent<Transform>().gameObject;
-                    if(!parentObject.gameObject.GetComponent<AddBox>()) {
-                        parentObject.gameObject.AddComponent<AddBox>();
-                    }
-                    else {
-                        AddBox addbox = parentObject.GetComponent<AddBox>();
-
+                foreach (VRRig rig in GorillaParent.instance.vrrigs)
+                {
+                    if (rig != null && !rig.isOfflineVRRig)
+                    {
                         Camera mainCamera = Camera.main;
                         Matrix4x4 projectionMatrix = mainCamera.projectionMatrix;
-                        Vector3 objectWorldPosition = parentObject.transform.position;
+                        Vector3 objectWorldPosition = rig.transform.position;
                         float objectDistanceFromCamera = Vector3.Distance(objectWorldPosition, mainCamera.transform.position);
 
                         Matrix4x4 worldToCameraMatrix = mainCamera.worldToCameraMatrix;
@@ -49,154 +41,44 @@ namespace Colossal.Mods
                         float maxScale = 8.5f;
 
                         objectScale = Mathf.Clamp(objectScale, minScale, maxScale);
-                        addbox.topSide.transform.localScale = new Vector3(BoxEsp.objectScale / 40, BoxEsp.objectScale / 40, BoxEsp.objectScale / 40);
 
-                        addbox.topSide.GetComponent<Renderer>().material.color = new Color(1, 1, 0, 0.4f);
-                    }
-                }
-                foreach (VRRig vrrig in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>())
-                {
-                    if (!vrrig.isOfflineVRRig && !vrrig.isMyPlayer)
-                    {
-                        if (!vrrig.gameObject.GetComponent<AddBox>())
+                        GameObject go = new GameObject("box");
+                        go.transform.position = rig.transform.position;
+
+                        GameObject face = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                        Destroy(face.GetComponent<Collider>());
+                        face.transform.SetParent(go.transform);
+                        face.transform.localPosition = new Vector3(0f, 0f, 0f);
+                        face.transform.localRotation = Quaternion.Euler(90, 0, 0);
+                        face.transform.localScale = new Vector3(BoxEsp.objectScale / 40, BoxEsp.objectScale / 40, BoxEsp.objectScale / 40);
+
+                        face.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+                        Color Espcolor;
+
+                        if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Length <= 0)
                         {
-                            vrrig.gameObject.AddComponent<AddBox>();
+                            Espcolor = new Color(1f, 0f, 1f, 0.4f);
                         }
                         else
                         {
-                            AddBox addbox = vrrig.GetComponent<AddBox>();
-
-                            Camera mainCamera = Camera.main;
-                            Matrix4x4 projectionMatrix = mainCamera.projectionMatrix;
-                            Vector3 objectWorldPosition = vrrig.transform.position;
-                            float objectDistanceFromCamera = Vector3.Distance(objectWorldPosition, mainCamera.transform.position);
-
-                            Matrix4x4 worldToCameraMatrix = mainCamera.worldToCameraMatrix;
-                            Vector3 objectViewportPosition = mainCamera.WorldToViewportPoint(objectWorldPosition);
-
-                            Vector4 objectClipPosition = projectionMatrix * worldToCameraMatrix * new Vector4(objectWorldPosition.x, objectWorldPosition.y, objectWorldPosition.z, 1);
-                            objectClipPosition /= objectClipPosition.w;
-
-                            objectScale = (objectDistanceFromCamera / objectClipPosition.w);
-
-                            float minScale = 2f;
-                            float maxScale = 8.5f;
-
-                            objectScale = Mathf.Clamp(objectScale, minScale, maxScale);
-                            addbox.topSide.transform.localScale = new Vector3(BoxEsp.objectScale / 40, BoxEsp.objectScale / 40, BoxEsp.objectScale / 40);
-
-                            if (!GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().isCasual)
+                            if (rig.mainSkin.material.name.Contains("fected"))
                             {
-                                if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(vrrig.myPlayer.ActorNumber))
-                                {
-                                    addbox.topSide.GetComponent<Renderer>().material.color = new Color(1f, 0f, 0f, 0.4f);
-                                }
-                                if (!GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(vrrig.myPlayer.ActorNumber))
-                                {
-                                    addbox.topSide.GetComponent<Renderer>().material.color = new Color(1f, 0f, 1f, 0.4f);
-                                }
-                                if (!GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(vrrig.myPlayer.ActorNumber) && vrrig.myPlayer.CustomProperties.ContainsValue("colossal"))
-                                {
-                                    addbox.topSide.GetComponent<Renderer>().material.color = ThisGuyIsUsingColossal.colour;
-                                }
-                                if (!GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(vrrig.myPlayer.ActorNumber) && vrrig.myPlayer.IsMasterClient)
-                                {
-                                    addbox.topSide.GetComponent<Renderer>().material.color = new Color(0f, 1f, 0f, 0.4f);
-                                }
+                                Espcolor = new Color(1f, 0f, 0f, 0.4f);
                             }
                             else
                             {
-                                if (vrrig.mainSkin.material.name.Contains("fected"))
-                                {
-                                    addbox.topSide.GetComponent<Renderer>().material.color = new Color(1f, 0f, 0f, 0.4f);
-                                }
-                                if (!vrrig.mainSkin.material.name.Contains("fected"))
-                                {
-                                    addbox.topSide.GetComponent<Renderer>().material.color = new Color(1f, 0f, 1f, 0.4f);
-                                }
-                                if (!vrrig.mainSkin.material.name.Contains("fected") && vrrig.myPlayer.CustomProperties.ContainsValue("colossal"))
-                                {
-                                    addbox.topSide.GetComponent<Renderer>().material.color = ThisGuyIsUsingColossal.colour;
-                                }
-                                if (!vrrig.mainSkin.material.name.Contains("fected") && vrrig.myPlayer.IsMasterClient)
-                                {
-                                    addbox.topSide.GetComponent<Renderer>().material.color = new Color(0f, 1f, 0f, 0.4f);
-                                }
+                                Espcolor = new Color(1f, 0f, 1f, 0.4f);
                             }
                         }
+
+                        face.GetComponent<Renderer>().material.color = Espcolor;
+                        Quaternion rotation = Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up);
+                        go.transform.rotation = rotation;
+
+                        GameObject.Destroy(go, Time.deltaTime);
                     }
                 }
             }
-            else
-            {
-                ThrowableBug[] bug = GameObject.FindObjectsOfType<ThrowableBug>();
-                if (GameObject.Find("Floating Bug Holdable")) {
-                    foreach (ThrowableBug bugthing in bug) {
-                        GameObject parentObject = bugthing.GetComponentInParent<Transform>().gameObject;
-                        if (parentObject.gameObject.GetComponent<AddBox>()) {
-                            GameObject.Destroy(parentObject.gameObject.GetComponent<AddBox>());
-                        }
-                    }
-                    GameObject.Destroy(GameObject.Find("Floating Bug Holdable/HollowBox"));
-                }
-                if (GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/rig/body/shoulder.R/upper_arm.R/forearm.R/hand.R/palm.01.R/TransferrableItemRightHand/Floating Bug Anchor/Floating Bug Holdable/HollowBox")) {
-                    foreach (ThrowableBug bugthing in bug) {
-                        GameObject parentObject = bugthing.GetComponentInParent<Transform>().gameObject;
-                        if (parentObject.gameObject.GetComponent<AddBox>()) {
-                            GameObject.Destroy(parentObject.gameObject.GetComponent<AddBox>());
-                        }
-                    }
-                    GameObject.Destroy(GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/rig/body/shoulder.R/upper_arm.R/forearm.R/hand.R/palm.01.R/TransferrableItemRightHand/Floating Bug Anchor/Floating Bug Holdable/HollowBox"));
-                }
-                if (GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/rig/body/shoulder.L/upper_arm.L/forearm.L/hand.R/palm.01.L/TransferrableItemRightHand/Floating Bug Anchor/Floating Bug Holdable/HollowBox")) {
-                    foreach (ThrowableBug bugthing in bug) {
-                        GameObject parentObject = bugthing.GetComponentInParent<Transform>().gameObject;
-                        if (parentObject.gameObject.GetComponent<AddBox>()) {
-                            GameObject.Destroy(parentObject.gameObject.GetComponent<AddBox>());
-                        }
-                    }
-                    GameObject.Destroy(GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/rig/body/shoulder.L/upper_arm.L/forearm.L/hand.R/palm.01.L/TransferrableItemRightHand/Floating Bug Anchor/Floating Bug Holdable/HollowBox"));
-                }
-                if(GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/HollowBox")) {
-                    foreach (VRRig vrrig in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>()) {
-                        if (!vrrig.isOfflineVRRig && !vrrig.isMyPlayer && !Plugin.GetPhotonViewFromVR(vrrig.gameObject).IsMine) {
-                            if (vrrig.gameObject.GetComponent<AddBox>()) {
-                                GameObject.Destroy(vrrig.gameObject.GetComponent<AddBox>());
-                            }
-                        }
-                    }
-                    GameObject.Destroy(GameObject.Find("Global/GorillaParent/GorillaVRRigs/Gorilla Player Networked(Clone)/HollowBox"));
-                }
-            }
-        }
-    }
-    public class Box : MonoBehaviour
-    {
-        private void LateUpdate()
-        {
-            transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
-        }
-    }
-    public class AddBox : MonoBehaviour
-    {
-        public GameObject topSide;
-        private GameObject hollowBoxGO;
-        private void Start()
-        {
-            hollowBoxGO = new GameObject("HollowBox");
-            hollowBoxGO.transform.SetParent(base.transform);
-
-            topSide = GameObject.CreatePrimitive(PrimitiveType.Plane);
-
-            topSide.transform.SetParent(hollowBoxGO.transform);
-            topSide.transform.localRotation = Quaternion.Euler(90, 0, 0);
-            topSide.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-            GameObject.Destroy(topSide.GetComponent<MeshCollider>());
-
-            hollowBoxGO.transform.localPosition = new Vector3(0, -0.1f, 0);
-            hollowBoxGO.transform.localRotation = Quaternion.identity;
-
-            hollowBoxGO.AddComponent<Box>();
         }
     }
 }

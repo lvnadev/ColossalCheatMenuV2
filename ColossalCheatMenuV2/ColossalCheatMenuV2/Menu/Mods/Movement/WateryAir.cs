@@ -12,24 +12,37 @@ namespace Colossal.Mods {
     public class WateryAir : MonoBehaviour {
         private GameObject waterbox;
         public void Update() {
-            if (Plugin.wateryair) {
-                if (waterbox == null) {
-                    GameObject.Find("Level").transform.Find("ForestToBeach_Prefab_V4").gameObject.SetActive(true);
-                    waterbox = GameObject.Instantiate(GameObject.Find("Level/ForestToBeach_Prefab_V4/CaveWaterVolume"));
-                    GameObject.Destroy(waterbox.GetComponentInChildren<Renderer>());
-                }
-                else {
-                    bool L;
-                    bool R;
-                    InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out L);
-                    InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out R);
-                    if (L && R) {
-                        waterbox.transform.position = GorillaTagger.Instance.headCollider.transform.position + new Vector3(0, 1, 0);
+            if (PluginConfig.wateryair) {
+                if (!PluginConfig.wateryair)
+                {
+                    UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<WateryAir>());
+                    if (this.waterbox != null)
+                    {
+                        UnityEngine.Object.Destroy(this.waterbox);
+                        this.waterbox = null;
                     }
-                    else {
-                        waterbox.transform.position = new Vector3(0, -6969, 0);
-                    }
+                    return;
                 }
+                if (this.waterbox == null)
+                {
+                    foreach (GameObject gameObject in Resources.FindObjectsOfTypeAll<GameObject>())
+                    {
+                        if (gameObject.name == "CaveWaterVolume")
+                        {
+                            gameObject.SetActive(true);
+                            this.waterbox = UnityEngine.Object.Instantiate<GameObject>(gameObject);
+                        }
+                    }
+                    return;
+                }
+                bool leftGrab = ControllerInputPoller.instance.leftGrab;
+                bool rightGrab = ControllerInputPoller.instance.rightGrab;
+                if (leftGrab && rightGrab)
+                {
+                    this.waterbox.transform.position = GorillaTagger.Instance.headCollider.transform.position + new Vector3(0f, 1f, 0f);
+                    return;
+                }
+                this.waterbox.transform.position = new Vector3(0f, -6969f, 0f);
             }
             else {
                 Destroy(GorillaTagger.Instance.GetComponent<WateryAir>());

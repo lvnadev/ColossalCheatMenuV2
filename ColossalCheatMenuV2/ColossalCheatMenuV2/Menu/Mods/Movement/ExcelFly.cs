@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using static Colossal.Plugin;
 
@@ -13,17 +14,13 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if (Plugin.excelfly)
+            if (PluginConfig.excelfly)
             {
-                bool excelL;
-                bool excelR;
-                InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out excelL);
-                InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out excelR);
-                if (excelL)
+                if (ControllerInputPoller.instance.leftControllerPrimaryButton)
                 {
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity += -GorillaLocomotion.Player.Instance.leftControllerTransform.right / 2f;
                 }
-                if (excelR)
+                if (ControllerInputPoller.instance.rightControllerPrimaryButton)
                 {
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity += GorillaLocomotion.Player.Instance.rightControllerTransform.right / 2f;
                 }

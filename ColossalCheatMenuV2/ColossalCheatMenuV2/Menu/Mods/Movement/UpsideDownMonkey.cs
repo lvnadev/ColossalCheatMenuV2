@@ -13,70 +13,17 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if (Plugin.upsidedownmonkey)
+            if (PluginConfig.upsidedownmonkey)
             {
-                GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
-                try
-                {
-                    foreach (VRRig vrrig in Resources.FindObjectsOfTypeAll<VRRig>())
-                    {
-                        if (vrrig.isMyPlayer)
-                        {
-                            vrrig.gameObject.transform.Find("gorilla").GetComponent<Renderer>().enabled = false;
-                        }
-                    }
-                    try
-                    {
-                        foreach (VRRig vrrig2 in Resources.FindObjectsOfTypeAll<VRRig>())
-                        {
-                            if (vrrig2.isMyPlayer)
-                            {
-                                UnityEngine.Object.FindObjectsOfType<VRRig>();
-                            }
-                        }
-                        GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
-                    }
-                    catch
-                    {
-                    }
-                }
-                catch
-                {
-                }
+                if(GorillaLocomotion.Player.Instance.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
+                    GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
             }
             else
             {
-                GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                try
-                {
-                    foreach (VRRig vrrig3 in Resources.FindObjectsOfTypeAll<VRRig>())
-                    {
-                        if (vrrig3.isMyPlayer)
-                        {
-                            vrrig3.gameObject.transform.Find("gorilla").GetComponent<Renderer>().enabled = true;
-                        }
-                    }
-                    try
-                    {
-                        foreach (VRRig vrrig4 in Resources.FindObjectsOfTypeAll<VRRig>())
-                        {
-                            if (vrrig4.isMyPlayer)
-                            {
-                                UnityEngine.Object.FindObjectsOfType<VRRig>();
-                            }
-                        }
-                        GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                    }
-                    catch
-                    {
-                    }
-                }
-                catch
-                {
-                }
+                if (GorillaLocomotion.Player.Instance.transform.rotation != Quaternion.Euler(0f, 0f, 0f))
+                    GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-
-                Destroy(GorillaTagger.Instance.GetComponent<UpsideDownMonkey>());
+                UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<UpsideDownMonkey>());
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using GorillaNetworking;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,68 +15,61 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if (Plugin.chams && PhotonNetwork.InRoom)
+            if (PluginConfig.chams && PhotonNetwork.InRoom)
             {
-                foreach (VRRig vrrig in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>())
+                foreach(VRRig vrrig in GorillaParent.instance.vrrigs)
                 {
-                    if (!vrrig.isOfflineVRRig && !vrrig.isMyPlayer && !Plugin.GetPhotonViewFromVR(vrrig.gameObject).IsMine)
+                    if (vrrig != null && !vrrig.isOfflineVRRig && vrrig.mainSkin.material.shader != Shader.Find("GUI/Text Shader"))
                     {
-                        if (vrrig.mainSkin.material.name.Contains("fected"))
+                        vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
+                        if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Length <= 0)
                         {
-                            vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
-                            vrrig.mainSkin.material.color = new Color(1f, 0f, 0f, 0.4f);
-                        }
-                        if (!vrrig.mainSkin.material.name.Contains("fected"))
-                        {
-                            vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
                             vrrig.mainSkin.material.color = new Color(1f, 0f, 1f, 0.4f);
                         }
-                        if (!vrrig.mainSkin.material.name.Contains("fected") && vrrig.myPlayer.CustomProperties.ContainsValue("colossal"))
+                        else
                         {
-                            vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
-                            vrrig.mainSkin.material.color = ThisGuyIsUsingColossal.colour;
-                        }
-                        if (!vrrig.mainSkin.material.name.Contains("fected") && vrrig.myPlayer.IsMasterClient)
-                        {
-                            vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
-                            vrrig.mainSkin.material.color = new Color(0f, 1f, 0f, 0.4f);
-                        }
-                    }
-                }
-                ThrowableBug[] bug = GameObject.FindObjectsOfType<ThrowableBug>();
-                foreach (ThrowableBug bugthing in bug) {
-                    GameObject parentObject =  bugthing.GetComponentInParent<Transform>().gameObject;
-                    parentObject.GetComponentInChildren<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
-                    parentObject.GetComponentInChildren<Renderer>().material.color = new Color(1, 1, 0, 0.4f);
-                }
-            }
-            else
-            {
-                foreach (VRRig vrrig2 in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>())
-                {
-                    if (!vrrig2.isOfflineVRRig && !vrrig2.isMyPlayer && !Plugin.GetPhotonViewFromVR(vrrig2.gameObject).IsMine)
-                    {
-                        if (vrrig2.mainSkin.material.shader == Shader.Find("GUI/Text Shader") && !vrrig2.isOfflineVRRig)
-                        {
-                            foreach (GorillaPlayerScoreboardLine gorillaPlayerScoreboardLine in UnityEngine.Object.FindObjectOfType<GorillaScoreBoard>().lines)
+                            if (vrrig.mainSkin.material.name.Contains("fected"))
                             {
-                                if (gorillaPlayerScoreboardLine.linePlayer == vrrig2.myPlayer && gorillaPlayerScoreboardLine.linePlayer != PhotonNetwork.LocalPlayer)
-                                {
-                                    vrrig2.mainSkin.material = vrrig2.materialsToChangeTo[gorillaPlayerScoreboardLine.currentMatIndex];
-                                    break;
-                                }
+                                vrrig.mainSkin.material.color = new Color(1f, 0f, 0f, 0.4f);
+                            }
+                            else
+                            {
+                                vrrig.mainSkin.material.color = new Color(1f, 0f, 1f, 0.4f);
                             }
                         }
                     }
                 }
-                ThrowableBug[] bug = GameObject.FindObjectsOfType<ThrowableBug>();
-                foreach (ThrowableBug bugthing in bug) {
+                /*ThrowableBug[] bug = Resources.FindObjectsOfTypeAll<ThrowableBug>();
+                foreach (ThrowableBug bugthing in bug)
+                {
                     GameObject parentObject = bugthing.GetComponentInParent<Transform>().gameObject;
-                    if (parentObject.GetComponentInChildren<Renderer>().material.shader == Shader.Find("GUI/Text Shader")) {
-                        parentObject.GetComponentInChildren<Renderer>().material.shader = Shader.Find("Standard");
-                        parentObject.GetComponentInChildren<Renderer>().material.color = new Color(1, 1, 1, 1f);
+                    parentObject.GetComponentInChildren<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+                    parentObject.GetComponentInChildren<Renderer>().material.color = new Color(1, 1, 0, 0.4f);
+                }*/
+            }
+            else
+            {
+                if(PhotonNetwork.InRoom)
+                {
+                    foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
+                    {
+                        if (vrrig != null && !vrrig.isOfflineVRRig && vrrig.mainSkin.material.shader == Shader.Find("GUI/Text Shader"))
+                        {
+                            vrrig.mainSkin.material.shader = Shader.Find("GorillaTag/UberShader");
+                            vrrig.mainSkin.material.color = Color.white;
+                        }
                     }
                 }
+                /*ThrowableBug[] bug = Resources.FindObjectsOfTypeAll<ThrowableBug>();
+                foreach (ThrowableBug bugthing in bug)
+                {
+                    GameObject parentObject = bugthing.GetComponentInParent<Transform>().gameObject;
+                    if (parentObject.GetComponentInChildren<Renderer>().material.shader == Shader.Find("GUI/Text Shader"))
+                    {
+                        parentObject.GetComponentInChildren<Renderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                        parentObject.GetComponentInChildren<Renderer>().material.color = new Color(1, 1, 1, 1f);
+                    }
+                }*/
             }
         }
     }

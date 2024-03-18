@@ -14,74 +14,122 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if (Plugin.mosa)
+            if(Menu.Menu.Speed[0].stringsliderind != null)
             {
-                GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.5f;
-            }
-            if (Plugin.coke)
-            {
-                GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.5f;
-            }
-            if (Plugin.pixi)
-            {
-                GorillaLocomotion.Player.Instance.maxJumpSpeed = 9.5f;
-            }
-            if (Plugin.rgrip85)
-            {
-                bool grip;
-                InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out grip);
-                if (grip)
+                switch (Menu.Menu.Speed[0].stringsliderind)
                 {
-                    GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.5f;
+                    case 1:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.2f;
+                        break;
+                    case 2:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.4f;
+                        break;
+                    case 3:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.6f;
+                        break;
+                    case 4:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.8f;
+                        break;
+                    case 5:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 8f;
+                        break;
+                    case 6:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.2f;
+                        break;
+                    case 7:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.4f;
+                        break;
+                    case 8:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.6f;
+                        break;
+                    case 9:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
+                        break;
+                    case 10:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
+                        break;
+                    case 11:
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
+                        break;
                 }
-            }
-            if (Plugin.rgrip95)
-            {
-                bool grip;
-                InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out grip);
-                if (grip)
+                if (ControllerInputPoller.instance.leftGrab)
                 {
-                    GorillaLocomotion.Player.Instance.maxJumpSpeed = 9.5f;
-                }
-            }
-            if (Plugin.lgrip85)
-            {
-                bool grip;
-                InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out grip);
-                if (grip)
-                {
-                    GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.5f;
-                }
-            }
-            if (Plugin.lgrip95)
-            {
-                bool grip;
-                InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out grip);
-                if (grip)
-                {
-                    GorillaLocomotion.Player.Instance.maxJumpSpeed = 9.5f;
-                }
-            }
-            bool once = false;
-            if (!Plugin.mosa && !Plugin.coke && !Plugin.pixi && !Plugin.rgrip85 && !Plugin.rgrip95 && !Plugin.lgrip85 && !Plugin.lgrip95 && !once)
-            {
-                foreach (VRRig vrrig in GameObject.Find("GorillaVRRigs").GetComponentsInChildren<VRRig>())
-                {
-                    if (vrrig.isOfflineVRRig && vrrig.isMyPlayer)
+                    switch (Menu.Menu.Speed[1].stringsliderind)
                     {
-                        if (vrrig.mainSkin.material.name.Contains("fected"))
-                        {
+                        case 1:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.2f;
+                            break;
+                        case 2:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.4f;
+                            break;
+                        case 3:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.6f;
+                            break;
+                        case 4:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.8f;
+                            break;
+                        case 5:
                             GorillaLocomotion.Player.Instance.maxJumpSpeed = 8f;
-                        }
-                        if (!vrrig.mainSkin.material.name.Contains("fected"))
-                        {
-                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 6.5f;
-                        }
+                            break;
+                        case 6:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.2f;
+                            break;
+                        case 7:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.4f;
+                            break;
+                        case 8:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.6f;
+                            break;
+                        case 9:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
+                            break;
+                        case 10:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
+                            break;
+                        case 11:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
+                            break;
                     }
                 }
-                once = true;
-
-                Destroy(GorillaTagger.Instance.GetComponent<SpeedMod>());
+                if (ControllerInputPoller.instance.rightGrab)
+                {
+                    switch (Menu.Menu.Speed[2].stringsliderind)
+                    {
+                        case 1:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.2f;
+                            break;
+                        case 2:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.4f;
+                            break;
+                        case 3:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.6f;
+                            break;
+                        case 4:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.8f;
+                            break;
+                        case 5:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8f;
+                            break;
+                        case 6:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.2f;
+                            break;
+                        case 7:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.4f;
+                            break;
+                        case 8:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.6f;
+                            break;
+                        case 9:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
+                            break;
+                        case 10:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
+                            break;
+                        case 11:
+                            GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
+                            break;
+                    }
+                }
             }
         }
     }

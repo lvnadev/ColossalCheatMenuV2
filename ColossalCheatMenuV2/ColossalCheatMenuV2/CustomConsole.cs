@@ -34,6 +34,17 @@ namespace Colossal {
             logWriter = new StreamWriter(Console.OpenStandardOutput());
             logWriter.AutoFlush = true;
             Console.SetOut(logWriter);
+
+            CustomConsole.LogToConsole(
+                @"
+                _________  ________  .____    ________    _________ _________   _____  .____     
+                \_   ___ \ \_____  \ |    |   \_____  \  /   _____//   _____/  /  _  \ |    |    
+                /    \  \/  /   |   \|    |    /   |   \ \_____  \ \_____  \  /  /_\  \|    |    
+                \     \____/    |    \    |___/    |    \/        \/        \/    |    \    |___ 
+                 \______  /\_______  /_______ \_______  /_______  /_______  /\____|__  /_______ \
+                        \/         \/        \/       \/        \/        \/         \/        \/
+                                Trolling lemming harder since July, 19th. 2022
+                ");
         }
 
         private void OnApplicationQuit() {

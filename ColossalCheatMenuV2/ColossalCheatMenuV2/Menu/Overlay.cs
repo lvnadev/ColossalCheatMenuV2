@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
-using WebSocketSharp;
 using static Colossal.Plugin;
 
 namespace Colossal.Menu.ClientHub {
@@ -33,7 +32,7 @@ namespace Colossal.Menu.ClientHub {
         static Text NotifiText;
 
         public void Update() {
-            if (Menu.overlay && Menu.agreement) {
+            if (PluginConfig.overlay && Menu.agreement) {
                 if (!loaded1) {
                     MainCamera = GameObject.Find("Main Camera");
                     HUDObjROOM = new GameObject();
@@ -112,16 +111,16 @@ namespace Colossal.Menu.ClientHub {
                 if(PhotonNetwork.InRoom) {
                     TesttextROOM.text = $"<color={Menu.MenuColour}>RoomName: </color>{PhotonNetwork.CurrentRoom.Name}\n<color={Menu.MenuColour}>Players: </color>{PhotonNetwork.CurrentRoom.PlayerCount}";
                 } else {
-                    if (!TesttextROOM.text.IsNullOrEmpty()) {
+                    if (TesttextROOM.text != null) {
                         TesttextROOM.text = "";
                     }
                 }
                 Testtext.text = $"<color={Menu.MenuColour}>Ping: </color>{PhotonNetwork.GetPing()}\n<color={Menu.MenuColour}>FPS: </color>{fps.ToString("F2")}";
             } else {
-                if(!Testtext.text.IsNullOrEmpty()) {
+                if(Testtext.text != null) {
                     Testtext.text = "";
                 }
-                if (!TesttextROOM.text.IsNullOrEmpty()) {
+                if (TesttextROOM.text != null) {
                     TesttextROOM.text = "";
                 }
             }

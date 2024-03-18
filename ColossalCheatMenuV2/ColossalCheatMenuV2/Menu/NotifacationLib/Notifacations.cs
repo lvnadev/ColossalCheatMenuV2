@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
-using WebSocketSharp;
 using static Colossal.Plugin;
 
 namespace Colossal.Menu.ClientHub {
@@ -24,8 +23,8 @@ namespace Colossal.Menu.ClientHub {
         string newtext;
         public static string PreviousNotifi;
 
-        static GameObject HUDObj;
-        static GameObject HUDObj2;
+        public static GameObject HUDObj;
+        public static GameObject HUDObj2;
         static GameObject MainCamera;
         static Text Testtext;
         private static TextAnchor textAnchor = TextAnchor.UpperRight;
@@ -34,7 +33,7 @@ namespace Colossal.Menu.ClientHub {
 
         private static bool once = false;
         public void Update() {
-            if (Menu.noti && Menu.agreement) {
+            if (PluginConfig.noti && Menu.agreement) {
                 if(!loaded) {
                     MainCamera = GameObject.Find("Main Camera");
                     HUDObj = new GameObject();
@@ -61,7 +60,7 @@ namespace Colossal.Menu.ClientHub {
                     Testtext = TestText.AddComponent<Text>();
                     Testtext.text = "";
                     Testtext.fontSize = 10;
-                    Testtext.font = GameObject.Find("COC Text").GetComponent<Text>().font;
+                    Testtext.font = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/UI/CodeOfConduct/COC Text").GetComponent<Text>().font;
                     Testtext.rectTransform.sizeDelta = new Vector2(260, 300);
                     Testtext.rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.7f);
                     Testtext.rectTransform.localPosition = new Vector3(-2.4f, 0.3f, 0f);
@@ -74,14 +73,19 @@ namespace Colossal.Menu.ClientHub {
                 HUDObj2.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
                 HUDObj2.transform.rotation = MainCamera.transform.rotation;
             } else {
-                if(!Testtext.text.IsNullOrEmpty()) {
+                if(Testtext.text != null) {
                     Testtext.text = "";
                 }
             }
         }
         private void FixedUpdate() {
-            if(Menu.noti && Menu.agreement) {
-                if (!Testtext.text.IsNullOrEmpty()) {
+            if(PluginConfig.noti && Menu.agreement) {
+
+                //Debug.Log("Noti enabled thingy thing");
+
+                if (Testtext.text != null) {
+                    //Debug.Log("Noti test text isnt null");
+
                     NotificationDecayTimeCounter++;
                     if (NotificationDecayTimeCounter > NotificationDecayTime) {
                         Notifilines = null;
@@ -95,15 +99,18 @@ namespace Colossal.Menu.ClientHub {
                         }
 
                         Testtext.text = newtext;
+
+                        //Debug.Log("Did noti shit");
                     }
                 } else {
-                    NotificationDecayTimeCounter = 0;
+                    if(NotificationDecayTimeCounter != null)
+                        NotificationDecayTimeCounter = 0;
                 }
             }
         }
 
         public static void SendNotification(string NotificationText) {
-            if (Menu.noti) {
+            if (PluginConfig.noti) {
                 if (!NotificationText.Contains(Environment.NewLine)) { NotificationText = NotificationText + Environment.NewLine; }
                 NotifiText.text = NotifiText.text + NotificationText;
                 PreviousNotifi = NotificationText;

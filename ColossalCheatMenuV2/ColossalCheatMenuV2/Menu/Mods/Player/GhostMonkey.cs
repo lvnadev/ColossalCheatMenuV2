@@ -1,4 +1,7 @@
-﻿using Photon.Pun;
+﻿using Colossal.Patches;
+using ColossalCheatMenuV2.Menu.Mods;
+using GorillaNetworking;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +15,43 @@ namespace Colossal.Mods
 {
     public class GhostMonkey : MonoBehaviour
     {
+        private GameObject ghost;
         public void Update()
         {
-            if (Plugin.ghostmonkey && PhotonNetwork.InRoom)
+            if (PluginConfig.ghostmonkey && PhotonNetwork.InRoom)
             {
-                bool ghostR;
-                InputDevices.GetDeviceAtXRNode(XRNode.RightHand).TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out ghostR);
-                if (ghostR)
+                if (!PluginConfig.ghostmonkey || !PhotonNetwork.InRoom)
                 {
-                    GorillaTagger.Instance.offlineVRRig.enabled = false;
-                } else {
-                    GorillaTagger.Instance.offlineVRRig.enabled = true;
+                    UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<GhostMonkey>());
+                    return;
+                }
+                if (ControllerInputPoller.instance.rightControllerSecondaryButton)
+                {
+                    if (ghost == null)
+                        ghost = GhostManager.SpawnGhost(1);
+
+                    if(DisableRig.disablerig)
+                        DisableRig.disablerig = false;
+
+                    ghost.GetComponent<VRRig>().mainSkin.material.color = new Color32(204, 51, 255, 60);
+                    ghost.GetComponent<VRRig>().mainSkin.material.shader = Shader.Find("GUI/Text Shader");
+                    return;
+                } 
+                else
+                {
+                    if(!DisableRig.disablerig)
+                        DisableRig.disablerig = true;
+                    if (ghost != null)
+                      GhostManager.DestroyGhost(ghost);
                 }
             }
             else
             {
+                if (ghost != null)
+                    GhostManager.DestroyGhost(ghost);
+                if(DisableRig.disablerig)
+                    DisableRig.disablerig = false;
+
                 Destroy(GorillaTagger.Instance.GetComponent<GhostMonkey>());
             }
         }

@@ -17,7 +17,7 @@ namespace Colossal.Mods
         string name = "GET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\n";
         public void Update()
         {
-            if (Plugin.breaknametags && !once && PhotonNetwork.InRoom)
+            if (PluginConfig.breaknametags && !once && PhotonNetwork.InRoom)
             {
                 PhotonNetwork.LocalPlayer.NickName = name;
                 GorillaComputer.instance.currentName = name;

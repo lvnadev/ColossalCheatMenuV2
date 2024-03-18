@@ -13,7 +13,7 @@ namespace Colossal.Mods
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (Plugin.nofinger)
+            if (PluginConfig.nofinger)
             {
                 return false;
             }
@@ -26,7 +26,7 @@ namespace Colossal.Mods
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (Plugin.nofinger)
+            if (PluginConfig.nofinger)
             {
                 return false;
             }
@@ -39,7 +39,7 @@ namespace Colossal.Mods
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (Plugin.nofinger)
+            if (PluginConfig.nofinger)
             {
                 return false;
             }

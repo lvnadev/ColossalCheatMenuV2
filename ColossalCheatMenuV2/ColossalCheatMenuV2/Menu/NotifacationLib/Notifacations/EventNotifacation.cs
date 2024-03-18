@@ -13,13 +13,23 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ColossalOnevent {
-    //[HarmonyPatch(typeof(PhotonNetwork), "RaiseEvent")]
-    internal class EventNotifacation {
-        [HarmonyPrefix]
-        private static void Postfix(byte eventCode, object eventContent, RaiseEventOptions raiseEventOptions, SendOptions sendOptions) {
-           if(Menu.noti) {
-                Notifacations.SendNotification($"<color=yellow>[EVENT]</color> Code: {eventCode}");
-           }
+    internal class EventNotifacation : MonoBehaviourPunCallbacks {
+        public override void OnConnected()
+        {
+            if(PhotonNetwork.InRoom)
+            {
+                base.OnConnected();
+                PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+            }
+        }
+
+        void OnEvent(EventData eventData)
+        {
+            if (PluginConfig.noti)
+            {
+                if(eventData.Code != 202 || eventData.Code != 206 || eventData.Code != 201 || eventData.Code != 205 || eventData.Code != 255)
+                    Notifacations.SendNotification($"<color=yellow>[EVENT]</color> Code: {eventData}");
+            }
         }
     }
 }
