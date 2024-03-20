@@ -28,34 +28,19 @@ namespace Colossal.Mods
             {
                 if (vrrig != null && !vrrig.isOfflineVRRig && !processedVRRigs.Contains(vrrig))
                 {
-                    if(PluginConfig.csghostclient)
+                    if (PluginConfig.csghostclient)
                     {
-                        bool isColossal = vrrig.Creator.CustomProperties.ContainsKey("colossal");
-                        if (isColossal)
+                        if (vrrig.Creator.CustomProperties.ContainsKey("colossal"))
                         {
-                            //vrrig.mainSkin.material.SetColor("_EmissionColor", Color.magenta * 2.5f);
-
-                            RectTransform nametagRect = vrrig.playerText.GetComponent<RectTransform>();
-                            nametagRect.localPosition = Vector3.up * 180f + Vector3.right * 25f;
-                            Quaternion rotation = Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up);
-                            nametagRect.transform.rotation = rotation;
-                            nametagRect.localScale = new Vector3(5, 5, 5);
                             vrrig.playerText.color = Color.magenta;
-                        }
-                        else
-                        {
-                            RectTransform nametagRect = vrrig.playerText.GetComponent<RectTransform>();
-                            nametagRect.localPosition = Vector3.up * 180f + Vector3.right * 25f;
-                            Quaternion rotation = Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up);
-                            nametagRect.transform.rotation = rotation;
-                            nametagRect.localScale = new Vector3(5, 5, 5);
+                            vrrig.playerText.text = "[CCM] " + vrrig.Creator.NickName;
                         }
                     }
                     else
                     {
-                        vrrig.playerText.enabled = false;
+                        vrrig.playerText.color = Color.white;
+                        vrrig.playerText.text = (vrrig.Creator.NickName ?? "");
                     }
-
                     processedVRRigs.Add(vrrig);
                 }
             }

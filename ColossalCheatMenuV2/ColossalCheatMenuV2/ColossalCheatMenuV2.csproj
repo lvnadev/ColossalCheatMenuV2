@@ -57,6 +57,7 @@
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\Mods\AntiCrashes\AntiCrash.cs" />
     <Compile Include="Menu\Mods\GhostManager.cs" />
+    <Compile Include="Menu\Mods\Modders\FakeQuestMenu.cs" />
     <Compile Include="Menu\Mods\Modders\PcCheckBypass.cs" />
     <Compile Include="Menu\Mods\Movement\SpinBot.cs" />
     <Compile Include="Menu\Mods\Player\Desync.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Menu\Mods\Movement\TFly.cs" />
     <Compile Include="Menu\Mods\Movement\WallWalk.cs" />
     <Compile Include="Menu\Mods\Visual\HollowBoxEsp.cs" />
+    <Compile Include="Menu\Mods\Visual\Sky Colour.cs" />
     <Compile Include="Menu\Mods\Visual\WhyIsEveryoneLookingAtMe.cs" />
     <Compile Include="Menu\NotifacationLib\Notifacations\EventNotifacation.cs" />
     <Compile Include="Menu\NotifacationLib\Notifacations\JoinNotifacation.cs" />
@@ -96,7 +98,6 @@
     <Compile Include="Patches\Bepinex\ControllerPatch.cs" />
     <Compile Include="Patches\Events.cs" />
     <Compile Include="Patches\GeneralFailMessage.cs" />
-    <Compile Include="Patches\Make It Fucking Work\Starry.cs" />
     <Compile Include="Menu\Mods\Visual\NoExpressions.cs" />
     <Compile Include="Patches\DisableRig.cs" />
     <Compile Include="Patches\SendReport.cs" />

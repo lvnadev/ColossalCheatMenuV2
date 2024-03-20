@@ -51,6 +51,7 @@ public class PluginConfig
     public static bool breaknametags = false;
     public static bool breakmodcheckers = false;
     public static bool pccheckbypass = false;
+    public static bool fakequestmenu = false;
 
     //group 5
     public static int MenuColour = 0;
@@ -152,6 +153,7 @@ internal class Configs : MonoBehaviour
                 PluginConfig.breaknametags,
                 PluginConfig.breakmodcheckers,
                 PluginConfig.pccheckbypass,
+                PluginConfig.fakequestmenu,
 
                 //group 5
                 PluginConfig.driftmode,

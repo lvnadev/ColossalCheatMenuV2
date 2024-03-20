@@ -119,6 +119,7 @@ namespace Colossal.Menu {
                     Plugin.holder.AddComponent<SpeedMod>();
                     Plugin.holder.AddComponent<WallWalk>();
                     Plugin.holder.AddComponent<TagAura>();
+                    Plugin.holder.AddComponent<SkyColour>();
 
 
                     if (GorillaTagger.Instance.gameObject.GetComponent<Overlay>() == null)
@@ -198,7 +199,7 @@ namespace Colossal.Menu {
                     Visual[0] = new MenuOption { DisplayName = "Chams", _type = "toggle", AssociatedBool = false };
                     Visual[1] = new MenuOption { DisplayName = "BoxESP", _type = "toggle", AssociatedBool = false };
                     Visual[2] = new MenuOption { DisplayName = "HollowBoxESP", _type = "toggle", AssociatedBool = false };
-                    Visual[3] = new MenuOption { DisplayName = "[BROKEN] Sky Colour", _type = "submenu", AssociatedString = "Sky" };
+                    Visual[3] = new MenuOption { DisplayName = "Sky Colour", _type = "STRINGslider", StringArray = new string[] { "Default", "Purple", "Red", "Cyan", "Green" } };
                     Visual[4] = new MenuOption { DisplayName = "WhyIsEveryoneLookingAtMe", _type = "toggle", AssociatedBool = false };
                     Visual[5] = new MenuOption { DisplayName = "No Expressions", _type = "toggle", AssociatedBool = false };
                     Visual[6] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
@@ -226,16 +227,16 @@ namespace Colossal.Menu {
                     Modders = new MenuOption[5];
                     Modders[0] = new MenuOption { DisplayName = "Break NameTags", _type = "toggle", AssociatedBool = false };
                     Modders[1] = new MenuOption { DisplayName = "Break ModCheckers", _type = "toggle", AssociatedBool = false };
-                    Modders[2] = new MenuOption { DisplayName = "No Snitch", _type = "button", AssociatedString = "nosnitch" };
-                    Modders[3] = new MenuOption { DisplayName = "Pc Check Bypass", _type = "toggle", AssociatedBool = false };
+                    Modders[2] = new MenuOption { DisplayName = "Pc Check Bypass", _type = "toggle", AssociatedBool = false };
+                    Modders[3] = new MenuOption { DisplayName = "Fake Quest Menu", _type = "toggle", AssociatedBool = false };
                     Modders[4] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
                     Computer = new MenuOption[8];
                     Computer[0] = new MenuOption { DisplayName = "Disconnect", _type = "button", AssociatedString = "disconnect" };
                     Computer[1] = new MenuOption { DisplayName = "RandomIdentity", _type = "button", AssociatedString = "randomidentity" };
-                    Computer[2] = new MenuOption { DisplayName = "Join GTC", _type = "button", AssociatedString = "joincgt" };
-                    Computer[3] = new MenuOption { DisplayName = "Join TTT", _type = "button", AssociatedString = "jointtt" };
-                    Computer[4] = new MenuOption { DisplayName = "Join CBOT", _type = "button", AssociatedString = "joincbot" };
+                    Computer[2] = new MenuOption { DisplayName = "Join GTC", _type = "button", AssociatedString = "join GTC" };
+                    Computer[3] = new MenuOption { DisplayName = "Join TTT", _type = "button", AssociatedString = "join TTT" };
+                    Computer[4] = new MenuOption { DisplayName = "Join YTTV", _type = "button", AssociatedString = "join YTTV" };
                     Computer[5] = new MenuOption { DisplayName = "Modded Casual", _type = "button", AssociatedString = "moddedcasual" };
                     Computer[6] = new MenuOption { DisplayName = "Modded Infection", _type = "button", AssociatedString = "moddedinfection" };
                     Computer[7] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
@@ -523,7 +524,8 @@ namespace Colossal.Menu {
                 //Modders
                 PluginConfig.breaknametags = Modders[0].AssociatedBool;
                 PluginConfig.breakmodcheckers = Modders[1].AssociatedBool;
-                PluginConfig.pccheckbypass = Modders[3].AssociatedBool;
+                PluginConfig.pccheckbypass = Modders[2].AssociatedBool;
+                PluginConfig.fakequestmenu = Modders[3].AssociatedBool;
 
                 //Settings
                 PluginConfig.MenuColour = Settings[0].stringsliderind;

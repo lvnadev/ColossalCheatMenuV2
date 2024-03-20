@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR;
+using Valve.VR;
 using static Colossal.Plugin;
 
 namespace Colossal.Mods
@@ -16,8 +17,7 @@ namespace Colossal.Mods
         {
             if (PluginConfig.creepermonkey)
             {
-                bool rightTrigger = StarrySteamControllerPatch.GetRightTrigger();
-                if (StarrySteamControllerPatch.GetLeftTrigger())
+                if (SteamVR_Actions.gorillaTag_LeftTriggerClick.GetState(SteamVR_Input_Sources.LeftHand))
                 {
                     float num = float.PositiveInfinity;
                     foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
@@ -36,16 +36,16 @@ namespace Colossal.Mods
                         }
                     }
                 }
-                if (!rightTrigger)
+                if (!SteamVR_Actions.gorillaTag_RightTriggerClick.GetState(SteamVR_Input_Sources.RightHand))
                 {
                     return;
                 }
                 float num2 = float.PositiveInfinity;
-                using (List<VRRig>.Enumerator enumerator = GorillaParent.instance.vrrigs.GetEnumerator())
+                using (List<VRRig>.Enumerator enumerator3 = GorillaParent.instance.vrrigs.GetEnumerator())
                 {
-                    while (enumerator.MoveNext())
+                    while (enumerator3.MoveNext())
                     {
-                        VRRig vrrig3 = enumerator.Current;
+                        VRRig vrrig3 = enumerator3.Current;
                         if (vrrig3 != GorillaTagger.Instance.offlineVRRig)
                         {
                             float sqrMagnitude2 = (vrrig3.transform.position - GorillaLocomotion.Player.Instance.transform.position).sqrMagnitude;
@@ -62,10 +62,7 @@ namespace Colossal.Mods
                     return;
                 }
             }
-            else
-            {
-                Destroy(GorillaTagger.Instance.GetComponent<CreeperMonkey>());
-            }
+            UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<CreeperMonkey>());
         }
     }
 }

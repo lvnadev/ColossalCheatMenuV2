@@ -9,23 +9,22 @@ using static Colossal.Plugin;
 
 namespace Colossal.Mods {
     public class PcCheckBypass : MonoBehaviour {
-        private GameObject igloo;
-        public void Start()
-        {
-            igloo = GameObject.Find("goodigloo");
-        }
         public void Update() {
-            if (PluginConfig.pccheckbypass) {
-                if(GameObject.Find("Environment Objects/LocalObjects_Prefab").transform.Find("Mountain").gameObject.activeSelf) {
-                    if(igloo.activeSelf) {
-                        igloo.SetActive(false);
-                    }
+            if (PluginConfig.pccheckbypass)
+            {
+                if (GameObject.Find("Mountain/Geometry/goodigloo").active)
+                {
+                    GameObject.Find("Mountain/Geometry/goodigloo").SetActive(false);
+                    return;
                 }
-            } else {
-                Destroy(GorillaTagger.Instance.GetComponent<PcCheckBypass>());
-                if (!igloo.activeSelf) {
-                    igloo.SetActive(true);
+            }
+            else
+            {
+                if (!GameObject.Find("Mountain/Geometry/goodigloo").active)
+                {
+                    GameObject.Find("Mountain/Geometry/goodigloo").SetActive(true);
                 }
+                UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<PcCheckBypass>());
             }
         }
     }

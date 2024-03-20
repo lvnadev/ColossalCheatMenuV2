@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR;
+using Valve.VR;
 using static Colossal.Plugin;
 
 namespace Colossal.Mods
@@ -22,62 +23,66 @@ namespace Colossal.Mods
         {
             if (PluginConfig.taggun && PhotonNetwork.InRoom)
             {
-                if(pointer == null) {
-                    pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    Destroy(pointer.GetComponent<Rigidbody>());
-                    Destroy(pointer.GetComponent<SphereCollider>());
-                    pointer.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    pointer.GetComponent<Renderer>().material = Boards.boardmat;
+                if (this.pointer == null)
+                {
+                    this.pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    UnityEngine.Object.Destroy(this.pointer.GetComponent<Rigidbody>());
+                    UnityEngine.Object.Destroy(this.pointer.GetComponent<SphereCollider>());
+                    this.pointer.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    this.pointer.GetComponent<Renderer>().material = Boards.boardmat;
                 }
-                RaycastHit info;
-                Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position - GorillaTagger.Instance.rightHandTransform.up, -GorillaTagger.Instance.rightHandTransform.up, out info);
-                pointer.transform.position = info.point;
-
                 RaycastHit raycastHit;
-                Physics.Raycast(GorillaLocomotion.Player.Instance.rightControllerTransform.position - GorillaLocomotion.Player.Instance.rightControllerTransform.up, -GorillaLocomotion.Player.Instance.rightControllerTransform.up, out raycastHit);
-                if (StarrySteamControllerPatch.GetLeftJoystickClick())
+                Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position - GorillaTagger.Instance.rightHandTransform.up, -GorillaTagger.Instance.rightHandTransform.up, out raycastHit);
+                this.pointer.transform.position = raycastHit.point;
+                RaycastHit raycastHit2;
+                Physics.Raycast(GorillaLocomotion.Player.Instance.rightControllerTransform.position - GorillaLocomotion.Player.Instance.rightControllerTransform.up, -GorillaLocomotion.Player.Instance.rightControllerTransform.up, out raycastHit2);
+                if (SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand))
                 {
-                    if (radiusLine == null) {
-                        lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                        lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
-
-                        GameObject lineObject = new GameObject("RadiusLine");
-                        lineObject.transform.parent = pointer.transform;
-                        radiusLine = lineObject.AddComponent<LineRenderer>();
-                        radiusLine.positionCount = 2;
-                        radiusLine.startWidth = 0.05f;
-                        radiusLine.endWidth = 0.05f;
-                        radiusLine.material = lineMaterial;
+                    if (this.radiusLine == null)
+                    {
+                        this.lineMaterial = new Material(Shader.Find("Sprites/Default"));
+                        this.lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
+                        this.radiusLine = new GameObject("RadiusLine")
+                        {
+                            transform =
+                            {
+                                parent = this.pointer.transform
+                            }
+                        }.AddComponent<LineRenderer>();
+                        this.radiusLine.positionCount = 2;
+                        this.radiusLine.startWidth = 0.05f;
+                        this.radiusLine.endWidth = 0.05f;
+                        this.radiusLine.material = this.lineMaterial;
                     }
-                    radiusLine.SetPosition(0, raycastHit.point);
-                    radiusLine.SetPosition(1, GorillaLocomotion.Player.Instance.rightControllerTransform.position);
-                    if (radiusLine.GetPosition(0) == null) {
-                        if (radiusLine != null) {
-                            Destroy(radiusLine);
-                            radiusLine = null;
-                        }
-                    }
-
-                    if(DisableRig.disablerig)
+                    this.radiusLine.SetPosition(0, raycastHit2.point);
+                    this.radiusLine.SetPosition(1, GorillaLocomotion.Player.Instance.rightControllerTransform.position);
+                    this.radiusLine.GetPosition(0);
+                    if (DisableRig.disablerig)
+                    {
                         DisableRig.disablerig = false;
-                    GorillaTagger.Instance.offlineVRRig.transform.position = raycastHit.point;
-                    GorillaLocomotion.Player.Instance.rightControllerTransform.position = raycastHit.point;
-                }
-                else
-                {
-                    if(!DisableRig.disablerig)
-                        DisableRig.disablerig = true;
-                    if (radiusLine != null) {
-                        Destroy(radiusLine);
-                        radiusLine = null;
                     }
+                    GorillaTagger.Instance.offlineVRRig.transform.position = raycastHit2.point;
+                    GorillaLocomotion.Player.Instance.rightControllerTransform.position = raycastHit2.point;
+                    return;
+                }
+                if (!DisableRig.disablerig)
+                {
+                    DisableRig.disablerig = true;
+                }
+                if (this.radiusLine != null)
+                {
+                    UnityEngine.Object.Destroy(this.radiusLine);
+                    this.radiusLine = null;
+                    return;
                 }
             }
             else
             {
-                Destroy(GorillaTagger.Instance.GetComponent<TagGun>());
-                if (pointer != null)
-                    Destroy(pointer);
+                UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<TagGun>());
+                if (this.pointer != null)
+                {
+                    UnityEngine.Object.Destroy(this.pointer);
+                }
             }
         }
     }

@@ -27,7 +27,7 @@ namespace Colossal {
         public static GameObject hud;
         public static GameObject holder;
 
-        public static float version = 5.1f;
+        public static float version = 5.2f;
         public static bool sussy = false;
 
         public void Start()
@@ -83,7 +83,9 @@ namespace Colossal {
                 { typeof(BreakModChecker), PluginConfig.breakmodcheckers },
                 { typeof(BreakNameTags), PluginConfig.breaknametags },
                 { typeof(SpinBot), PluginConfig.SpinBot },
-                { typeof(Desync), PluginConfig.desync }
+                { typeof(Desync), PluginConfig.desync },
+                { typeof(FakeQuestMenu), PluginConfig.fakequestmenu },
+
             };
             foreach (var kvp in componentConditions)
             {
