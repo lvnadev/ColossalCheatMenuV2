@@ -121,7 +121,7 @@ namespace Colossal.Menu {
                     Plugin.holder.AddComponent<TagAura>();
                     Plugin.holder.AddComponent<SkyColour>();
 
-
+                    Debug.Log("1");
                     if (GorillaTagger.Instance.gameObject.GetComponent<Overlay>() == null)
                         GorillaTagger.Instance.gameObject.AddComponent<Overlay>();
 
@@ -190,9 +190,9 @@ namespace Colossal.Menu {
                     Movement[8] = new MenuOption { DisplayName = "[BROKEN] SpinBot", _type = "toggle", AssociatedBool = false };
                     Movement[9] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
                     Speed = new MenuOption[4];
-                    Speed[0] = new MenuOption { DisplayName = "Speed", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6", "8.8", "9", "No Limit" } };
-                    Speed[1] = new MenuOption { DisplayName = "Speed (LG)", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6", "8.8", "9", "No Limit" } };
-                    Speed[2] = new MenuOption { DisplayName = "Speed (RG)", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6", "8.8", "9", "No Limit" } };
+                    Speed[0] = new MenuOption { DisplayName = "Speed", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } }; //quick "Fix" but apperantly anything above was detected... -Lars
+                    Speed[1] = new MenuOption { DisplayName = "Speed (LG)", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
+                    Speed[2] = new MenuOption { DisplayName = "Speed (RG)", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
                     Speed[3] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
                     Visual = new MenuOption[7];
@@ -272,6 +272,8 @@ namespace Colossal.Menu {
         public static void Load() {
             if (!agreement)
             {
+                if(GameObject.Find("CLIENT_HUB_AGREEMENT") == null) //watch as this breaks the whole menu
+                    Menu.LoadOnce();
                 Menu.HUDObj2.transform.transform.position = new Vector3(Menu.MainCamera.transform.position.x, Menu.MainCamera.transform.position.y, Menu.MainCamera.transform.position.z);
                 Menu.HUDObj2.transform.rotation = Menu.MainCamera.transform.rotation;
                 bool state = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand);

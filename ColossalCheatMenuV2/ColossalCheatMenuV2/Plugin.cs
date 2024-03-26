@@ -27,7 +27,7 @@ namespace Colossal {
         public static GameObject hud;
         public static GameObject holder;
 
-        public static float version = 5.2f;
+        public static float version = 5.3f;
         public static bool sussy = false;
 
         public void Start()
@@ -98,6 +98,7 @@ namespace Colossal {
                 } else
                 {
                     Debug.Log("Holder is null");
+                    holder = new GameObject();
                 }
             }
         }

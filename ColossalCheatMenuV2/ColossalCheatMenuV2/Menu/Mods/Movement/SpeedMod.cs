@@ -42,15 +42,15 @@ namespace Colossal.Mods
                     case 8:
                         GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.6f;
                         break;
-                    case 9:
-                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
-                        break;
-                    case 10:
-                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
-                        break;
-                    case 11:
-                        GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
-                        break;
+                    //case 9:
+                    //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
+                    //    break;
+                    //case 10:
+                    //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
+                    //    break;
+                    //case 11:
+                    //    GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
+                    //    break;
                 }
                 if (ControllerInputPoller.instance.leftGrab)
                 {
@@ -80,15 +80,15 @@ namespace Colossal.Mods
                         case 8:
                             GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.6f;
                             break;
-                        case 9:
-                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
-                            break;
-                        case 10:
-                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
-                            break;
-                        case 11:
-                            GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
-                            break;
+                        //case 9:
+                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
+                        //    break;
+                        //case 10:
+                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
+                        //    break;
+                        //case 11:
+                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
+                        //    break;
                     }
                 }
                 if (ControllerInputPoller.instance.rightGrab)
@@ -119,15 +119,16 @@ namespace Colossal.Mods
                         case 8:
                             GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.6f;
                             break;
-                        case 9:
-                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
-                            break;
-                        case 10:
-                            GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
-                            break;
-                        case 11:
-                            GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
-                            break;
+                        //i am very good at making stuff undetected -Lars
+                        //case 9:
+                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
+                        //    break;
+                        //case 10:
+                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
+                        //    break;
+                        //case 11:
+                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
+                        //    break;
                     }
                 }
             }
