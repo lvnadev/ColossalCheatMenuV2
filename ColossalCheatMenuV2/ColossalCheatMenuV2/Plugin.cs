@@ -32,13 +32,13 @@ namespace Colossal {
 
         public void Start()
         {
-            Debug.Log("[COLOSSAL] Plugin Start Call");
+            CustomConsole.LogToConsole("[COLOSSAL] Plugin Start Call");
 
 
             AutoUpdate();
 
 
-            Debug.Log("[COLOSSAL] Spawned Holder");
+            CustomConsole.LogToConsole("[COLOSSAL] Spawned Holder");
             holder = new GameObject();
             holder.name = "Holder";
             holder.AddComponent<Boards>();
@@ -97,7 +97,7 @@ namespace Colossal {
                     }
                 } else
                 {
-                    Debug.Log("Holder is null");
+                    CustomConsole.LogToConsole("Holder is null");
                     holder = new GameObject();
                 }
             }

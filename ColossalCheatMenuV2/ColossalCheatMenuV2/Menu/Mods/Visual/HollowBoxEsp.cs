@@ -55,20 +55,13 @@ namespace Colossal.Mods
 
                         Color Espcolor;
 
-                        if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Length <= 0)
+                        if (rig.mainSkin.material.name.Contains("fected"))
                         {
-                            Espcolor = Color.magenta;
+                            Espcolor = Color.red;
                         }
                         else
                         {
-                            if (rig.mainSkin.material.name.Contains("fected"))
-                            {
-                                Espcolor = Color.red;
-                            }
-                            else
-                            {
-                                Espcolor = Color.magenta;
-                            }
+                            Espcolor = Color.magenta;
                         }
 
                         top.GetComponent<Renderer>().material.color = Espcolor;

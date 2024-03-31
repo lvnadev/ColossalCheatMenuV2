@@ -1,4 +1,5 @@
 ﻿using Colossal.Mods;
+using GorillaNetworking;
 using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
@@ -55,20 +56,13 @@ namespace Colossal.Mods
                         face.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
                         Color Espcolor;
 
-                        if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Length <= 0)
+                        if (rig.mainSkin.material.name.Contains("fected"))
                         {
-                            Espcolor = new Color(1f, 0f, 1f, 0.4f);
+                            Espcolor = new Color(1f, 0f, 0f, 0.4f);
                         }
                         else
                         {
-                            if (rig.mainSkin.material.name.Contains("fected"))
-                            {
-                                Espcolor = new Color(1f, 0f, 0f, 0.4f);
-                            }
-                            else
-                            {
-                                Espcolor = new Color(1f, 0f, 1f, 0.4f);
-                            }
+                            Espcolor = new Color(1f, 0f, 1f, 0.4f);
                         }
 
                         face.GetComponent<Renderer>().material.color = Espcolor;

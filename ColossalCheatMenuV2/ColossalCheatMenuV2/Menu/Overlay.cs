@@ -109,13 +109,13 @@ namespace Colossal.Menu.ClientHub {
                 deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
                 float fps = 1.0f / deltaTime;
                 if(PhotonNetwork.InRoom) {
-                    TesttextROOM.text = $"<color={Menu.MenuColour}>RoomName: </color>{PhotonNetwork.CurrentRoom.Name}\n<color={Menu.MenuColour}>Players: </color>{PhotonNetwork.CurrentRoom.PlayerCount}";
+                    TesttextROOM.text = $"<color={Menu.MenuColourString}>RoomName: </color>{PhotonNetwork.CurrentRoom.Name}\n<color={Menu.MenuColourString}>Players: </color>{PhotonNetwork.CurrentRoom.PlayerCount}";
                 } else {
                     if (TesttextROOM.text != null) {
                         TesttextROOM.text = "";
                     }
                 }
-                Testtext.text = $"<color={Menu.MenuColour}>Ping: </color>{PhotonNetwork.GetPing()}\n<color={Menu.MenuColour}>FPS: </color>{fps.ToString("F2")}";
+                Testtext.text = $"<color={Menu.MenuColourString}>Ping: </color>{PhotonNetwork.GetPing()}\n<color={Menu.MenuColourString}>FPS: </color>{fps.ToString("F2")}";
             } else {
                 if(Testtext.text != null) {
                     Testtext.text = "";

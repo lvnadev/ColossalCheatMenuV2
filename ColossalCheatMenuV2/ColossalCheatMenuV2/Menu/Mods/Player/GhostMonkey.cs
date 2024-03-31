@@ -1,5 +1,4 @@
 ﻿using Colossal.Patches;
-using ColossalCheatMenuV2.Menu.Mods;
 using GorillaNetworking;
 using Photon.Pun;
 using System;
@@ -28,7 +27,7 @@ namespace Colossal.Mods
                 if (ControllerInputPoller.instance.rightControllerSecondaryButton)
                 {
                     if (ghost == null)
-                        ghost = GhostManager.SpawnGhost(1);
+                        ghost = GhostManager.SpawnGhost();
 
                     if(DisableRig.disablerig)
                         DisableRig.disablerig = false;

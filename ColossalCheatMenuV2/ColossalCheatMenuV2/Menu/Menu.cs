@@ -48,8 +48,10 @@ namespace Colossal.Menu {
         static Text NotifiText;
 
         public static string MenuState = "Main";
-        public static string MenuColour = "magenta";
+        public static string MenuColourString = "magenta";
+        public static Color MenuColourUnity = Color.magenta;
         public static float menurgb = 0;
+
         public static int SelectedOptionIndex = 0;
         public static MenuOption[] CurrentViewingMenu = null;
         public static MenuOption[] MainMenu;
@@ -60,22 +62,20 @@ namespace Colossal.Menu {
         public static MenuOption[] Modders;
         public static MenuOption[] Account;
         public static MenuOption[] Settings;
-
+        //sub menus
         public static MenuOption[] Speed;
-        public static MenuOption[] TagAura;
-        public static MenuOption[] Presets;
-        public static MenuOption[] Sky;
+        public static MenuOption[] Colours;
 
         public static bool inputcooldown = false;
         public static bool menutogglecooldown = false;
 
         public static bool agreement = false;
         public static void LoadOnce() {
-            Debug.Log("Load Once Ran");
+            CustomConsole.LogToConsole("Load Once Ran");
 
             try {
                 if (!agreement) {
-                    Debug.Log("Aggreement Is False");
+                    CustomConsole.LogToConsole("Aggreement Is False");
 
                     MainCamera = GameObject.Find("Main Camera");
                     HUDObj = new GameObject();
@@ -113,7 +113,7 @@ namespace Colossal.Menu {
                     HUDObj2.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
                     HUDObj2.transform.rotation = MainCamera.transform.rotation;
                 } else {
-                    Debug.Log("Aggreement Is True");
+                    CustomConsole.LogToConsole("Aggreement Is True");
 
 
                     Plugin.holder.AddComponent<SpeedMod>();
@@ -121,7 +121,6 @@ namespace Colossal.Menu {
                     Plugin.holder.AddComponent<TagAura>();
                     Plugin.holder.AddComponent<SkyColour>();
 
-                    Debug.Log("1");
                     if (GorillaTagger.Instance.gameObject.GetComponent<Overlay>() == null)
                         GorillaTagger.Instance.gameObject.AddComponent<Overlay>();
 
@@ -203,13 +202,6 @@ namespace Colossal.Menu {
                     Visual[4] = new MenuOption { DisplayName = "WhyIsEveryoneLookingAtMe", _type = "toggle", AssociatedBool = false };
                     Visual[5] = new MenuOption { DisplayName = "No Expressions", _type = "toggle", AssociatedBool = false };
                     Visual[6] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
-                    Sky = new MenuOption[6];
-                    Sky[0] = new MenuOption { DisplayName = "MonkeyColour", _type = "button", AssociatedString = "monkeycoloursky" };
-                    Sky[1] = new MenuOption { DisplayName = "Purple", _type = "button", AssociatedString = "purplesky" };
-                    Sky[2] = new MenuOption { DisplayName = "Red", _type = "button", AssociatedString = "redsky" };
-                    Sky[3] = new MenuOption { DisplayName = "Cyan", _type = "button", AssociatedString = "cyansky" };
-                    Sky[4] = new MenuOption { DisplayName = "Green", _type = "button", AssociatedString = "greensky" };
-                    Sky[5] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
                     Player = new MenuOption[11];
                     Player[0] = new MenuOption { DisplayName = "NoFinger", _type = "toggle", AssociatedBool = false };
@@ -249,12 +241,19 @@ namespace Colossal.Menu {
                     Account[4] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
                     Settings = new MenuOption[6];
-                    Settings[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue", "RGB" } };
+                    Settings[0] = new MenuOption { DisplayName = "Colours", _type = "submenu", AssociatedString = "Colours" };
                     Settings[1] = new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Right", "Middle" } };
                     Settings[2] = new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = Configs.GetConfigFileNames() };
                     Settings[3] = new MenuOption { DisplayName = "Load Config", _type = "button", AssociatedString = "loadconfig" };
                     Settings[4] = new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" };
                     Settings[5] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
+                    Colours = new MenuOption[6];
+                    Colours[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue", "RGB" } };
+                    Colours[1] = new MenuOption { DisplayName = "Ghost Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
+                    Colours[2] = new MenuOption { DisplayName = "Beam Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
+                    Colours[3] = new MenuOption { DisplayName = "ESP Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
+                    Colours[4] = new MenuOption { DisplayName = "Ghost Opacity", _type = "STRINGslider", StringArray = new string[] { "0%", "20%", "30%", "60%", "80%", "100%" } };
+                    Colours[5] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
                     MenuState = "Main";
                     CurrentViewingMenu = MainMenu;
@@ -530,10 +529,14 @@ namespace Colossal.Menu {
                 PluginConfig.fakequestmenu = Modders[3].AssociatedBool;
 
                 //Settings
-                PluginConfig.MenuColour = Settings[0].stringsliderind;
+                PluginConfig.MenuColour = Colours[0].stringsliderind;
                 PluginConfig.MenuPos = Settings[1].stringsliderind;
+                PluginConfig.GhostColour = Colours[1].stringsliderind;
+                PluginConfig.BeamColour = Colours[2].stringsliderind;
+                PluginConfig.ESPColour = Colours[3].stringsliderind;
+                PluginConfig.GhostOpacity = Colours[4].stringsliderind;
 
-                string ToDraw = Plugin.sussy ? $"<color={MenuColour}>SUSSY : {MenuState}</color>\n" : $"<color={MenuColour}>COLOSSAL : {MenuState}</color>\n";
+                string ToDraw = Plugin.sussy ? $"<color={MenuColourString}>SUSSY : {MenuState}</color>\n" : $"<color={MenuColourString}>COLOSSAL : {MenuState}</color>\n";
                 int i = 0;
                 if (CurrentViewingMenu != null)
                 {
@@ -549,7 +552,7 @@ namespace Colossal.Menu {
                         {
                             if (opt.AssociatedBool == true)
                             {
-                                ToDraw = ToDraw + $" <color={MenuColour}>[ON]</color>";
+                                ToDraw = ToDraw + $" <color={MenuColourString}>[ON]</color>";
                             }
                             else
                             {
@@ -586,27 +589,33 @@ namespace Colossal.Menu {
                 {
                     if (menurgb >= 0.1f)
                     {
-                        MenuColour = "magenta";
+                        MenuColourString = "magenta";
+                        MenuColourUnity = Color.magenta;
                     }
                     if (menurgb >= 0.2f)
                     {
-                        MenuColour = "red";
+                        MenuColourString = "red";
+                        MenuColourUnity = Color.red;
                     }
                     if (menurgb >= 0.3f)
                     {
-                        MenuColour = "green";
+                        MenuColourString = "green";
+                        MenuColourUnity = Color.green;
                     }
                     if (menurgb >= 0.4f)
                     {
-                        MenuColour = "blue";
+                        MenuColourString = "blue";
+                        MenuColourUnity = Color.blue;
                     }
                     if (menurgb >= 0.5f)
                     {
-                        MenuColour = "cyan";
+                        MenuColourString = "cyan";
+                        MenuColourUnity = Color.cyan;
                     }
                     if (menurgb >= 0.6f)
                     {
-                        MenuColour = "yellow";
+                        MenuColourString = "yellow";
+                        MenuColourUnity = Color.yellow;
                     }
                     if (menurgb >= 0.6f)
                     {
@@ -660,12 +669,10 @@ namespace Colossal.Menu {
                             CurrentViewingMenu = Speed;
                             Debug.Log("<color=magenta>Speed...</color>");
                         }
-                        if (option.AssociatedString == "TagAura") {
-                            CurrentViewingMenu = TagAura;
-                            Debug.Log("<color=magenta>TagAura...</color>");
-                        }
-                        if (option.AssociatedString == "Sky") {
-                            CurrentViewingMenu = Sky;
+                        if (option.AssociatedString == "Colours")
+                        {
+                            CurrentViewingMenu = Colours;
+                            Debug.Log("<color=magenta>Colours...</color>");
                         }
                         MenuState = option.AssociatedString;
                         SelectedOptionIndex = 0;
@@ -674,11 +681,11 @@ namespace Colossal.Menu {
                         if (option.AssociatedBool == false) {
                             option.AssociatedBool = true;
                             CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {option.AssociatedBool}");
-                            Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
+                            Notifacations.SendNotification($"<color={MenuColourString}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
                         } else {
                             option.AssociatedBool = false;
                             CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {option.AssociatedBool}");
-                            Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
+                            Notifacations.SendNotification($"<color={MenuColourString}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
                         }
                     }
                     if (option._type == "button")
@@ -821,32 +828,32 @@ namespace Colossal.Menu {
                         }
                     }
 
-                    switch (Settings[0].stringsliderind)
+                    switch (Colours[0].stringsliderind)
                     {
                         case 0:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColour = "magenta";
+                            MenuColourString = "magenta";
                             break;
                         case 1:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColour = "red";
+                            MenuColourString = "red";
                             break;
                         case 2:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColour = "yellow";
+                            MenuColourString = "yellow";
                             break;
                         case 3:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColour = "green";
+                            MenuColourString = "green";
                             break;
                         case 4:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColour = "blue";
+                            MenuColourString = "blue";
                             break;
                         case 5:
                             PluginConfig.MenuRGB = true;

@@ -22,20 +22,13 @@ namespace Colossal.Mods
                     if (vrrig != null && !vrrig.isOfflineVRRig && vrrig.mainSkin.material.shader != Shader.Find("GUI/Text Shader"))
                     {
                         vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
-                        if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Length <= 0)
+                        if (vrrig.mainSkin.material.name.Contains("fected"))
                         {
-                            vrrig.mainSkin.material.color = new Color(1f, 0f, 1f, 0.4f);
+                            vrrig.mainSkin.material.color = new Color(1f, 0f, 0f, 0.4f);
                         }
                         else
                         {
-                            if (vrrig.mainSkin.material.name.Contains("fected"))
-                            {
-                                vrrig.mainSkin.material.color = new Color(1f, 0f, 0f, 0.4f);
-                            }
-                            else
-                            {
-                                vrrig.mainSkin.material.color = new Color(1f, 0f, 1f, 0.4f);
-                            }
+                            vrrig.mainSkin.material.color = new Color(1f, 0f, 1f, 0.4f);
                         }
                     }
                 }

@@ -57,6 +57,10 @@ public class PluginConfig
     public static int MenuColour = 0;
     public static int MenuPos = 0;
     public static bool MenuRGB = false;
+    public static int GhostColour = 0;
+    public static int BeamColour = 0;
+    public static int ESPColour = 0;
+    public static int GhostOpacity = 0;
 
     //group 6
     public static bool driftmode = false;
@@ -153,7 +157,6 @@ internal class Configs : MonoBehaviour
                 PluginConfig.breaknametags,
                 PluginConfig.breakmodcheckers,
                 PluginConfig.pccheckbypass,
-                PluginConfig.fakequestmenu,
 
                 //group 5
                 PluginConfig.driftmode,
@@ -164,6 +167,10 @@ internal class Configs : MonoBehaviour
                 //group 6
                 PluginConfig.MenuColour,
                 PluginConfig.MenuPos,
+                PluginConfig.GhostColour,
+                PluginConfig.BeamColour,
+                PluginConfig.ESPColour,
+                PluginConfig.GhostOpacity
             };
 
             string jsonContent = JsonConvert.SerializeObject(values, Formatting.Indented);
@@ -186,16 +193,22 @@ internal class Configs : MonoBehaviour
             string json = File.ReadAllText(filePath);
             List<object> values = JsonConvert.DeserializeObject<List<object>>(json);
 
-            if (values.Count != 35)
+            if (values.Count != 40)
             {
                 Console.WriteLine($"Error loading plugin configuration from {filePath}: Incorrect number of values.");
                 Notifacations.SendNotification($"<color=blue>[CONFIG]</color> ERROR : {filePath}");
+
+                for (int i = 0; i < values.Count; i++)
+                {
+                    Debug.Log($"Value at index {i}: {values[i]}");
+                }
                 return;
             }
-            /*for (int i = 0; i < values.Length; i++)
+
+            for (int i = 0; i < values.Count; i++)
             {
                 Debug.Log($"Value at index {i}: {values[i]}");
-            }*/
+            }
 
             Menu.Movement[0].AssociatedBool = Convert.ToBoolean(values[0]);
             Menu.Movement[1].AssociatedBool = Convert.ToBoolean(values[1]);
@@ -228,15 +241,19 @@ internal class Configs : MonoBehaviour
 
             Menu.Modders[0].AssociatedBool = Convert.ToBoolean(values[26]);
             Menu.Modders[1].AssociatedBool = Convert.ToBoolean(values[27]);
-            Menu.Modders[3].AssociatedBool = Convert.ToBoolean(values[28]);
+            Menu.Modders[2].AssociatedBool = Convert.ToBoolean(values[28]);
 
             Menu.MainMenu[7].AssociatedBool = Convert.ToBoolean(values[29]);
             Menu.MainMenu[8].AssociatedBool = Convert.ToBoolean(values[30]);
             Menu.MainMenu[9].AssociatedBool = Convert.ToBoolean(values[31]);
             Menu.MainMenu[10].AssociatedBool = Convert.ToBoolean(values[32]);
 
-            Menu.Settings[0].stringsliderind = Convert.ToInt32(values[33]);
+            Menu.Colours[0].stringsliderind = Convert.ToInt32(values[33]);
             Menu.Settings[1].stringsliderind = Convert.ToInt32(values[34]);
+            Menu.Colours[1].stringsliderind = Convert.ToInt32(values[35]);
+            Menu.Colours[2].stringsliderind = Convert.ToInt32(values[36]);
+            Menu.Colours[3].stringsliderind = Convert.ToInt32(values[37]);
+            Menu.Colours[4].stringsliderind = Convert.ToInt32(values[38]);
 
             Notifacations.SendNotification($"<color=blue>[CONFIG]</color> LOADED : {filePath}");
             Console.WriteLine($"loaded {filePath}");
