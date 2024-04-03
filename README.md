@@ -1,19 +1,62 @@
-# ColossalCheatMenuV2
+<div align="center">
+  <img src="images/ccmlogo.png" width="400" height="400" />
+  <h1>Colossal Cheat Menu V2</h1>
+</div>
 
-<img src="images/colossus.png" alt="Centered Image">
+With a Unique UI written by lars, it stands out from the competition with unique and **NON SKIDDED** features. And did I mention its **COMPLETELY FREE AND OPEN SOURCE**
 
-**HEY YOU**, ***yea you femboy***!!!
-Tired of skidded menu's that get you banned?
-Want an actually **GOOD** menu written by people that know what they are doing??
+### Configs
+CCMV2 is fully customizable! You can save your presets and share them with friends using the easy to use config system.
 
-## Introducing
-### Colossal Cheat Menu V2 (CCMV2)
-With a Unique UI written by lars , it stands out from the competition with unique and **NON SKIDDED** features. And did I mention its **COMPLETELY FREE AND OPEN SOURCE**
+# Features
+### Movement
+- **Excel Fly**
+- **T Fly**
+- **Wall Walk**
+- **Speed** (7, 7.2, 7.4, 7.6, 7.8, 8, 8.2, 8.4, 8.6)
+- **RGrip Speed** (7, 7.2, 7.4, 7.6, 7.8, 8, 8.2, 8.4, 8.6)
+- **LGrip Speed** (7, 7.2, 7.4, 7.6, 7.8, 8, 8.2, 8.4, 8.6)
+- **Platforms**
+- **Upsidedown Monkey**
+- **Watery Air**
+- **Long Arms**
+- **Spin Bot**
+- **WASD Fly**
+- **Floaty Monkey**
 
-<img src="images/shiba.jpg" alt="Centered Image">
-(Image from shiba)
+### Visual
+- **Chams**
+- **Box ESP**
+- **Hollow Box ESP**
+- **Sky Colour** (Purple, Red, Cyan, Green)
+- **Why Is Everyone Looking At Me**
+- **No Expressions**
 
-<img src="images/randomccmpic.jpg" alt="Centered Image">
+### Player
+- **No Finger**
+- **Tag Gun**
+- **Creeper Monkey**
+- **Invis Monkey**
+- **Tag Aura** (Really Close, Close, Legit, Semi Legit, Semi Blatant, Blatant, Rage)
+- **Tag All**
+- **Desync**
 
-## Join The Discord!
-### https://discord.gg/x4VEPyCEGR
+### Modders
+- **Break NameTags**
+- **Break ModCheckers**
+- **PC Check Bypass**
+
+### Computer
+- **Disconnect**
+- **Random Identity**
+- **Join GTC**
+- **Join TTT**
+- **Join YTTV**
+- **Modded Casual**
+- **Modded Infection**
+
+<div align="center">
+  <div</div>
+  Thank you for chosing Colossal Cheat Menu.
+  Consider joining the discord. https://discord.gg/x4VEPyCEGR
+</div>
