@@ -13,7 +13,6 @@ using UnityEngine;
 using UnityEngine.XR;
 using static Colossal.Plugin;
 
-namespace ColossalOnevent {
     //[HarmonyPatch(typeof(PhotonNetwork), "OnEvent")]
     internal class Instantate
     {
@@ -33,4 +32,3 @@ namespace ColossalOnevent {
             return true;
         }*/
     }
-}

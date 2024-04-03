@@ -3,7 +3,7 @@ using Colossal;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ColossalCheatMenuV2.Menu
+namespace Colossal.Menu
 {
     internal class Boards : MonoBehaviour
     {
@@ -51,7 +51,7 @@ namespace ColossalCheatMenuV2.Menu
                     CustomConsole.LogToConsole("[COLOSSAL] Loaded Colours!");
                     Boards.tempbool = true;
                 }
-                coctext = $"<color=cyan>Thank you for using CCMV2, the successor to the</color><color={textcolour}> first cheat menu!</color><color=cyan> CCMV2 will be getting frequently updated with new features/FUD. \n\nContributors:\n</color><color={textcolour}>ColossusYTTV: Menu Maker/Mod Creator\nLars/LHAX: Menu Base</color><color=cyan>\nWM: No Fingers\nStarry: Creeper Monke/Tester\nAntic/ChatGPT: Tester\nCunzaki/Plinko: Tester\nBlobFish: DisableRig\n\nCurrent Menu Version: {Plugin.version}</color>"; 
+                coctext = $"<color=cyan>Thank you for using CCMV2, the successor to the</color><color={textcolour}> first cheat menu!</color><color=cyan> CCMV2 will be getting frequently updated with new features and undetected mods. \n\nContributors:\n</color><color={textcolour}>ColossusYTTV: Menu Maker/Mod Creator\nLars/LHAX: Menu Base</color><color=cyan>\nWM: No Fingers\nStarry: Creeper Monke/Tester\nAntic/ChatGPT: Tester\nCunzaki/Plinko: Tester\nBlobFish: DisableRig\n\nCurrent Menu Version: {Plugin.version}</color>"; 
                 if (GameObject.Find("Environment Objects/LocalObjects_Prefab").transform.Find("TreeRoom").gameObject.activeSelf)
                 {
                     this.rainbowtext += Time.deltaTime;

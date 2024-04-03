@@ -12,7 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ColossalOnevent {
+namespace Colossal.Menu.ClientHub.Notifacation
+{
     internal class EventNotifacation : MonoBehaviourPunCallbacks {
         public override void OnConnected()
         {

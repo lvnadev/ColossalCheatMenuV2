@@ -548,3 +548,16 @@ C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\Colossal
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.csproj.CopyComplete
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.dll
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.pdb
+<<<<<<< Updated upstream
+=======
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\VoiceSDK.Runtime.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\ZString.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Meta.WitAi.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Meta.WitAi.Lib.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Meta.WitAi.TTS.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Meta.VoiceSDK.Mic.Common.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Meta.WitAi.Conduit.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Meta.VoiceSDK.Mic.Other.dll
+C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Newtonsoft.Json.xml
+>>>>>>> Stashed changes

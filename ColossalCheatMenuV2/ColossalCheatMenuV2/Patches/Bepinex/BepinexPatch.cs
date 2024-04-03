@@ -45,6 +45,7 @@ namespace Colossal.Patches {
         BepInPatcher()
         {
             new Harmony("ColossusYTTV.ColossalCheatMenuV2").PatchAll(Assembly.GetExecutingAssembly());
+            
         }
 
         void Awake() {

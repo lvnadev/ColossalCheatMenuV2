@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Valve.VR.Extras;
 
+<<<<<<< Updated upstream
 namespace ColossalCheatMenuV2.Menu.Mods
+=======
+namespace Colossal.Menu
+>>>>>>> Stashed changes
 {
     internal class GhostManager
     {
@@ -19,6 +23,7 @@ namespace ColossalCheatMenuV2.Menu.Mods
             GameObject ghost = GameObject.Instantiate(GorillaTagger.Instance.offlineVRRig.gameObject);
             var vrrig = ghost.GetComponent<VRRig>();
 
+<<<<<<< Updated upstream
             Color32 ghostColor;
             switch (colorOption)
             {
@@ -27,6 +32,49 @@ namespace ColossalCheatMenuV2.Menu.Mods
                     break;
                 case 2:
                     ghostColor = new Color32(68, 51, 255, 60);
+=======
+
+            switch (Menu.ColourSettings[4].stringsliderind)
+            {
+                case 0:
+                    opacity = 100;
+                    break;
+                case 1:
+                    opacity = 80;
+                    break;
+                case 2:
+                    opacity = 60;
+                    break;
+                case 3:
+                    opacity = 30;
+                    break;
+                case 4:
+                    opacity = 20;
+                    break;
+                case 5:
+                    opacity = 0;
+                    break;
+            }
+            switch (Menu.ColourSettings[1].stringsliderind)
+            {
+                case 0:
+                    ghostColor = new Color32(204, 51, 255, opacity);
+                    break;
+                case 1:
+                    ghostColor = new Color32(255, 0, 0, opacity);
+                    break;
+                case 2:
+                    ghostColor = new Color32(255, 255, 0, opacity);
+                    break;
+                case 3:
+                    ghostColor = new Color32(0, 255, 0, opacity);
+                    break;
+                case 4:
+                    ghostColor = new Color32(64, 255, 0, opacity);
+                    break;
+                case 5:
+                    ghostColor = new Color32(0, 0, 255, opacity);
+>>>>>>> Stashed changes
                     break;
                 default:
                     ghostColor = new Color32(255, 255, 255, 255);

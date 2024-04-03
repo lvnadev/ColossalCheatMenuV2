@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 ﻿using Colossal.Patches;
 using ColossalCheatMenuV2.Menu.Mods;
+=======
+﻿using Colossal.Menu;
+using Colossal.Patches;
+>>>>>>> Stashed changes
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,37 +22,35 @@ namespace Colossal.Mods
         private GameObject ghost;
         public void Update()
         {
-            /*if (PluginConfig.SpinBot)
-            {
-                if (ghost == null)
-                    ghost = GhostManager.SpawnGhost(1);
+            //if (PluginConfig.SpinBot)
+            //{
+            //    if (ghost == null)
+            //        ghost = GhostManager.SpawnGhost();
 
-                if (ghost != null)
-                {
-                    if (DisableRig.disablerig)
-                        DisableRig.disablerig = false;
+            //    if (ghost != null)
+            //    {
+            //        if (DisableRig.disablerig)
+            //            DisableRig.disablerig = false;
 
-                    GorillaTagger.Instance.offlineVRRig.transform.position = ghost.transform.position;
+            //        //Spinning SS rig
+            //        GorillaTagger.Instance.offlineVRRig.transform.position = ghost.transform.position;
+            //        GorillaTagger.Instance.offlineVRRig.transform.Rotate(0, 0, 50 * Time.deltaTime);
 
-                    Quaternion targetRotation = Quaternion.LookRotation(ghost.transform.position - GorillaTagger.Instance.offlineVRRig.transform.position);
+            //        //Spinning CS rig
+            //        VRRig vrrig = ghost.GetComponent<VRRig>();
+            //        vrrig.mainSkin.material.color = GhostManager.ghostColor;
+            //        vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
 
-                    GorillaTagger.Instance.offlineVRRig.transform.rotation = Quaternion.RotateTowards(
-                        ghost.transform.rotation,
-                        targetRotation,
-                        100 * Time.deltaTime
-                    );
-                }
-            }
-            else
-            {
-                if(!DisableRig.disablerig && !PluginConfig.desync)
-                    DisableRig.disablerig = true;
+            //        //ghost.transform.Rotate(0, 0, 50 * Time.deltaTime);
+            //    }
+            //}
+            //else
+            //{
+            //   if (ghost != null)
+            //        GhostManager.DestroyGhost(ghost);
 
-               if (ghost != null)
-                    GhostManager.DestroyGhost(ghost);
-
-                Destroy(GorillaTagger.Instance.GetComponent<SpinBot>());
-            }*/
+            //    Destroy(GorillaTagger.Instance.GetComponent<SpinBot>());
+            //}
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colossal.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,13 +18,9 @@ namespace Colossal.Mods
             if (PluginConfig.excelfly)
             {
                 if (ControllerInputPoller.instance.leftControllerPrimaryButton)
-                {
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity += -GorillaLocomotion.Player.Instance.leftControllerTransform.right / 2f;
-                }
                 if (ControllerInputPoller.instance.rightControllerPrimaryButton)
-                {
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity += GorillaLocomotion.Player.Instance.rightControllerTransform.right / 2f;
-                }
             }
             else
             {

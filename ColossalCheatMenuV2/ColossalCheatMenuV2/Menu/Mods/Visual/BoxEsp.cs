@@ -1,4 +1,10 @@
+<<<<<<< Updated upstream
 ﻿using Colossal.Mods;
+=======
+﻿using Colossal.Menu;
+using Colossal.Mods;
+using GorillaNetworking;
+>>>>>>> Stashed changes
 using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
@@ -15,11 +21,34 @@ namespace Colossal.Mods
     public class BoxEsp : MonoBehaviour
     {
         public static float objectScale;
+        private Color espcolor;
 
         public void Update()
         {
             if (PluginConfig.boxesp && PhotonNetwork.InRoom)
             {
+                switch (PluginConfig.ESPColour)
+                {
+                    case 0:
+                        espcolor = new Color(0.6f, 0f, 0.8f, 0.4f);
+                        break;
+                    case 1:
+                        espcolor = new Color(1f, 0f, 0f, 0.4f);
+                        break;
+                    case 2:
+                        espcolor = new Color(1f, 1f, 0f, 0.4f);
+                        break;
+                    case 3:
+                        espcolor = new Color(0f, 1f, 0f, 0.4f);
+                        break;
+                    case 4:
+                        espcolor = new Color(0f, 0f, 1f, 0.4f);
+                        break;
+                    default:
+                        espcolor = new Color(0.6f, 0f, 0.8f, 0.4f);
+                        break;
+                }
+
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
                     if (rig != null && !rig.isOfflineVRRig)
@@ -55,6 +84,7 @@ namespace Colossal.Mods
                         face.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
                         Color Espcolor;
 
+<<<<<<< Updated upstream
                         if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Length <= 0)
                         {
                             Espcolor = new Color(1f, 0f, 1f, 0.4f);
@@ -70,6 +100,12 @@ namespace Colossal.Mods
                                 Espcolor = new Color(1f, 0f, 1f, 0.4f);
                             }
                         }
+=======
+                        if (rig.mainSkin.material.name.Contains("fected"))
+                            Espcolor = new Color(1f, 0f, 0f, 0.4f);
+                        else
+                            Espcolor = espcolor;
+>>>>>>> Stashed changes
 
                         face.GetComponent<Renderer>().material.color = Espcolor;
                         Quaternion rotation = Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up);

@@ -1,4 +1,5 @@
-﻿using Colossal.Mods;
+﻿using Colossal.Menu;
+using Colossal.Mods;
 using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
@@ -17,10 +18,33 @@ namespace Colossal.Mods
 {
     public class HollowBoxEsp : MonoBehaviour 
     {
+        private Color espcolor;
         public void Update()
         {
             if (PluginConfig.hollowboxesp && PhotonNetwork.InRoom)
             {
+                switch (PluginConfig.ESPColour)
+                {
+                    case 0:
+                        espcolor = new Color(0.6f, 0f, 0.8f, 0.4f);
+                        break;
+                    case 1:
+                        espcolor = new Color(1f, 0f, 0f, 0.4f);
+                        break;
+                    case 2:
+                        espcolor = new Color(1f, 1f, 0f, 0.4f);
+                        break;
+                    case 3:
+                        espcolor = new Color(0f, 1f, 0f, 0.4f);
+                        break;
+                    case 4:
+                        espcolor = new Color(0f, 0f, 1f, 0.4f);
+                        break;
+                    default:
+                        espcolor = new Color(0.6f, 0f, 0.8f, 0.4f);
+                        break;
+                }
+
                 foreach (VRRig rig in GorillaParent.instance.vrrigs)
                 {
                     if (rig != null && !rig.isOfflineVRRig)
@@ -55,6 +79,7 @@ namespace Colossal.Mods
 
                         Color Espcolor;
 
+<<<<<<< Updated upstream
                         if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Length <= 0)
                         {
                             Espcolor = Color.magenta;
@@ -70,6 +95,12 @@ namespace Colossal.Mods
                                 Espcolor = Color.magenta;
                             }
                         }
+=======
+                        if (rig.mainSkin.material.name.Contains("fected"))
+                            Espcolor = Color.red;
+                        else
+                            Espcolor = espcolor;
+>>>>>>> Stashed changes
 
                         top.GetComponent<Renderer>().material.color = Espcolor;
                         bottom.GetComponent<Renderer>().material.color = Espcolor;

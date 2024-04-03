@@ -1,10 +1,12 @@
 ﻿using ExitGames.Client.Photon;
+using HarmonyLib;
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Colossal.Mods
+namespace Colossal.Menu
 {
     public class ThisGuyIsUsingColossal : MonoBehaviour
     {
@@ -39,7 +41,7 @@ namespace Colossal.Mods
                     else
                     {
                         vrrig.playerText.color = Color.white;
-                        vrrig.playerText.text = (vrrig.Creator.NickName ?? "");
+                        vrrig.playerText.text = vrrig.Creator.NickName;
                     }
                     processedVRRigs.Add(vrrig);
                 }

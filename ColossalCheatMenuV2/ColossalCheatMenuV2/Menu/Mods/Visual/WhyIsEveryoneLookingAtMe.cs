@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colossal.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Colossal.Mods {
             if (PluginConfig.whyiseveryonelookingatme) {
                 foreach (VRRig vrrig in GorillaParent.instance.vrrigs) {
                     if (!vrrig.isOfflineVRRig) {
-                        vrrig.headConstraint.transform.LookAt(GorillaLocomotion.Player.Instance.transform.position);
+                        vrrig.AddComponent<FacePlayer>();
                     }
                 }
             } else {
