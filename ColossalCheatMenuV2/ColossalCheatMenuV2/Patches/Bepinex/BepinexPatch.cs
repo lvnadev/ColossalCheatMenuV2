@@ -45,24 +45,9 @@ namespace Colossal.Patches {
         BepInPatcher()
         {
             new Harmony("ColossusYTTV.ColossalCheatMenuV2").PatchAll(Assembly.GetExecutingAssembly());
-            
         }
 
         void Awake() {
-            /*using (WebClient client = new WebClient()) {
-                try {
-                    string versiondownload = client.DownloadString("https://pastebin.com/raw/2uU6L7NZ");
-                    if (versiondownload != Plugin.version) {
-                        CustomConsole.LogToConsole("Update needed... Downloading");
-                        await Plugin.update();
-                    } else {
-                        CustomConsole.LogToConsole("Up To Date!");
-                    }
-                } catch (WebException ex) {
-                    CustomConsole.LogToConsole("Error: " + ex.Message);
-                }
-            }*/
-
             System.Random random = new System.Random();
             int randomNumber = random.Next(1, 51);
             if (randomNumber == 1) {
@@ -72,14 +57,7 @@ namespace Colossal.Patches {
         public static void LoadModStuff() {
             if (!GameObject.Find("KmansBepInPatch")) {
                 CreateBepInPatch();
-                CreateInputPatch();
             }
-        }
-        public static void CreateInputPatch() {
-            GameObject gameob = new GameObject();
-            gameob.name = "KmansInputPatch";
-            gameob.AddComponent<ControllerPatch>();
-            UnityEngine.Object.DontDestroyOnLoad(gameob);
         }
         public static void CreateBepInPatch() {
             Debug.Log("Creating Patcher");

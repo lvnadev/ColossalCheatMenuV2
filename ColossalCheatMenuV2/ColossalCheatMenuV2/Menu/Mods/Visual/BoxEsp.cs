@@ -1,10 +1,10 @@
-<<<<<<< Updated upstream
+
 ﻿using Colossal.Mods;
-=======
+
 ﻿using Colossal.Menu;
 using Colossal.Mods;
 using GorillaNetworking;
->>>>>>> Stashed changes
+
 using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
@@ -84,28 +84,21 @@ namespace Colossal.Mods
                         face.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
                         Color Espcolor;
 
-<<<<<<< Updated upstream
-                        if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Length <= 0)
+
+                        if (rig.mainSkin.material.name.Contains("fected"))
                         {
-                            Espcolor = new Color(1f, 0f, 1f, 0.4f);
+                            Espcolor = new Color(1f, 0f, 0f, 0.4f);
                         }
                         else
                         {
-                            if (rig.mainSkin.material.name.Contains("fected"))
-                            {
-                                Espcolor = new Color(1f, 0f, 0f, 0.4f);
-                            }
-                            else
-                            {
-                                Espcolor = new Color(1f, 0f, 1f, 0.4f);
-                            }
+                            Espcolor = new Color(1f, 0f, 1f, 0.4f);
                         }
-=======
+
                         if (rig.mainSkin.material.name.Contains("fected"))
                             Espcolor = new Color(1f, 0f, 0f, 0.4f);
                         else
                             Espcolor = espcolor;
->>>>>>> Stashed changes
+
 
                         face.GetComponent<Renderer>().material.color = Espcolor;
                         Quaternion rotation = Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up);

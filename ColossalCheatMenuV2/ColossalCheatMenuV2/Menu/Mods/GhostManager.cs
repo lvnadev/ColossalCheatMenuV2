@@ -8,31 +8,20 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Valve.VR.Extras;
 
-<<<<<<< Updated upstream
-namespace ColossalCheatMenuV2.Menu.Mods
-=======
+
 namespace Colossal.Menu
->>>>>>> Stashed changes
 {
     internal class GhostManager
     {
         private static List<GameObject> ghosts = new List<GameObject>();
 
-        public static GameObject SpawnGhost(int colorOption)
+        public static byte opacity;
+        public static Color ghostColor;
+
+        public static GameObject SpawnGhost()
         {
             GameObject ghost = GameObject.Instantiate(GorillaTagger.Instance.offlineVRRig.gameObject);
             var vrrig = ghost.GetComponent<VRRig>();
-
-<<<<<<< Updated upstream
-            Color32 ghostColor;
-            switch (colorOption)
-            {
-                case 1:
-                    ghostColor = new Color32(204, 51, 255, 60);
-                    break;
-                case 2:
-                    ghostColor = new Color32(68, 51, 255, 60);
-=======
 
             switch (Menu.ColourSettings[4].stringsliderind)
             {
@@ -74,7 +63,7 @@ namespace Colossal.Menu
                     break;
                 case 5:
                     ghostColor = new Color32(0, 0, 255, opacity);
->>>>>>> Stashed changes
+
                     break;
                 default:
                     ghostColor = new Color32(255, 255, 255, 255);

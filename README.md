@@ -1,14 +1,25 @@
-<div align="center">
-  <img src="images/ccmlogo.png" width="400" height="400" />
-  <h1>Colossal Cheat Menu V2</h1>
+<div align="left">
+  <img src="images/ccmlogo.png" width="250" height="250" />
+  <h1 style="position: absolute; top: 17%; right: 60%; transform: translate(50%, -50%); margin: 0; padding: 0; color: magenta; z-index: 1;">Colossal Cheat Menu V2</h1>
+  <h2 style="position: absolute; top: 22%; right: 60%; transform: translate(50%, -50%); margin: 0; padding: 0; color: red; z-index: 1;">The Best Ghost Client.</h2>
 </div>
 
-With a Unique UI written by lars, it stands out from the competition with unique and **NON SKIDDED** features. And did I mention its **COMPLETELY FREE AND OPEN SOURCE**
+<div align="center" style="font-size: 16px;">
+  With a Unique UI written by <span style="color: cyan;">lars</span>,<br>
+  it stands out from the competition with unique and <span style="color: magenta;">NON SKIDDED</span> features.<br>
+  And did I mention its completely <span style="color: magenta;">FREE</span> and <span style="color: magenta;">OPEN SOURCE</span>!
+</div>
 
-### Configs
-CCMV2 is fully customizable! You can save your presets and share them with friends using the easy to use config system.
 
 # Features
+- **CONFIGS**: CCMV2 is fully customizable! You can save your presets and share them with friends using the easy to use config system.
+- **CLIENT SIDED GHOST CLIENT**: Wanna make videos while cheating? You can toggle all Client Sided visuals to fool your viewers!.
+- **THIS GUY IS USING COLOSSAL**: You can see everyone else who is using CCMV2 in your lobby! They are displayed with a purple name and [CCM] prefix.
+- **BYPASSES**: Multiple advanced bypasses to help you evade anti cheat.
+- **NOTIFACATIONS**: Be notified when anti cheat gets flagged, when someone joins and leaves your room aswell as status changes on the menu.
+- **ANTI CRASH**: Do you have problems with other users crashing you? Try our anti crash, laugh in their faces.
+- **AMAZING VISUALS**: When using a mod that gives you a out of body experience a customizable ghost of yourself will be displayed.
+
 ### Movement
 - **Excel Fly**
 - **T Fly**
@@ -55,8 +66,8 @@ CCMV2 is fully customizable! You can save your presets and share them with frien
 - **Modded Casual**
 - **Modded Infection**
 
-<div align="center">
+<div align="center" style="font-size: 20px;">
   <div</div>
-  Thank you for chosing Colossal Cheat Menu.
-  Consider joining the discord. https://discord.gg/x4VEPyCEGR
+  Thank you for chosing <span style="color: magenta;">Colossal Cheat Menu</span>.
+  Consider joining the <span style="color: cyan;">discord. https://discord.gg/x4VEPyCEGR</span>
 </div>

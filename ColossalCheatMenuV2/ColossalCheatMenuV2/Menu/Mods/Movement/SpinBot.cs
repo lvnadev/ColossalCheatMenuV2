@@ -1,10 +1,6 @@
-<<<<<<< Updated upstream
-﻿using Colossal.Patches;
-using ColossalCheatMenuV2.Menu.Mods;
-=======
+
 ﻿using Colossal.Menu;
 using Colossal.Patches;
->>>>>>> Stashed changes
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -49,11 +49,11 @@ namespace Colossal.Menu {
         static Text NotifiText;
 
         public static string MenuState = "Main";
-<<<<<<< Updated upstream
+
         public static string MenuColour = "magenta";
-=======
+
         public static string MenuColourString = "magenta";
->>>>>>> Stashed changes
+
         public static float menurgb = 0;
         public static int SelectedOptionIndex = 0;
         public static MenuOption[] CurrentViewingMenu = null;
@@ -67,14 +67,14 @@ namespace Colossal.Menu {
         public static MenuOption[] Settings;
 
         public static MenuOption[] Speed;
-<<<<<<< Updated upstream
+
         public static MenuOption[] TagAura;
         public static MenuOption[] Presets;
         public static MenuOption[] Sky;
-=======
+
         public static MenuOption[] ColourSettings;
         public static MenuOption[] MiscSettings;
->>>>>>> Stashed changes
+
 
         public static bool inputcooldown = false;
         public static bool menutogglecooldown = false;
@@ -299,15 +299,6 @@ namespace Colossal.Menu {
                     Account[3] = new MenuOption { DisplayName = "Server: EU", _type = "button", AssociatedString = "servereu" };
                     Account[4] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
-<<<<<<< Updated upstream
-                    Settings = new MenuOption[6];
-                    Settings[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue", "RGB" } };
-                    Settings[1] = new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Right", "Middle" } };
-                    Settings[2] = new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = Configs.GetConfigFileNames() };
-                    Settings[3] = new MenuOption { DisplayName = "Load Config", _type = "button", AssociatedString = "loadconfig" };
-                    Settings[4] = new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" };
-                    Settings[5] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
-=======
                     Settings = new MenuOption[7];
                     Settings[0] = new MenuOption { DisplayName = "Colours", _type = "submenu", AssociatedString = "ColourSettings" };
                     Settings[1] = new MenuOption { DisplayName = "Misc", _type = "submenu", AssociatedString = "MiscSettings" };
@@ -329,7 +320,6 @@ namespace Colossal.Menu {
                     MiscSettings[2] = new MenuOption { DisplayName = "TagAura Ammount", _type = "STRINGslider", StringArray = new string[] { "Really Close", "Close", "Legit", "Semi Legit", "Semi Blatant", "Blatant", "Rage" } };
                     MiscSettings[3] = new MenuOption { DisplayName = "WallWalk Ammount", _type = "STRINGslider", StringArray = new string[] { "6.8", "7", "7.5", "7.8", "8", "8.5", "8.8", "9", "9.5", "9.8" } };
                     MiscSettings[4] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
->>>>>>> Stashed changes
 
                     MenuState = "Main";
                     CurrentViewingMenu = MainMenu;
@@ -569,10 +559,6 @@ namespace Colossal.Menu {
                 //PluginConfig.fakequestmenu = Modders[3].AssociatedBool;
 
                 //Settings
-<<<<<<< Updated upstream
-                PluginConfig.MenuColour = Settings[0].stringsliderind;
-                PluginConfig.MenuPos = Settings[1].stringsliderind;
-=======
                 PluginConfig.MenuPos = Settings[2].stringsliderind;
                 //Colour Settings
                 PluginConfig.MenuColour = ColourSettings[0].stringsliderind;
@@ -585,7 +571,7 @@ namespace Colossal.Menu {
                 PluginConfig.FloatMonkeyAmmount = MiscSettings[1].stringsliderind;
                 PluginConfig.TagAuraAmmount = MiscSettings[2].stringsliderind;
                 PluginConfig.WallWalkAmmount = MiscSettings[3].stringsliderind;
->>>>>>> Stashed changes
+
 
                 string ToDraw = Plugin.sussy ? $"<color={MenuColour}>SUSSY : {MenuState}</color>\n" : $"<color={MenuColour}>COLOSSAL : {MenuState}</color>\n";
                 int i = 0;
@@ -600,13 +586,10 @@ namespace Colossal.Menu {
                         if (opt._type == "toggle")
                         {
                             if (opt.AssociatedBool == true)
-<<<<<<< Updated upstream
                             {
                                 ToDraw = ToDraw + $" <color={MenuColour}>[ON]</color>";
+                                //ToDraw = ToDraw + $" <color={MenuColourString}>[ON]</color>";
                             }
-=======
-                                ToDraw = ToDraw + $" <color={MenuColourString}>[ON]</color>";
->>>>>>> Stashed changes
                             else
                                 ToDraw = ToDraw + " <color=red>[OFF]</color>";
                         }
@@ -630,32 +613,6 @@ namespace Colossal.Menu {
                 }
                 if (PluginConfig.MenuRGB)
                 {
-                    if (menurgb >= 0.1f)
-<<<<<<< Updated upstream
-                    {
-                        MenuColour = "magenta";
-                    }
-                    if (menurgb >= 0.2f)
-                    {
-                        MenuColour = "red";
-                    }
-                    if (menurgb >= 0.3f)
-                    {
-                        MenuColour = "green";
-                    }
-                    if (menurgb >= 0.4f)
-                    {
-                        MenuColour = "blue";
-                    }
-                    if (menurgb >= 0.5f)
-                    {
-                        MenuColour = "cyan";
-                    }
-                    if (menurgb >= 0.6f)
-                    {
-                        MenuColour = "yellow";
-                    }
-=======
                         MenuColourString = "magenta";
                     if (menurgb >= 0.2f)
                         MenuColourString = "red";
@@ -667,7 +624,7 @@ namespace Colossal.Menu {
                         MenuColourString = "cyan";
                     if (menurgb >= 0.6f)
                         MenuColourString = "yellow";
->>>>>>> Stashed changes
+
                     if (menurgb >= 0.6f)
                         menurgb = 0;
                 }
@@ -695,18 +652,11 @@ namespace Colossal.Menu {
                             CurrentViewingMenu = Settings;
 
                         if (option.AssociatedString == "Speed")
+                        {
                             CurrentViewingMenu = Speed;
-<<<<<<< Updated upstream
                             Debug.Log("<color=magenta>Speed...</color>");
                         }
-                        if (option.AssociatedString == "TagAura") {
-                            CurrentViewingMenu = TagAura;
-                            Debug.Log("<color=magenta>TagAura...</color>");
-                        }
-                        if (option.AssociatedString == "Sky") {
-                            CurrentViewingMenu = Sky;
-                        }
-=======
+
                         if (option.AssociatedString == "ColourSettings")
                             CurrentViewingMenu = ColourSettings;
                         if (option.AssociatedString == "MiscSettings")
@@ -714,7 +664,7 @@ namespace Colossal.Menu {
 
                         if (option.AssociatedString == "Back")
                             CurrentViewingMenu = MainMenu;
->>>>>>> Stashed changes
+
                         MenuState = option.AssociatedString;
                         SelectedOptionIndex = 0;
                     }
@@ -723,15 +673,10 @@ namespace Colossal.Menu {
                         {
                             option.AssociatedBool = true;
                             CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {option.AssociatedBool}");
-<<<<<<< Updated upstream
                             Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
-                        } else {
-=======
-                            Notifacations.SendNotification($"<color={MenuColourString}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
-                        } 
+                        }
                         else 
                         {
->>>>>>> Stashed changes
                             option.AssociatedBool = false;
                             CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {option.AssociatedBool}");
                             Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
@@ -822,11 +767,9 @@ namespace Colossal.Menu {
                             Configs.SaveConfig();
                     }
 
-<<<<<<< Updated upstream
-                    switch (Settings[0].stringsliderind)
-=======
+
                     switch (ColourSettings[0].stringsliderind)
->>>>>>> Stashed changes
+
                     {
                         case 0:
                             if (PluginConfig.MenuRGB)

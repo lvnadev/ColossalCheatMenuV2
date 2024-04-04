@@ -22,21 +22,21 @@ namespace Colossal.Mods
         {
             if (PluginConfig.taggun && PhotonNetwork.InRoom)
             {
-                switch (Menu.Menu.MiscSettings[2].stringsliderind)
+                switch (Menu.Menu.ColourSettings[2].stringsliderind)
                 {
-                    case 1:
+                    case 0:
                         lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
                         break;
-                    case 2:
+                    case 1:
                         lineMaterial.color = new Color(1f, 0f, 0f, 0.5f);
                         break;
-                    case 3:
+                    case 2:
                         lineMaterial.color = new Color(1f, 1f, 0f, 0.5f);
                         break;
-                    case 4:
+                    case 3:
                         lineMaterial.color = new Color(0f, 1f, 0f, 0.5f);
                         break;
-                    case 5:
+                    case 4:
                         lineMaterial.color = new Color(0f, 0f, 1f, 0.5f);
                         break;
                 }

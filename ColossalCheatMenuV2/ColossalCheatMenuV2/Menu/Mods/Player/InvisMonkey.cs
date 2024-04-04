@@ -1,10 +1,6 @@
-<<<<<<< Updated upstream
-﻿using Colossal.Patches;
-using ColossalCheatMenuV2.Menu.Mods;
-=======
+
 ﻿using Colossal.Menu;
 using Colossal.Patches;
->>>>>>> Stashed changes
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -32,12 +28,12 @@ namespace Colossal.Mods
                 if (ControllerInputPoller.instance.leftControllerSecondaryButton)
                 {
                     if(ghost == null) 
-                        ghost = GhostManager.SpawnGhost(1);
+                        ghost = GhostManager.SpawnGhost();
 
                     if(DisableRig.disablerig)
                         DisableRig.disablerig = false;
 
-                    ghost.GetComponent<VRRig>().mainSkin.material.color = new Color32(204, 51, 255, 60);
+                    ghost.GetComponent<VRRig>().mainSkin.material.color = GhostManager.ghostColor;
                     ghost.GetComponent<VRRig>().mainSkin.material.shader = Shader.Find("GUI/Text Shader");
 
                     GorillaTagger.Instance.offlineVRRig.transform.position = new Vector3(GorillaLocomotion.Player.Instance.headCollider.transform.position.x, -646.46466f, GorillaLocomotion.Player.Instance.headCollider.transform.position.z);

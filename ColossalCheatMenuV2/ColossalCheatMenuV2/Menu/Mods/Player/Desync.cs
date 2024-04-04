@@ -1,10 +1,6 @@
-<<<<<<< Updated upstream
-﻿using Colossal.Patches;
-using ColossalCheatMenuV2.Menu.Mods;
-=======
+
 ﻿using Colossal.Menu;
 using Colossal.Patches;
->>>>>>> Stashed changes
 using GorillaExtensions;
 using Photon.Pun;
 using System;
@@ -43,7 +39,7 @@ namespace Colossal.Mods
                     if (Time.time - prevtime >= (PhotonNetwork.GetPing() / 500))
                     {
                         if (ghost == null)
-                            ghost = GhostManager.SpawnGhost(2);
+                            ghost = GhostManager.SpawnGhost();
 
                         var vrrig = ghost.GetComponent<VRRig>();
 
@@ -64,7 +60,7 @@ namespace Colossal.Mods
                         vrrig.leftHandPlayer.Pause();
                         vrrig.rightHandPlayer.Pause();
 
-                        vrrig.mainSkin.material.color = new Color32(68, 51, 255, 60);
+                        vrrig.mainSkin.material.color = GhostManager.ghostColor;
                         vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
                         vrrig.enabled = false;
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -44,7 +43,6 @@ namespace Colossal {
             AutoUpdate();
 
 
-<<<<<<< Updated upstream
             Debug.Log("[COLOSSAL] Spawned Holder");
             holder = new GameObject();
             holder.name = "Holder";
@@ -54,7 +52,7 @@ namespace Colossal {
             holder.AddComponent<LeaveNotifacation>();
             holder.AddComponent<MasterChangeNotifacation>();
             holder.AddComponent<Configs>();
-=======
+
             string[] oculusDlls = Directory.GetFiles(Environment.CurrentDirectory, "OculusXRPlugin.dll", SearchOption.AllDirectories);
             if (oculusDlls.Length > 0)
                 oculus = true;
@@ -70,7 +68,7 @@ namespace Colossal {
                 holder.AddComponent<LeaveNotifacation>();
                 holder.AddComponent<MasterChangeNotifacation>();
                 holder.AddComponent<Configs>();
->>>>>>> Stashed changes
+
 
 
                 Menu.Menu.LoadOnce();
@@ -139,14 +137,7 @@ namespace Colossal {
                         CustomConsole.LogToConsole("Holder is null");
                         holder = new GameObject();
                     }
-<<<<<<< Updated upstream
-                } else
-                {
-                    Debug.Log("Holder is null");
-                    holder = new GameObject();
-=======
->>>>>>> Stashed changes
-                }
+                } 
             }
         }
 
