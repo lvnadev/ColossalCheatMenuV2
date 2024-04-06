@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Colossal.Menu;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,27 +15,54 @@ namespace Colossal.Mods {
         private LineRenderer radiusLine;
         private Material lineMaterial;
 
-        private int ammount;
+        private float ammount;
         public void Update() {
-            if(Menu.Menu.Player[6].stringsliderind != null)
+            if(PluginConfig.tagaura)
             {
-                switch (Menu.Menu.Player[6].stringsliderind)
+                switch (Menu.Menu.MiscSettings[2].stringsliderind)
                 {
                     case 0:
-                        ammount = 0;
+                        ammount = 4.5f;
                         break;
                     case 1:
-                        ammount = 3;
+                        ammount = 4;
                         break;
                     case 2:
-                        ammount = 2;
+                        ammount = 3.5f;
                         break;
                     case 3:
-                        ammount = 1;
+                        ammount = 3;
+                        break;
+                    case 4:
+                        ammount = 2.5f;
+                        break;
+                    case 5:
+                        ammount = 2f;
+                        break;
+                    case 6:
+                        ammount = 1f;
+                        break;
+                }
+                switch (Menu.Menu.ColourSettings[2].stringsliderind)
+                {
+                    case 0:
+                        lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
+                        break;
+                    case 1:
+                        lineMaterial.color = new Color(1f, 0f, 0f, 0.5f);
+                        break;
+                    case 2:
+                        lineMaterial.color = new Color(1f, 1f, 0f, 0.5f);
+                        break;
+                    case 3:
+                        lineMaterial.color = new Color(0f, 1f, 0f, 0.5f);
+                        break;
+                    case 4:
+                        lineMaterial.color = new Color(0f, 0f, 1f, 0.5f);
                         break;
                 }
 
-                if(ammount > 0)
+                if (ammount > 0)
                 {
                     foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
                     {
@@ -50,7 +78,6 @@ namespace Colossal.Mods {
                                         if (radiusLine == null)
                                         {
                                             lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                                            lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
 
                                             GameObject lineObject = new GameObject("RadiusLine");
                                             lineObject.transform.parent = vrrig.transform;
@@ -77,6 +104,10 @@ namespace Colossal.Mods {
                         }
                     }
                 }
+            }
+            else
+            {
+                Destroy(GorillaTagger.Instance.GetComponent<TagAura>());
             }
         }
     }

@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
+using System.Security.Policy;
 using System.Threading.Tasks;
+using Colossal.Menu;
 using Colossal.Menu.ClientHub;
 using Colossal.Menu.ClientHub.Notifacation;
 using Colossal.Mods;
-using ColossalCheatMenuV2.Menu;
-using ColossalOnevent;
+using Colossal.Patches;
+using GorillaNetworking;
 using Photon.Pun;
 using PlayFab;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Random;
 using static Valve.VR.SteamVR_ExternalCamera;
 
 namespace Colossal {
@@ -27,18 +31,19 @@ namespace Colossal {
         public static GameObject hud;
         public static GameObject holder;
 
-        public static float version = 5.3f;
+        public static float version = 5.4f;
         public static bool sussy = false;
+        public static bool oculus = false;
 
         public void Start()
         {
-            CustomConsole.LogToConsole("[COLOSSAL] Plugin Start Call");
+            Debug.Log("[COLOSSAL] Plugin Start Call");
 
 
             AutoUpdate();
 
 
-            CustomConsole.LogToConsole("[COLOSSAL] Spawned Holder");
+            Debug.Log("[COLOSSAL] Spawned Holder");
             holder = new GameObject();
             holder.name = "Holder";
             holder.AddComponent<Boards>();
@@ -48,58 +53,91 @@ namespace Colossal {
             holder.AddComponent<MasterChangeNotifacation>();
             holder.AddComponent<Configs>();
 
+            string[] oculusDlls = Directory.GetFiles(Environment.CurrentDirectory, "OculusXRPlugin.dll", SearchOption.AllDirectories);
+            if (oculusDlls.Length > 0)
+                oculus = true;
 
-            Menu.Menu.LoadOnce();
-            CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start functions");
+            if (!oculus)
+            {
+                CustomConsole.LogToConsole("[COLOSSAL] Spawned Holder");
+                holder = new GameObject();
+                holder.name = "Holder";
+                holder.AddComponent<Boards>();
+                holder.AddComponent<EventNotifacation>();
+                holder.AddComponent<JoinNotifacation>();
+                holder.AddComponent<LeaveNotifacation>();
+                holder.AddComponent<MasterChangeNotifacation>();
+                holder.AddComponent<Configs>();
 
-            CustomConsole.LogToConsole("[COLOSSAL] Getting configs");
-            Configs.GetConfigFileNames();
 
-            hud = GameObject.Find("CLIENT_HUB");
+
+                Menu.Menu.LoadOnce();
+                CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start functions");
+
+                CustomConsole.LogToConsole("[COLOSSAL] Getting configs");
+                Configs.GetConfigFileNames();
+
+                hud = GameObject.Find("CLIENT_HUB");
+            }
+            else
+            {
+                // Doing this for now because I am to lazy to fix fucking inputs 😭
+                CustomConsole.LogToConsole("[COLOSSAL] YOU ARE PLAYING ON OCLULUS. PLEASE LAUNCH ON THE STEAM PORT OF THE GAME!");
+
+                Menu.Menu.LoadOnceOculus();
+            }
         }
         public void Update() {
-            Menu.Menu.Load();
-            Dictionary<Type, bool> componentConditions = new Dictionary<Type, bool>
+            if(!oculus)
             {
-                { typeof(CustomConsole), true },
-                { typeof(ThisGuyIsUsingColossal), true },
-                { typeof(LongArm), PluginConfig.longarms },
-                { typeof(WhyIsEveryoneLookingAtMe), PluginConfig.whyiseveryonelookingatme },
-                { typeof(ExcelFly), PluginConfig.excelfly },
-                { typeof(WateryAir), PluginConfig.wateryair },
-                { typeof(FreezeMonkey), PluginConfig.freezemonkey },
-                { typeof(Platforms), PluginConfig.platforms },
-                { typeof(TFly), PluginConfig.tfly },
-                { typeof(UpsideDownMonkey), PluginConfig.upsidedownmonkey },
-                { typeof(Chams), PluginConfig.chams },
-                { typeof(HollowBoxEsp), PluginConfig.hollowboxesp },
-                { typeof(BoxEsp), PluginConfig.boxesp },
-                { typeof(CreeperMonkey), PluginConfig.creepermonkey },
-                { typeof(GhostMonkey), PluginConfig.ghostmonkey },
-                { typeof(InvisMonkey), PluginConfig.invismonkey },
-                { typeof(LegMod), PluginConfig.legmod },
-                { typeof(TagGun), PluginConfig.taggun },
-                { typeof(TagAll), PluginConfig.tagall },
-                { typeof(BreakModChecker), PluginConfig.breakmodcheckers },
-                { typeof(BreakNameTags), PluginConfig.breaknametags },
-                { typeof(SpinBot), PluginConfig.SpinBot },
-                { typeof(Desync), PluginConfig.desync },
-                { typeof(FakeQuestMenu), PluginConfig.fakequestmenu },
+                Menu.Menu.Load();
+                Dictionary<Type, bool> componentConditions = new Dictionary<Type, bool>
+                {
+                    { typeof(CustomConsole), true },
+                    { typeof(ThisGuyIsUsingColossal), true },
+                    { typeof(LongArm), PluginConfig.longarms },
+                    { typeof(WhyIsEveryoneLookingAtMe), PluginConfig.whyiseveryonelookingatme },
+                    { typeof(ExcelFly), PluginConfig.excelfly },
+                    { typeof(WateryAir), PluginConfig.wateryair },
+                    { typeof(FreezeMonkey), PluginConfig.freezemonkey },
+                    { typeof(Platforms), PluginConfig.platforms },
+                    { typeof(TFly), PluginConfig.tfly },
+                    { typeof(UpsideDownMonkey), PluginConfig.upsidedownmonkey },
+                    { typeof(Chams), PluginConfig.chams },
+                    { typeof(HollowBoxEsp), PluginConfig.hollowboxesp },
+                    { typeof(BoxEsp), PluginConfig.boxesp },
+                    { typeof(CreeperMonkey), PluginConfig.creepermonkey },
+                    { typeof(GhostMonkey), PluginConfig.ghostmonkey },
+                    { typeof(InvisMonkey), PluginConfig.invismonkey },
+                    { typeof(LegMod), PluginConfig.legmod },
+                    { typeof(TagGun), PluginConfig.taggun },
+                    { typeof(TagAll), PluginConfig.tagall },
+                    { typeof(BreakModChecker), PluginConfig.breakmodcheckers },
+                    { typeof(BreakNameTags), PluginConfig.breaknametags },
+                    { typeof(SpinBot), PluginConfig.SpinBot },
+                    { typeof(Desync), PluginConfig.desync },
+                    { typeof(FakeQuestMenu), PluginConfig.fakequestmenu },
+                    { typeof(WASDFly), PluginConfig.WASDFly },
+                    { typeof(FloatyMonkey), PluginConfig.FloatyMonkey },
+                    { typeof(TagAura), PluginConfig.FloatyMonkey },
+                    { typeof(WallWalk), PluginConfig.wallwalk },
 
-            };
-            foreach (var kvp in componentConditions)
-            {
-                if(holder != null)
+                };
+                foreach (var kvp in componentConditions)
                 {
-                    if (kvp.Value && holder.GetComponent(kvp.Key) == null)
+                    if (holder != null)
                     {
-                        holder.AddComponent(kvp.Key);
+                        if (kvp.Value && holder.GetComponent(kvp.Key) == null)
+                        {
+                            holder.AddComponent(kvp.Key);
+                        }
                     }
-                } else
-                {
-                    CustomConsole.LogToConsole("Holder is null");
-                    holder = new GameObject();
-                }
+                    else
+                    {
+                        CustomConsole.LogToConsole("Holder is null");
+                        holder = new GameObject();
+                    }
+                } 
             }
         }
 
@@ -171,7 +209,6 @@ namespace Colossal {
                 CustomConsole.LogToConsole("[COLOSSAL] No matching file found.");
             }
         }
-
 
         /*public void FixedUpdate() {
             if (PhotonNetwork.InRoom) {

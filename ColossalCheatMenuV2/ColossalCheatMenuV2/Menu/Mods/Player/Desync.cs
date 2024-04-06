@@ -1,4 +1,6 @@
-﻿using Colossal.Patches;
+
+﻿using Colossal.Menu;
+using Colossal.Patches;
 using GorillaExtensions;
 using Photon.Pun;
 using System;

@@ -22,15 +22,6 @@ namespace Colossal
                 HarmonyLoader.IsPatched = true;
             }
         }
-        internal static void ApplyHarmonyPatchesOnEvent() {
-            if (!HarmonyLoader.IsPatched) {
-                if (HarmonyLoader.instance == null) {
-                    HarmonyLoader.instance = new Harmony("org.ColossalOnevent");
-                }
-                HarmonyLoader.instance.PatchAll(Assembly.GetExecutingAssembly());
-                HarmonyLoader.IsPatched = true;
-            }
-        }
 
         internal static void RemoveHarmonyPatches()
         {

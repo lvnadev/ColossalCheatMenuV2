@@ -21,9 +21,10 @@ using HarmonyLib;
 using System.Reflection;
 using Photon.Realtime;
 using Valve.VR;
-using ColossalCheatMenuV2.Patches.MakeItFuckingWork;
 using System.Runtime.Remoting.Messaging;
-using static Valve.VR.SteamVR_ExternalCamera;
+using Colossal.Patches;
+using PlayFab.ClientModels;
+using static UnityEngine.Random;
 
 namespace Colossal.Menu {
     public class MenuOption {
@@ -48,10 +49,12 @@ namespace Colossal.Menu {
         static Text NotifiText;
 
         public static string MenuState = "Main";
-        public static string MenuColourString = "magenta";
-        public static Color MenuColourUnity = Color.magenta;
-        public static float menurgb = 0;
 
+        public static string MenuColour = "magenta";
+
+        public static string MenuColourString = "magenta";
+
+        public static float menurgb = 0;
         public static int SelectedOptionIndex = 0;
         public static MenuOption[] CurrentViewingMenu = null;
         public static MenuOption[] MainMenu;
@@ -62,20 +65,68 @@ namespace Colossal.Menu {
         public static MenuOption[] Modders;
         public static MenuOption[] Account;
         public static MenuOption[] Settings;
-        //sub menus
+
         public static MenuOption[] Speed;
-        public static MenuOption[] Colours;
+
+        public static MenuOption[] TagAura;
+        public static MenuOption[] Presets;
+        public static MenuOption[] Sky;
+
+        public static MenuOption[] ColourSettings;
+        public static MenuOption[] MiscSettings;
+
 
         public static bool inputcooldown = false;
         public static bool menutogglecooldown = false;
 
         public static bool agreement = false;
+
+        public static void LoadOnceOculus()
+        {
+            CustomConsole.LogToConsole("[COLOSSAL] Spawning Oculus Prompt");
+
+            MainCamera = GameObject.Find("Main Camera");
+            HUDObj = new GameObject();
+            HUDObj2 = new GameObject();
+            HUDObj2.name = "CLIENT_HUB_AGREEMENT";
+            HUDObj.name = "CLIENT_HUB_AGREEMENT";
+            HUDObj.AddComponent<Canvas>();
+            HUDObj.AddComponent<CanvasScaler>();
+            HUDObj.AddComponent<GraphicRaycaster>();
+            HUDObj.GetComponent<Canvas>().enabled = true;
+            HUDObj.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+            HUDObj.GetComponent<Canvas>().worldCamera = MainCamera.GetComponent<Camera>();
+            HUDObj.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 5);
+            HUDObj.GetComponent<RectTransform>().position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
+            HUDObj2.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z - 4.6f);
+            HUDObj.transform.parent = HUDObj2.transform;
+            HUDObj.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 1.6f);
+            var Temp = HUDObj.GetComponent<RectTransform>().rotation.eulerAngles;
+            Temp.y = -270f;
+            HUDObj.transform.localScale = new Vector3(1f, 1f, 1f);
+            HUDObj.GetComponent<RectTransform>().rotation = Quaternion.Euler(Temp);
+            GameObject TestText = new GameObject();
+            TestText.transform.parent = HUDObj.transform;
+            Testtext = TestText.AddComponent<Text>();
+            Testtext.text = "<color=red>YOU ARE PLAYING ON THE OCULUS VERSION!\n</color><color=white>Please launch Gorilla Tag using a steam\nversion of the game to continue using the menu.\n\nThank you for chosing CCMV2</color>";
+            Testtext.fontSize = 10;
+            Testtext.font = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/UI/CodeOfConduct/COC Text").GetComponent<Text>().font;
+            Testtext.rectTransform.sizeDelta = new Vector2(260, 300);   
+            Testtext.rectTransform.localScale = new Vector3(0.01f, 0.01f, 1f);
+            Testtext.rectTransform.localPosition = new Vector3(-2.4f, -0.4f, 1f);
+            Testtext.material = AlertText;
+            NotifiText = Testtext;
+            Testtext.alignment = TextAnchor.UpperLeft;
+
+            HUDObj2.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
+            HUDObj2.transform.rotation = MainCamera.transform.rotation;
+        }
         public static void LoadOnce() {
-            CustomConsole.LogToConsole("Load Once Ran");
+            Debug.Log("Load Once Ran");
 
             try {
                 if (!agreement) {
-                    CustomConsole.LogToConsole("Aggreement Is False");
+                    Debug.Log("Aggreement Is False");
 
                     MainCamera = GameObject.Find("Main Camera");
                     HUDObj = new GameObject();
@@ -113,14 +164,13 @@ namespace Colossal.Menu {
                     HUDObj2.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
                     HUDObj2.transform.rotation = MainCamera.transform.rotation;
                 } else {
-                    CustomConsole.LogToConsole("Aggreement Is True");
+                    Debug.Log("Aggreement Is True");
 
 
                     Plugin.holder.AddComponent<SpeedMod>();
-                    Plugin.holder.AddComponent<WallWalk>();
-                    Plugin.holder.AddComponent<TagAura>();
                     Plugin.holder.AddComponent<SkyColour>();
 
+                    Debug.Log("1");
                     if (GorillaTagger.Instance.gameObject.GetComponent<Overlay>() == null)
                         GorillaTagger.Instance.gameObject.AddComponent<Overlay>();
 
@@ -177,17 +227,19 @@ namespace Colossal.Menu {
                     MainMenu[9] = new MenuOption { DisplayName = "Overlay", _type = "toggle", AssociatedBool = true };
                     MainMenu[10] = new MenuOption { DisplayName = "CS Visuals", _type = "toggle", AssociatedBool = true };
 
-                    Movement = new MenuOption[10];
+                    Movement = new MenuOption[12];
                     Movement[0] = new MenuOption { DisplayName = "ExcelFly", _type = "toggle", AssociatedBool = false };
                     Movement[1] = new MenuOption { DisplayName = "TFly", _type = "toggle", AssociatedBool = false };
-                    Movement[2] = new MenuOption { DisplayName = "WallWalk", _type = "STRINGslider", StringArray = new string[] {"Off", "7.5", "7.9", "8.3", "8.7", "9.1", "9.5" } };
+                    Movement[2] = new MenuOption { DisplayName = "WallWalk", _type = "toggle", AssociatedBool = false };
                     Movement[3] = new MenuOption { DisplayName = "Speed", _type = "submenu", AssociatedString = "Speed" };
                     Movement[4] = new MenuOption { DisplayName = "Platforms", _type = "toggle", AssociatedBool = false };
                     Movement[5] = new MenuOption { DisplayName = "UpsideDown Monkey", _type = "toggle", AssociatedBool = false };
                     Movement[6] = new MenuOption { DisplayName = "WateryAir", _type = "toggle", AssociatedBool = false };
                     Movement[7] = new MenuOption { DisplayName = "LongArms", _type = "toggle", AssociatedBool = false };
                     Movement[8] = new MenuOption { DisplayName = "[BROKEN] SpinBot", _type = "toggle", AssociatedBool = false };
-                    Movement[9] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
+                    Movement[9] = new MenuOption { DisplayName = "WASD Fly", _type = "toggle", AssociatedBool = false };
+                    Movement[10] = new MenuOption { DisplayName = "FloatyMonkey", _type = "toggle", AssociatedBool = false };
+                    Movement[11] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
                     Speed = new MenuOption[4];
                     Speed[0] = new MenuOption { DisplayName = "Speed", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } }; //quick "Fix" but apperantly anything above was detected... -Lars
                     Speed[1] = new MenuOption { DisplayName = "Speed (LG)", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
@@ -202,6 +254,13 @@ namespace Colossal.Menu {
                     Visual[4] = new MenuOption { DisplayName = "WhyIsEveryoneLookingAtMe", _type = "toggle", AssociatedBool = false };
                     Visual[5] = new MenuOption { DisplayName = "No Expressions", _type = "toggle", AssociatedBool = false };
                     Visual[6] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
+                    Sky = new MenuOption[6];
+                    Sky[0] = new MenuOption { DisplayName = "MonkeyColour", _type = "button", AssociatedString = "monkeycoloursky" };
+                    Sky[1] = new MenuOption { DisplayName = "Purple", _type = "button", AssociatedString = "purplesky" };
+                    Sky[2] = new MenuOption { DisplayName = "Red", _type = "button", AssociatedString = "redsky" };
+                    Sky[3] = new MenuOption { DisplayName = "Cyan", _type = "button", AssociatedString = "cyansky" };
+                    Sky[4] = new MenuOption { DisplayName = "Green", _type = "button", AssociatedString = "greensky" };
+                    Sky[5] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
                     Player = new MenuOption[11];
                     Player[0] = new MenuOption { DisplayName = "NoFinger", _type = "toggle", AssociatedBool = false };
@@ -210,7 +269,7 @@ namespace Colossal.Menu {
                     Player[3] = new MenuOption { DisplayName = "CreeperMonkey", _type = "toggle", AssociatedBool = false };
                     Player[4] = new MenuOption { DisplayName = "[BROKEN] GhostMonkey", _type = "toggle", AssociatedBool = false };
                     Player[5] = new MenuOption { DisplayName = "InvisMonkey", _type = "toggle", AssociatedBool = false };
-                    Player[6] = new MenuOption { DisplayName = "TagAura", _type = "STRINGslider", StringArray = new string[] { "Off", "Colossal", "Ghost", "Blatant" } };
+                    Player[6] = new MenuOption { DisplayName = "TagAura", _type = "toggle", AssociatedBool = false };
                     Player[7] = new MenuOption { DisplayName = "TagAll", _type = "toggle", AssociatedBool = false };
                     Player[8] = new MenuOption { DisplayName = "[BROKEN] FreezeMonke", _type = "toggle", AssociatedBool = false };
                     Player[9] = new MenuOption { DisplayName = "Desync", _type = "toggle", AssociatedBool = false };
@@ -220,7 +279,7 @@ namespace Colossal.Menu {
                     Modders[0] = new MenuOption { DisplayName = "Break NameTags", _type = "toggle", AssociatedBool = false };
                     Modders[1] = new MenuOption { DisplayName = "Break ModCheckers", _type = "toggle", AssociatedBool = false };
                     Modders[2] = new MenuOption { DisplayName = "Pc Check Bypass", _type = "toggle", AssociatedBool = false };
-                    Modders[3] = new MenuOption { DisplayName = "Fake Quest Menu", _type = "toggle", AssociatedBool = false };
+                    Modders[3] = new MenuOption { DisplayName = "[BROKEN] Fake Quest Menu", _type = "toggle", AssociatedBool = false };
                     Modders[4] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
                     Computer = new MenuOption[8];
@@ -240,20 +299,27 @@ namespace Colossal.Menu {
                     Account[3] = new MenuOption { DisplayName = "Server: EU", _type = "button", AssociatedString = "servereu" };
                     Account[4] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
-                    Settings = new MenuOption[6];
-                    Settings[0] = new MenuOption { DisplayName = "Colours", _type = "submenu", AssociatedString = "Colours" };
-                    Settings[1] = new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Right", "Middle" } };
-                    Settings[2] = new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = Configs.GetConfigFileNames() };
-                    Settings[3] = new MenuOption { DisplayName = "Load Config", _type = "button", AssociatedString = "loadconfig" };
-                    Settings[4] = new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" };
-                    Settings[5] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
-                    Colours = new MenuOption[6];
-                    Colours[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue", "RGB" } };
-                    Colours[1] = new MenuOption { DisplayName = "Ghost Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
-                    Colours[2] = new MenuOption { DisplayName = "Beam Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
-                    Colours[3] = new MenuOption { DisplayName = "ESP Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
-                    Colours[4] = new MenuOption { DisplayName = "Ghost Opacity", _type = "STRINGslider", StringArray = new string[] { "0%", "20%", "30%", "60%", "80%", "100%" } };
-                    Colours[5] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
+                    Settings = new MenuOption[7];
+                    Settings[0] = new MenuOption { DisplayName = "Colours", _type = "submenu", AssociatedString = "ColourSettings" };
+                    Settings[1] = new MenuOption { DisplayName = "Misc", _type = "submenu", AssociatedString = "MiscSettings" };
+                    Settings[2] = new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Right", "Middle" } };
+                    Settings[3] = new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = Configs.GetConfigFileNames() };
+                    Settings[4] = new MenuOption { DisplayName = "Load Config", _type = "button", AssociatedString = "loadconfig" };
+                    Settings[5] = new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" };
+                    Settings[6] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
+                    ColourSettings = new MenuOption[6];
+                    ColourSettings[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue", "RGB" } };
+                    ColourSettings[1] = new MenuOption { DisplayName = "Ghost Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
+                    ColourSettings[2] = new MenuOption { DisplayName = "Beam Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
+                    ColourSettings[3] = new MenuOption { DisplayName = "ESP Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
+                    ColourSettings[4] = new MenuOption { DisplayName = "Ghost Opacity", _type = "STRINGslider", StringArray = new string[] { "100%", "80%", "60%", "30%", "20%", "0%" } };
+                    ColourSettings[5] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
+                    MiscSettings = new MenuOption[5];
+                    MiscSettings[0] = new MenuOption { DisplayName = "WASD Fly Speed", _type = "STRINGslider", StringArray = new string[] { "5", "7", "10", "13", "16" } };
+                    MiscSettings[1] = new MenuOption { DisplayName = "FloatMonkey Ammount", _type = "STRINGslider", StringArray = new string[] { "1.1", "1.2", "1.4", "1.6", "1.8", "2", "2.2", "2.4", "2.6", "2.8", "3", "3.2", "3.4", "3.6", "3.8", "4", "Anti Grav" } };
+                    MiscSettings[2] = new MenuOption { DisplayName = "TagAura Ammount", _type = "STRINGslider", StringArray = new string[] { "Really Close", "Close", "Legit", "Semi Legit", "Semi Blatant", "Blatant", "Rage" } };
+                    MiscSettings[3] = new MenuOption { DisplayName = "WallWalk Ammount", _type = "STRINGslider", StringArray = new string[] { "6.8", "7", "7.5", "7.8", "8", "8.5", "8.8", "9", "9.5", "9.8" } };
+                    MiscSettings[4] = new MenuOption { DisplayName = "Back", _type = "submenu", AssociatedString = "Back" };
 
                     MenuState = "Main";
                     CurrentViewingMenu = MainMenu;
@@ -285,9 +351,7 @@ namespace Colossal.Menu {
                     Menu.LoadOnce();
                 }
                 else
-                {
                     Menu.menutogglecooldown = false;
-                }
                 if (Keyboard.current.enterKey.wasPressedThisFrame)
                 {
                     Menu.menutogglecooldown = true;
@@ -308,9 +372,7 @@ namespace Colossal.Menu {
                     Menu.GUIToggled = !Menu.GUIToggled;
                 }
                 if (!state3 && !state4 && Menu.menutogglecooldown)
-                {
                     Menu.menutogglecooldown = false;
-                }
                 if (Menu.GUIToggled)
                 {
                     Menu.HUDObj2.transform.position = new Vector3(Menu.MainCamera.transform.position.x, Menu.MainCamera.transform.position.y, Menu.MainCamera.transform.position.z);
@@ -322,26 +384,18 @@ namespace Colossal.Menu {
                     {
                         Menu.inputcooldown = true;
                         if (Menu.SelectedOptionIndex == 0)
-                        {
                             Menu.SelectedOptionIndex = Menu.CurrentViewingMenu.Count<MenuOption>() - 1;
-                        }
                         else
-                        {
                             Menu.SelectedOptionIndex--;
-                        }
                         Menu.UpdateMenuState(new MenuOption(), null, null);
                     }
                     if (current.downArrowKey.wasPressedThisFrame)
                     {
                         Menu.inputcooldown = true;
                         if (Menu.SelectedOptionIndex + 1 == Menu.CurrentViewingMenu.Count<MenuOption>())
-                        {
                             Menu.SelectedOptionIndex = 0;
-                        }
                         else
-                        {
                             Menu.SelectedOptionIndex++;
-                        }
                         Menu.UpdateMenuState(new MenuOption(), null, null);
                     }
                     if (current.enterKey.wasPressedThisFrame)
@@ -356,9 +410,7 @@ namespace Colossal.Menu {
                             if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
                                 CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() - 1;
                             else
-                            {
                                 CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind - 1;
-                            }
                             Menu.inputcooldown = true;
                         }
                         if (current.rightArrowKey.wasPressedThisFrame)
@@ -366,9 +418,7 @@ namespace Colossal.Menu {
                             if ((CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1) == CurrentViewingMenu[SelectedOptionIndex].StringArray.Count())
                                 CurrentViewingMenu[SelectedOptionIndex].stringsliderind = 0;
                             else
-                            {
                                 CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1;
-                            }
                             Menu.inputcooldown = true;
                         }
                         UpdateMenuState(new MenuOption(), null, null);
@@ -385,26 +435,18 @@ namespace Colossal.Menu {
                         {
                             Menu.inputcooldown = true;
                             if (Menu.SelectedOptionIndex == 0)
-                            {
                                 Menu.SelectedOptionIndex = Menu.CurrentViewingMenu.Count<MenuOption>() - 1;
-                            }
                             else
-                            {
                                 Menu.SelectedOptionIndex--;
-                            }
                             Menu.UpdateMenuState(new MenuOption(), null, null);
                         }
                         if (rightJoystickAxis.y >= -0.7f && !Menu.inputcooldown)
                         {
                             Menu.inputcooldown = true;
                             if (Menu.SelectedOptionIndex + 1 == Menu.CurrentViewingMenu.Count<MenuOption>())
-                            {
                                 Menu.SelectedOptionIndex = 0;
-                            }
                             else
-                            {
                                 Menu.SelectedOptionIndex++;
-                            }
                             Menu.UpdateMenuState(new MenuOption(), null, null);
                         }
                         if (rightJoystickAxis.x >= 0.7f && !Menu.inputcooldown)
@@ -419,9 +461,7 @@ namespace Colossal.Menu {
                                 if ((CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1) == CurrentViewingMenu[SelectedOptionIndex].StringArray.Count())
                                     CurrentViewingMenu[SelectedOptionIndex].stringsliderind = 0;
                                 else
-                                {
                                     CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1;
-                                }
                                 Menu.inputcooldown = true;
                             }
                             if ((rightJoystickAxis.x > 0.7f && !Menu.inputcooldown))
@@ -429,17 +469,13 @@ namespace Colossal.Menu {
                                 if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
                                     CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() - 1;
                                 else
-                                {
                                     CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind - 1;
-                                }
                                 Menu.inputcooldown = true;
                             }
                             UpdateMenuState(new MenuOption(), null, null);
                         }
                         if (rightJoystickAxis.y <= -0.7f && rightJoystickAxis.y <= 0.7f && rightJoystickAxis.x <= 0.7f && Menu.inputcooldown)
-                        {
                             Menu.inputcooldown = false;
-                        }
                     }
                     else if (SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand))
                     {
@@ -448,30 +484,22 @@ namespace Colossal.Menu {
                         {
                             Menu.inputcooldown = true;
                             if (Menu.SelectedOptionIndex + 1 == Menu.CurrentViewingMenu.Count<MenuOption>())
-                            {
                                 Menu.SelectedOptionIndex = 0;
-                            }
                             else
-                            {
                                 Menu.SelectedOptionIndex++;
-                            }
                             Menu.UpdateMenuState(new MenuOption(), null, null);
                         }
                         if (!trigger && !rightGrab && Menu.inputcooldown)
-                        {
                             Menu.inputcooldown = false;
-                        }
 
                         if (CurrentViewingMenu[SelectedOptionIndex]._type == "STRINGslider")
                         {
-                            if ((rightGrab && !Menu.inputcooldown))
+                            if (rightGrab && !Menu.inputcooldown)
                             {
                                 if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
                                     CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() - 1;
                                 else
-                                {
                                     CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind - 1;
-                                }
                                 Menu.inputcooldown = true;
                             }
                             UpdateMenuState(new MenuOption(), null, null);
@@ -493,7 +521,7 @@ namespace Colossal.Menu {
                 //Movement
                 PluginConfig.excelfly = Movement[0].AssociatedBool;
                 PluginConfig.tfly = Movement[1].AssociatedBool;
-                PluginConfig.wallwalk = Movement[2].stringsliderind;
+                PluginConfig.wallwalk = Movement[2].AssociatedBool;
                 PluginConfig.speed = Speed[0].stringsliderind;
                 PluginConfig.speedlg = Speed[1].stringsliderind;
                 PluginConfig.speedrg = Speed[2].stringsliderind;
@@ -502,6 +530,8 @@ namespace Colossal.Menu {
                 PluginConfig.wateryair = Movement[6].AssociatedBool;
                 PluginConfig.longarms = Movement[7].AssociatedBool;
                 PluginConfig.SpinBot = Movement[8].AssociatedBool;
+                PluginConfig.WASDFly = Movement[9].AssociatedBool;
+                PluginConfig.FloatyMonkey = Movement[10].AssociatedBool;
 
                 //Visual
                 PluginConfig.chams = Visual[0].AssociatedBool;
@@ -517,7 +547,7 @@ namespace Colossal.Menu {
                 PluginConfig.creepermonkey = Player[3].AssociatedBool;
                 PluginConfig.ghostmonkey = Player[4].AssociatedBool;
                 PluginConfig.invismonkey = Player[5].AssociatedBool;
-                PluginConfig.tagaura = Player[6].stringsliderind;
+                PluginConfig.tagaura = Player[6].AssociatedBool;
                 PluginConfig.tagall = Player[7].AssociatedBool;
                 PluginConfig.freezemonkey = Player[8].AssociatedBool;
                 PluginConfig.desync = Player[9].AssociatedBool;
@@ -526,166 +556,130 @@ namespace Colossal.Menu {
                 PluginConfig.breaknametags = Modders[0].AssociatedBool;
                 PluginConfig.breakmodcheckers = Modders[1].AssociatedBool;
                 PluginConfig.pccheckbypass = Modders[2].AssociatedBool;
-                PluginConfig.fakequestmenu = Modders[3].AssociatedBool;
+                //PluginConfig.fakequestmenu = Modders[3].AssociatedBool;
 
                 //Settings
-                PluginConfig.MenuColour = Colours[0].stringsliderind;
-                PluginConfig.MenuPos = Settings[1].stringsliderind;
-                PluginConfig.GhostColour = Colours[1].stringsliderind;
-                PluginConfig.BeamColour = Colours[2].stringsliderind;
-                PluginConfig.ESPColour = Colours[3].stringsliderind;
-                PluginConfig.GhostOpacity = Colours[4].stringsliderind;
+                PluginConfig.MenuPos = Settings[2].stringsliderind;
+                //Colour Settings
+                PluginConfig.MenuColour = ColourSettings[0].stringsliderind;
+                PluginConfig.GhostColour = ColourSettings[1].stringsliderind;
+                PluginConfig.BeamColour = ColourSettings[2].stringsliderind;
+                PluginConfig.ESPColour = ColourSettings[3].stringsliderind;
+                PluginConfig.GhostOpacity = ColourSettings[4].stringsliderind;
+                //Misc Settings
+                PluginConfig.WASDFlySpeed = MiscSettings[0].stringsliderind;
+                PluginConfig.FloatMonkeyAmmount = MiscSettings[1].stringsliderind;
+                PluginConfig.TagAuraAmmount = MiscSettings[2].stringsliderind;
+                PluginConfig.WallWalkAmmount = MiscSettings[3].stringsliderind;
 
-                string ToDraw = Plugin.sussy ? $"<color={MenuColourString}>SUSSY : {MenuState}</color>\n" : $"<color={MenuColourString}>COLOSSAL : {MenuState}</color>\n";
+
+                string ToDraw = Plugin.sussy ? $"<color={MenuColour}>SUSSY : {MenuState}</color>\n" : $"<color={MenuColour}>COLOSSAL : {MenuState}</color>\n";
                 int i = 0;
                 if (CurrentViewingMenu != null)
                 {
                     foreach (MenuOption opt in CurrentViewingMenu)
                     {
                         if (SelectedOptionIndex == i)
-                        {
                             ToDraw = ToDraw + "> ";
-                        }
                         ToDraw = ToDraw + opt.DisplayName;
 
                         if (opt._type == "toggle")
                         {
                             if (opt.AssociatedBool == true)
                             {
-                                ToDraw = ToDraw + $" <color={MenuColourString}>[ON]</color>";
+                                ToDraw = ToDraw + $" <color={MenuColour}>[ON]</color>";
+                                //ToDraw = ToDraw + $" <color={MenuColourString}>[ON]</color>";
                             }
                             else
-                            {
                                 ToDraw = ToDraw + " <color=red>[OFF]</color>";
-                            }
                         }
                         if (opt._type == "STRINGslider")
-                        {
                             ToDraw = ToDraw + ": " + opt.StringArray[opt.stringsliderind] + " [" + (opt.stringsliderind + 1).ToString() + "/" + opt.StringArray.Length.ToString() + "]";
-                        }
                         ToDraw = ToDraw + "\n";
                         i++;
                     }
                     Testtext.text = ToDraw;
                 }
                 else
-                {
                     Debug.Log("Null for some reason");
-                }
 
 
                 if (PluginConfig.MenuRGB)
-                {
                     menurgb += Time.deltaTime;
-                }
                 else
                 {
                     if (menurgb != 0)
-                    {
                         menurgb = 0;
-                    }
                 }
                 if (PluginConfig.MenuRGB)
                 {
-                    if (menurgb >= 0.1f)
-                    {
                         MenuColourString = "magenta";
-                        MenuColourUnity = Color.magenta;
-                    }
                     if (menurgb >= 0.2f)
-                    {
                         MenuColourString = "red";
-                        MenuColourUnity = Color.red;
-                    }
                     if (menurgb >= 0.3f)
-                    {
                         MenuColourString = "green";
-                        MenuColourUnity = Color.green;
-                    }
                     if (menurgb >= 0.4f)
-                    {
                         MenuColourString = "blue";
-                        MenuColourUnity = Color.blue;
-                    }
                     if (menurgb >= 0.5f)
-                    {
                         MenuColourString = "cyan";
-                        MenuColourUnity = Color.cyan;
-                    }
                     if (menurgb >= 0.6f)
-                    {
                         MenuColourString = "yellow";
-                        MenuColourUnity = Color.yellow;
-                    }
+
                     if (menurgb >= 0.6f)
-                    {
                         menurgb = 0;
-                    }
                 }
             }
         }
         static void UpdateMenuState(MenuOption option, string _MenuState, string OperationType) {
             try {
-                if (OperationType == "optionhit") {
-                    if (option._type == "submenu") {
-                        if (option.AssociatedString == "Movement") {
+                if (OperationType == "optionhit") 
+                {
+                    if (option._type == "submenu") 
+                    {
+                        if (option.AssociatedString == "Movement")
                             CurrentViewingMenu = Movement;
-                            Debug.Log("<color=magenta>Movement...</color>");
-                        }
-                        if (option.AssociatedString == "Visual") {
+                        if (option.AssociatedString == "Visual")
                             CurrentViewingMenu = Visual;
-                            Debug.Log("<color=magenta>Visual...</color>");
-                        }
-                        if (option.AssociatedString == "Player") {
+                        if (option.AssociatedString == "Player")
                             CurrentViewingMenu = Player;
-                            Debug.Log("<color=magenta>Player...</color>");
-                        }
-                        if (option.AssociatedString == "Computer") {
+                        if (option.AssociatedString == "Computer")
                             CurrentViewingMenu = Computer;
-                            Debug.Log("<color=magenta>Computer...</color>");
-                        }
-                        if (option.AssociatedString == "Modders") {
+                        if (option.AssociatedString == "Modders")
                             CurrentViewingMenu = Modders;
-                            Debug.Log("<color=magenta>Modders...</color>");
-                        }
-                        if (option.AssociatedString == "Account") {
+                        if (option.AssociatedString == "Account")
                             CurrentViewingMenu = Account;
-                            Debug.Log("<color=magenta>Account...</color>");
-                        }
-                        if (option.AssociatedString == "Settings") {
+                        if (option.AssociatedString == "Settings")
                             CurrentViewingMenu = Settings;
-                            Debug.Log("<color=magenta>Settings...</color>");
-                        }
-                        if (option.AssociatedString == "DriftMode") {
-                            CurrentViewingMenu = Account;
-                            Debug.Log("<color=magenta>Account...</color>");
-                        }
-                        if (option.AssociatedString == "Back") {
-                            CurrentViewingMenu = MainMenu;
-                            Debug.Log("<color=magenta>Back...</color>");
-                        }
 
-                        if (option.AssociatedString == "Speed") {
+                        if (option.AssociatedString == "Speed")
+                        {
                             CurrentViewingMenu = Speed;
                             Debug.Log("<color=magenta>Speed...</color>");
                         }
-                        if (option.AssociatedString == "Colours")
-                        {
-                            CurrentViewingMenu = Colours;
-                            Debug.Log("<color=magenta>Colours...</color>");
-                        }
+
+                        if (option.AssociatedString == "ColourSettings")
+                            CurrentViewingMenu = ColourSettings;
+                        if (option.AssociatedString == "MiscSettings")
+                            CurrentViewingMenu = MiscSettings;
+
+                        if (option.AssociatedString == "Back")
+                            CurrentViewingMenu = MainMenu;
+
                         MenuState = option.AssociatedString;
                         SelectedOptionIndex = 0;
                     }
                     if (option._type == "toggle") {
-                        if (option.AssociatedBool == false) {
+                        if (option.AssociatedBool == false) 
+                        {
                             option.AssociatedBool = true;
                             CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {option.AssociatedBool}");
-                            Notifacations.SendNotification($"<color={MenuColourString}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
-                        } else {
+                            Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
+                        }
+                        else 
+                        {
                             option.AssociatedBool = false;
                             CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {option.AssociatedBool}");
-                            Notifacations.SendNotification($"<color={MenuColourString}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
+                            Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {option.AssociatedBool}");
                         }
                     }
                     if (option._type == "button")
@@ -763,103 +757,50 @@ namespace Colossal.Menu {
                             PhotonNetwork.Disconnect();
                             PlayFabClientAPI.ForgetAllCredentials();
                         }
-                        if (option.AssociatedString == "serverusw")
-                        {
-                            
-                        }
-                        if (option.AssociatedString == "serverus")
-                        {
-                            
-                        }
-                        if (option.AssociatedString == "servereu")
-                        {
-                            
-                        }
-
-                        //Sky
-                        if (option.AssociatedString == "monkeycoloursky")
-                        {
-                            GameObject gameObject = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky/newsky (1)");
-                            gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                            gameObject.GetComponent<MeshRenderer>().material.color = new Color(GorillaTagger.Instance.myVRRig.GetComponent<SkinnedMeshRenderer>().material.color.r, GorillaTagger.Instance.myVRRig.GetComponent<SkinnedMeshRenderer>().material.color.g, GorillaTagger.Instance.myVRRig.GetComponent<SkinnedMeshRenderer>().material.color.b);
-                        }
-                        if (option.AssociatedString == "purplesky")
-                        {
-                            GameObject gameObject = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky/newsky (1)");
-                            gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                            gameObject.GetComponent<MeshRenderer>().material.color = Color.magenta;
-                        }
-                        if (option.AssociatedString == "redsky")
-                        {
-                            GameObject gameObject = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky/newsky (1)");
-                            gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                            gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
-                        }
-                        if (option.AssociatedString == "cyansky")
-                        {
-                            GameObject gameObject = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky/newsky (1)");
-                            gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                            gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
-                        }
-                        if (option.AssociatedString == "greensky")
-                        {
-                            GameObject gameObject = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky/newsky (1)");
-                            gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                            gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
-                        }
 
 
                         if (option.AssociatedString == "loadconfig")
-                            Configs.LoadConfig($"{Configs.folderPath}\\{Settings[2].StringArray[Settings[2].stringsliderind]}.json");
+                        {
+                            Configs.LoadConfig($"{Configs.folderPath}\\{Settings[3].StringArray[Settings[3].stringsliderind]}.json");
+                        }
                         if (option.AssociatedString == "saveconfig")
                             Configs.SaveConfig();
-
-                        if (option.AssociatedString == "nosnitch")
-                        {
-                            if (PhotonNetwork.InRoom)
-                            {
-                                if (!GorillaTagger.Instance.offlineVRRig.gameObject.GetPhotonView().Controller.CustomProperties.ContainsValue("You know mod checkers are a illegal mod right :p"))
-                                {
-                                    Hashtable hash = new Hashtable();
-                                    hash.Add("mods", "You know mod checkers are a illegal mod right :p");
-                                    GorillaTagger.Instance.offlineVRRig.gameObject.GetPhotonView().Controller.SetCustomProperties(hash);
-                                }
-                            }
-                        }
                     }
 
-                    switch (Colours[0].stringsliderind)
+
+                    switch (ColourSettings[0].stringsliderind)
+
                     {
                         case 0:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColourString = "magenta";
+                            MenuColour = "magenta";
                             break;
                         case 1:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColourString = "red";
+                            MenuColour = "red";
                             break;
                         case 2:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColourString = "yellow";
+                            MenuColour = "yellow";
                             break;
                         case 3:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColourString = "green";
+                            MenuColour = "green";
                             break;
                         case 4:
                             if (PluginConfig.MenuRGB)
                                 PluginConfig.MenuRGB = false;
-                            MenuColourString = "blue";
+                            MenuColour = "blue";
                             break;
                         case 5:
                             PluginConfig.MenuRGB = true;
                             break;
                     }
-                    switch (Settings[1].stringsliderind)
+                    switch (Settings[2].stringsliderind)
                     {
                         case 0:
                             Testtext.rectTransform.localPosition = new Vector3(-2.4f, 1f, 2f);

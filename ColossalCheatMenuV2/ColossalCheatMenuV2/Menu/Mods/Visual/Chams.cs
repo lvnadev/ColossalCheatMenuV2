@@ -1,4 +1,5 @@
-﻿using GorillaNetworking;
+﻿using Colossal.Menu;
+using GorillaNetworking;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,34 @@ namespace Colossal.Mods
 {
     public class Chams : MonoBehaviour
     {
+        private Color espcolor;
         public void Update()
         {
             if (PluginConfig.chams && PhotonNetwork.InRoom)
             {
-                foreach(VRRig vrrig in GorillaParent.instance.vrrigs)
+                switch (PluginConfig.ESPColour)
+                {
+                    case 0:
+                        espcolor = new Color(0.6f, 0f, 0.8f, 0.4f);
+                        break;
+                    case 1:
+                        espcolor = new Color(1f, 0f, 0f, 0.4f);
+                        break;
+                    case 2:
+                        espcolor = new Color(1f, 1f, 0f, 0.4f);
+                        break;
+                    case 3:
+                        espcolor = new Color(0f, 1f, 0f, 0.4f);
+                        break;
+                    case 4:
+                        espcolor = new Color(0f, 0f, 1f, 0.4f);
+                        break;
+                    default:
+                        espcolor = new Color(0.6f, 0f, 0.8f, 0.4f);
+                        break;
+                }
+
+                foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
                 {
                     if (vrrig != null && !vrrig.isOfflineVRRig && vrrig.mainSkin.material.shader != Shader.Find("GUI/Text Shader"))
                     {
@@ -28,7 +52,10 @@ namespace Colossal.Mods
                         }
                         else
                         {
-                            vrrig.mainSkin.material.color = new Color(1f, 0f, 1f, 0.4f);
+                            if (espcolor != null)
+                                vrrig.mainSkin.material.color = espcolor;
+                            else
+                                CustomConsole.LogToConsole("ESP Colour is null");
                         }
                     }
                 }

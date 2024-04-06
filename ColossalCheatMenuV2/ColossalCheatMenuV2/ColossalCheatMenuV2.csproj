@@ -59,7 +59,9 @@
     <Compile Include="Menu\Mods\GhostManager.cs" />
     <Compile Include="Menu\Mods\Modders\FakeQuestMenu.cs" />
     <Compile Include="Menu\Mods\Modders\PcCheckBypass.cs" />
+    <Compile Include="Menu\Mods\Movement\FloatyMonkey.cs" />
     <Compile Include="Menu\Mods\Movement\SpinBot.cs" />
+    <Compile Include="Menu\Mods\Movement\WASDFly.cs" />
     <Compile Include="Menu\Mods\Player\Desync.cs" />
     <Compile Include="Menu\Mods\Player\FreezeMonkey.cs" />
     <Compile Include="Menu\Mods\Movement\LongArm.cs" />
@@ -95,7 +97,6 @@
     <Compile Include="Menu\Overlay.cs" />
     <Compile Include="Patches\Heroin.cs" />
     <Compile Include="Patches\Bepinex\BepinexPatch.cs" />
-    <Compile Include="Patches\Bepinex\ControllerPatch.cs" />
     <Compile Include="Patches\Events.cs" />
     <Compile Include="Patches\GeneralFailMessage.cs" />
     <Compile Include="Menu\Mods\Visual\NoExpressions.cs" />
@@ -146,8 +147,7 @@
       <HintPath>..\..\..\Dependencies\MonoMod.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Gorilla Tag\Gorilla Tag_Data\Managed\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
       <HintPath>..\..\..\Dependencies\Photon3Unity3D.dll</HintPath>
@@ -223,6 +223,5 @@
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

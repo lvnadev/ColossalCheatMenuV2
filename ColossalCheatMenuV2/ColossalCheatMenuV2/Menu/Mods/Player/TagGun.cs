@@ -1,6 +1,5 @@
-﻿using Colossal.Patches;
-using ColossalCheatMenuV2.Menu;
-using ColossalCheatMenuV2.Patches.MakeItFuckingWork;
+﻿using Colossal.Menu;
+using Colossal.Patches;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -23,6 +22,25 @@ namespace Colossal.Mods
         {
             if (PluginConfig.taggun && PhotonNetwork.InRoom)
             {
+                switch (Menu.Menu.ColourSettings[2].stringsliderind)
+                {
+                    case 0:
+                        lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
+                        break;
+                    case 1:
+                        lineMaterial.color = new Color(1f, 0f, 0f, 0.5f);
+                        break;
+                    case 2:
+                        lineMaterial.color = new Color(1f, 1f, 0f, 0.5f);
+                        break;
+                    case 3:
+                        lineMaterial.color = new Color(0f, 1f, 0f, 0.5f);
+                        break;
+                    case 4:
+                        lineMaterial.color = new Color(0f, 0f, 1f, 0.5f);
+                        break;
+                }
+
                 if (this.pointer == null)
                 {
                     this.pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -41,7 +59,6 @@ namespace Colossal.Mods
                     if (this.radiusLine == null)
                     {
                         this.lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                        this.lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
                         this.radiusLine = new GameObject("RadiusLine")
                         {
                             transform =

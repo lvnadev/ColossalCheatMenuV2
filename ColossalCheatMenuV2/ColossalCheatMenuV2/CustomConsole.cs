@@ -43,7 +43,7 @@ namespace Colossal {
                 \     \____/    |    \    |___/    |    \/        \/        \/    |    \    |___ 
                  \______  /\_______  /_______ \_______  /_______  /_______  /\____|__  /_______ \
                         \/         \/        \/       \/        \/        \/         \/        \/
-                                Trolling lemming harder since July, 19th. 2022
+                                      Trolling lemming since Nov. 2021
                 ");
         }
 

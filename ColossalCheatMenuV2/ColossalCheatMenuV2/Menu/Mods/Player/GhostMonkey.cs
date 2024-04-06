@@ -1,4 +1,6 @@
-﻿using Colossal.Patches;
+
+﻿using Colossal.Menu;
+using Colossal.Patches;
 using GorillaNetworking;
 using Photon.Pun;
 using System;
@@ -32,7 +34,7 @@ namespace Colossal.Mods
                     if(DisableRig.disablerig)
                         DisableRig.disablerig = false;
 
-                    ghost.GetComponent<VRRig>().mainSkin.material.color = new Color32(204, 51, 255, 60);
+                    ghost.GetComponent<VRRig>().mainSkin.material.color = GhostManager.ghostColor;
                     ghost.GetComponent<VRRig>().mainSkin.material.shader = Shader.Find("GUI/Text Shader");
                     return;
                 } 

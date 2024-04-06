@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colossal.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,9 @@ namespace Colossal.Mods
         {
             if (PluginConfig.upsidedownmonkey)
             {
-                if(GorillaLocomotion.Player.Instance.transform.rotation == Quaternion.Euler(0f, 0f, 0f))
+                if(GorillaLocomotion.Player.Instance.transform.rotation != Quaternion.Euler(0f, 0f, 180f))
                     GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+                GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * (Time.deltaTime * (20f / Time.deltaTime)), ForceMode.Acceleration);
             }
             else
             {

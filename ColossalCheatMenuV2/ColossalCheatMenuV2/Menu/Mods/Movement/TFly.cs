@@ -1,4 +1,5 @@
-﻿using ColossalCheatMenuV2.Patches.MakeItFuckingWork;
+﻿
+using Colossal.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
-using static Colossal.Plugin;
 
 namespace Colossal.Mods
 {

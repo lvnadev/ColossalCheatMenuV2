@@ -1,4 +1,5 @@
-﻿using ColossalCheatMenuV2.Patches.MakeItFuckingWork;
+﻿
+using Colossal.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;

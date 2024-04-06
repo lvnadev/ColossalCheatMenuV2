@@ -1,4 +1,5 @@
-﻿using Colossal.Patches;
+﻿using Colossal.Menu;
+using Colossal.Patches;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,25 @@ namespace Colossal.Mods {
         {
             if (PluginConfig.tagall)
             {
+                switch (Menu.Menu.ColourSettings[2].stringsliderind)
+                {
+                    case 0:
+                        lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
+                        break;
+                    case 1:
+                        lineMaterial.color = new Color(1f, 0f, 0f, 0.5f);
+                        break;
+                    case 2:
+                        lineMaterial.color = new Color(1f, 1f, 0f, 0.5f);
+                        break;
+                    case 3:
+                        lineMaterial.color = new Color(0f, 1f, 0f, 0.5f);
+                        break;
+                    case 4:
+                        lineMaterial.color = new Color(0f, 0f, 1f, 0.5f);
+                        break;
+                }
+
                 GorillaTagger.Instance.tagCooldown = 0;
                 GorillaLocomotion.Player.Instance.teleportThresholdNoVel = int.MaxValue;
                 foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
@@ -32,7 +52,6 @@ namespace Colossal.Mods {
                                 if (radiusLine == null)
                                 {
                                     lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                                    lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
 
                                     GameObject lineObject = new GameObject("RadiusLine");
                                     lineObject.transform.parent = vrrig.transform;
@@ -60,7 +79,6 @@ namespace Colossal.Mods {
                             if (radiusLine == null)
                             {
                                 lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                                lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
 
                                 GameObject lineObject = new GameObject("RadiusLine");
                                 lineObject.transform.parent = vrrig.transform;
