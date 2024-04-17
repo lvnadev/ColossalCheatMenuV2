@@ -61,6 +61,7 @@
     <Compile Include="Menu\Mods\Modders\PcCheckBypass.cs" />
     <Compile Include="Menu\Mods\Movement\FloatyMonkey.cs" />
     <Compile Include="Menu\Mods\Movement\SpinBot.cs" />
+    <Compile Include="Menu\Mods\Movement\Timer.cs" />
     <Compile Include="Menu\Mods\Movement\WASDFly.cs" />
     <Compile Include="Menu\Mods\Player\Desync.cs" />
     <Compile Include="Menu\Mods\Player\FreezeMonkey.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Menu\Mods\Player\TagAll.cs" />
     <Compile Include="Menu\Mods\Player\TagAura.cs" />
     <Compile Include="Menu\Mods\ThisGuyIsUsingColossal!!!.cs" />
+    <Compile Include="Menu\Mods\Visual\BoneESP.cs" />
     <Compile Include="Menu\Mods\Visual\BoxEsp.cs" />
     <Compile Include="Menu\Mods\Visual\Chams.cs" />
     <Compile Include="Menu\Mods\Player\CreeperMonkey.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Menu\Mods\Movement\WallWalk.cs" />
     <Compile Include="Menu\Mods\Visual\HollowBoxEsp.cs" />
     <Compile Include="Menu\Mods\Visual\Sky Colour.cs" />
+    <Compile Include="Menu\Mods\Visual\Tracers.cs" />
     <Compile Include="Menu\Mods\Visual\WhyIsEveryoneLookingAtMe.cs" />
     <Compile Include="Menu\NotifacationLib\Notifacations\EventNotifacation.cs" />
     <Compile Include="Menu\NotifacationLib\Notifacations\JoinNotifacation.cs" />

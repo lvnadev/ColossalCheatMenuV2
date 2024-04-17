@@ -80,17 +80,23 @@ namespace Colossal.Mods
                         case 8:
                             GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.6f;
                             break;
-                        //case 9:
-                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
-                        //    break;
-                        //case 10:
-                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
-                        //    break;
-                        //case 11:
-                        //    GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
-                        //    break;
+                            //case 9:
+                            //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.8f;
+                            //    break;
+                            //case 10:
+                            //    GorillaLocomotion.Player.Instance.maxJumpSpeed = 9f;
+                            //    break;
+                            //case 11:
+                            //    GorillaLocomotion.Player.Instance.maxJumpSpeed = int.MaxValue;
+                            //    break;
                     }
                 }
+                else if (!ControllerInputPoller.instance.rightGrab && Menu.Menu.Speed[1].stringsliderind != 0)
+                    if (GorillaTagger.Instance.offlineVRRig.mainSkin.material.name.Contains("fected"))
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.5f;
+                    else
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 6.5f;
+
                 if (ControllerInputPoller.instance.rightGrab)
                 {
                     switch (Menu.Menu.Speed[2].stringsliderind)
@@ -131,6 +137,11 @@ namespace Colossal.Mods
                         //    break;
                     }
                 }
+                else if (!ControllerInputPoller.instance.leftGrab && Menu.Menu.Speed[1].stringsliderind != 0)
+                    if (GorillaTagger.Instance.offlineVRRig.mainSkin.material.name.Contains("fected"))
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.5f;
+                    else
+                        GorillaLocomotion.Player.Instance.maxJumpSpeed = 6.5f;
             }
         }
     }

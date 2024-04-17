@@ -14,22 +14,18 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            //if (PluginConfig.pccheckbypass)
-            //{
-            //    if(GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/LeftHand Controller").active)
-            //        GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/LeftHand Controller").SetActive(false);
-            //    if(GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/RightHand Controller").active)
-            //        GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/RightHand Controller").SetActive(false);
-            //}
-            //else
-            //{
-            //    if (!GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/LeftHand Controller").active)
-            //        GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/LeftHand Controller").SetActive(true);
-            //    if (!GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/RightHand Controller").active)
-            //        GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/RightHand Controller").SetActive(true);
+            if (PluginConfig.pccheckbypass)
+            {
+                if(!GorillaLocomotion.Player.Instance.inOverlay)
+                    GorillaLocomotion.Player.Instance.inOverlay = true;
+            }
+            else
+            {
+                if(GorillaLocomotion.Player.Instance.inOverlay)
+                    GorillaLocomotion.Player.Instance.inOverlay = false;
 
-            //    Destroy(GorillaTagger.Instance.GetComponent<FakeQuestMenu>());
-            //}
+                Destroy(GorillaTagger.Instance.GetComponent<FakeQuestMenu>());
+            }
         }
     }
 }

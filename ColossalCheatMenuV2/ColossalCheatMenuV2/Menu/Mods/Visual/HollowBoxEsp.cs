@@ -79,16 +79,6 @@ namespace Colossal.Mods
 
                         Color Espcolor;
 
-
-                        if (rig.mainSkin.material.name.Contains("fected"))
-                        {
-                            Espcolor = Color.red;
-                        }
-                        else
-                        {
-                            Espcolor = Color.magenta;
-                        }
-
                         if (rig.mainSkin.material.name.Contains("fected"))
                             Espcolor = Color.red;
                         else

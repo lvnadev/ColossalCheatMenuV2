@@ -69,5 +69,8 @@
 <div align="center" style="font-size: 20px;">
   <div</div>
   Thank you for chosing <span style="color: magenta;">Colossal Cheat Menu</span>.
-  Consider joining the <span style="color: cyan;">discord. https://discord.gg/x4VEPyCEGR</span>
+  Consider joining the <span style="color: cyan;">discord. https://discord.gg/x4VEPyCEGR</span><br>
+</div>
+<div align="center" style="font-size: 30px;">
+  <span style="color: magenta;"><a href="https://github.com/ColossusYTTV/ColossalCheatMenuV2/releases">Download</a></span>
 </div>

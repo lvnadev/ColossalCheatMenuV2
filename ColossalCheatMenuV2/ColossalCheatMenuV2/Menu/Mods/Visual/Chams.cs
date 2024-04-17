@@ -47,9 +47,7 @@ namespace Colossal.Mods
                     {
                         vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
                         if (vrrig.mainSkin.material.name.Contains("fected"))
-                        {
                             vrrig.mainSkin.material.color = new Color(1f, 0f, 0f, 0.4f);
-                        }
                         else
                         {
                             if (espcolor != null)

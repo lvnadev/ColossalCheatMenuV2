@@ -53,6 +53,7 @@ namespace Colossal {
             holder.AddComponent<MasterChangeNotifacation>();
             holder.AddComponent<Configs>();
 
+
             string[] oculusDlls = Directory.GetFiles(Environment.CurrentDirectory, "OculusXRPlugin.dll", SearchOption.AllDirectories);
             if (oculusDlls.Length > 0)
                 oculus = true;
@@ -68,7 +69,6 @@ namespace Colossal {
                 holder.AddComponent<LeaveNotifacation>();
                 holder.AddComponent<MasterChangeNotifacation>();
                 holder.AddComponent<Configs>();
-
 
 
                 Menu.Menu.LoadOnce();
@@ -119,8 +119,11 @@ namespace Colossal {
                     { typeof(FakeQuestMenu), PluginConfig.fakequestmenu },
                     { typeof(WASDFly), PluginConfig.WASDFly },
                     { typeof(FloatyMonkey), PluginConfig.FloatyMonkey },
-                    { typeof(TagAura), PluginConfig.FloatyMonkey },
+                    { typeof(TagAura), PluginConfig.tagaura },
                     { typeof(WallWalk), PluginConfig.wallwalk },
+                    { typeof(Timer), PluginConfig.Timer },
+                    { typeof(Tracers), PluginConfig.tracers },
+                    { typeof(BoneESP), PluginConfig.boneesp },
 
                 };
                 foreach (var kvp in componentConditions)

@@ -64,41 +64,44 @@ namespace Colossal.Mods {
 
                 if (ammount > 0)
                 {
-                    foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
+                    if(PhotonNetwork.InRoom)
                     {
-                        if (!vrrig.isOfflineVRRig)
+                        foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
                         {
-                            float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
-                            if (distance < GorillaGameManager.instance.tagDistanceThreshold / ammount && !vrrig.mainSkin.material.name.Contains("fected"))
+                            if (!vrrig.isOfflineVRRig)
                             {
-                                if (GorillaGameManager.instance.gameObject.GetComponent<GorillaTagManager>().currentInfectedArray.Contains(GorillaTagger.Instance.myVRRig.Owner.ActorNumber))
+                                float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
+                                if (distance <= GorillaGameManager.instance.tagDistanceThreshold / ammount && !vrrig.mainSkin.material.name.Contains("fected"))
                                 {
-                                    if(PluginConfig.csghostclient)
+                                    if (GorillaTagger.Instance.offlineVRRig.mainSkin.material.name.Contains("fected"))
                                     {
-                                        if (radiusLine == null)
+                                        if (PluginConfig.csghostclient)
                                         {
-                                            lineMaterial = new Material(Shader.Find("Sprites/Default"));
-
-                                            GameObject lineObject = new GameObject("RadiusLine");
-                                            lineObject.transform.parent = vrrig.transform;
-                                            radiusLine = lineObject.AddComponent<LineRenderer>();
-                                            radiusLine.positionCount = 2;
-                                            radiusLine.startWidth = 0.05f;
-                                            radiusLine.endWidth = 0.05f;
-                                            radiusLine.material = lineMaterial;
-                                        }
-                                        radiusLine.SetPosition(0, vrrig.transform.position);
-                                        radiusLine.SetPosition(1, GorillaTagger.Instance.transform.position);
-                                        if (radiusLine.GetPosition(0) == null)
-                                        {
-                                            if (radiusLine != null)
+                                            if (radiusLine == null)
                                             {
-                                                Destroy(radiusLine);
-                                                radiusLine = null;
+                                                lineMaterial = new Material(Shader.Find("Sprites/Default"));
+
+                                                GameObject lineObject = new GameObject("RadiusLine");
+                                                lineObject.transform.parent = vrrig.transform;
+                                                radiusLine = lineObject.AddComponent<LineRenderer>();
+                                                radiusLine.positionCount = 2;
+                                                radiusLine.startWidth = 0.05f;
+                                                radiusLine.endWidth = 0.05f;
+                                                radiusLine.material = lineMaterial;
+                                            }
+                                            radiusLine.SetPosition(0, vrrig.transform.position);
+                                            radiusLine.SetPosition(1, GorillaTagger.Instance.transform.position);
+                                            if (radiusLine.GetPosition(0) == null)
+                                            {
+                                                if (radiusLine != null)
+                                                {
+                                                    Destroy(radiusLine);
+                                                    radiusLine = null;
+                                                }
                                             }
                                         }
+                                        GorillaLocomotion.Player.Instance.rightControllerTransform.position = vrrig.transform.position;
                                     }
-                                    GorillaLocomotion.Player.Instance.rightControllerTransform.position = vrrig.transform.position;
                                 }
                             }
                         }

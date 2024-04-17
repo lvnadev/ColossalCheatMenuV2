@@ -84,16 +84,6 @@ namespace Colossal.Mods
                         face.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
                         Color Espcolor;
 
-
-                        if (rig.mainSkin.material.name.Contains("fected"))
-                        {
-                            Espcolor = new Color(1f, 0f, 0f, 0.4f);
-                        }
-                        else
-                        {
-                            Espcolor = new Color(1f, 0f, 1f, 0.4f);
-                        }
-
                         if (rig.mainSkin.material.name.Contains("fected"))
                             Espcolor = new Color(1f, 0f, 0f, 0.4f);
                         else

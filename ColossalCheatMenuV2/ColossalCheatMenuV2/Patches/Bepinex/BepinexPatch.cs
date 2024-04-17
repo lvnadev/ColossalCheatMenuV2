@@ -35,6 +35,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using System.Threading.Tasks;
 using Colossal.Menu;
 using Colossal;
+using System.Security.Policy;
 
 namespace Colossal.Patches {
     [BepInPlugin("ColossusYTTV.ColossalCheatMenuV2", "ColossalCheatMenuV2", "1.0.0")]
