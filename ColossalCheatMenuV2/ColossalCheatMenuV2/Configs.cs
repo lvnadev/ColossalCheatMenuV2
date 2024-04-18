@@ -247,8 +247,8 @@ namespace Colossal.Menu
                 Menu.Movement[7].AssociatedBool = Convert.ToBoolean(values[9]);
                 Menu.Movement[8].AssociatedBool = Convert.ToBoolean(values[10]);
                 Menu.Movement[9].AssociatedBool = Convert.ToBoolean(values[11]);
-                Menu.Movement[10].AssociatedBool = Convert.ToBoolean(values[12]);
-                Menu.Movement[11].AssociatedBool = Convert.ToBoolean(values[13]);
+                Menu.Movement2[1].AssociatedBool = Convert.ToBoolean(values[12]);
+                Menu.Movement2[0].AssociatedBool = Convert.ToBoolean(values[13]);
 
                 Menu.Visual[0].AssociatedBool = Convert.ToBoolean(values[14]);
                 Menu.Visual[1].AssociatedBool = Convert.ToBoolean(values[15]);
