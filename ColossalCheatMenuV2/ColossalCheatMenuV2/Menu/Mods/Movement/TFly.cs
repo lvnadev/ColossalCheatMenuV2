@@ -3,11 +3,13 @@ using Colossal.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
+using static Colossal.Plugin;
 
 namespace Colossal.Mods
 {
@@ -30,7 +32,7 @@ namespace Colossal.Mods
             }
             else
             {
-                UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<TFly>());
+                UnityEngine.Object.Destroy(holder.GetComponent<TFly>());
             }
         }
     }

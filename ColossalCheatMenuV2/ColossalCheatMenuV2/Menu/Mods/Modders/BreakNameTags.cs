@@ -29,7 +29,7 @@ namespace Colossal.Mods
             else
             {
                 once = false;
-                Destroy(GorillaTagger.Instance.GetComponent<BreakNameTags>());
+                Destroy(holder.GetComponent<BreakNameTags>());
             }
         }
     }

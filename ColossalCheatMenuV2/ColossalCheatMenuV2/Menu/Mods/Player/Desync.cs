@@ -85,7 +85,7 @@ namespace Colossal.Mods
                 if (ghost != null)
                     GhostManager.DestroyGhost(ghost);
 
-                Destroy(GorillaTagger.Instance.GetComponent<Desync>());
+                Destroy(holder.GetComponent<Desync>());
             }
         }
     }

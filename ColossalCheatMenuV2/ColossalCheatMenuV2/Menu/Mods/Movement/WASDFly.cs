@@ -52,20 +52,20 @@ namespace Colossal.Mods
                 bool key6 = UnityInput.Current.GetKey(KeyCode.LeftControl);
                 if (key)
                 {
-                    GorillaTagger.Instance.rigidbody.transform.position += GorillaTagger.Instance.rigidbody.transform.forward * Time.deltaTime * flyspeed;
+                    GorillaTagger.Instance.rigidbody.transform.position += Camera.main.transform.forward * Time.deltaTime * flyspeed;
                 }
                 if (key3)
                 {
-                    GorillaTagger.Instance.rigidbody.transform.position += GorillaTagger.Instance.rigidbody.transform.forward * Time.deltaTime * -flyspeed;
+                    GorillaTagger.Instance.rigidbody.transform.position += Camera.main.transform.forward * Time.deltaTime * -flyspeed;
                 }
                 bool isPressed = Mouse.current.rightButton.isPressed;
                 if (isPressed)
                 {
-                    Vector3 eulerAngles = GorillaTagger.Instance.rigidbody.transform.rotation.eulerAngles;
+                    Vector3 eulerAngles = Camera.main.transform.rotation.eulerAngles;
                     if (X < 0f)
                         X = eulerAngles.y;
                     eulerAngles = new Vector3(eulerAngles.x, X + (Mouse.current.position.ReadValue().x / (float)Screen.width - 5) * 360f * 1.33f, eulerAngles.z);
-                    GorillaTagger.Instance.rigidbody.transform.rotation = Quaternion.Euler(eulerAngles);
+                    Camera.main.transform.rotation = Quaternion.Euler(eulerAngles);
                 }
                 else
                 {
@@ -73,24 +73,24 @@ namespace Colossal.Mods
                 }
                 if (key2)
                 {
-                    GorillaTagger.Instance.rigidbody.transform.position += GorillaTagger.Instance.rigidbody.transform.right * Time.deltaTime * -flyspeed;
+                    GorillaTagger.Instance.rigidbody.transform.position += Camera.main.transform.right * Time.deltaTime * -flyspeed;
                 }
                 if (key4)
                 {
-                    GorillaTagger.Instance.rigidbody.transform.position += GorillaTagger.Instance.rigidbody.transform.right * Time.deltaTime * flyspeed;
+                    GorillaTagger.Instance.rigidbody.transform.position += Camera.main.transform.right * Time.deltaTime * flyspeed;
                 }
                 if (key5)
                 {
-                    GorillaTagger.Instance.rigidbody.transform.position += GorillaTagger.Instance.rigidbody.transform.up * Time.deltaTime * flyspeed;
+                    GorillaTagger.Instance.rigidbody.transform.position += Camera.main.transform.up * Time.deltaTime * flyspeed;
                 }
                 if (key6)
                 {
-                    GorillaTagger.Instance.rigidbody.transform.position += GorillaTagger.Instance.rigidbody.transform.up * Time.deltaTime * -flyspeed;
+                    GorillaTagger.Instance.rigidbody.transform.position += Camera.main.transform.up * Time.deltaTime * -flyspeed;
                 }
             }
             else
             {
-                Destroy(GorillaTagger.Instance.GetComponent<WASDFly>());
+                Destroy(holder.GetComponent<WASDFly>());
             }
         }
     }

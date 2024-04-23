@@ -31,7 +31,7 @@ namespace Colossal {
         public static GameObject hud;
         public static GameObject holder;
 
-        public static float version = 5.4f;
+        public static float version = 5.5f;
         public static bool sussy = false;
         public static bool oculus = false;
 
@@ -60,17 +60,6 @@ namespace Colossal {
 
             if (!oculus)
             {
-                CustomConsole.LogToConsole("[COLOSSAL] Spawned Holder");
-                holder = new GameObject();
-                holder.name = "Holder";
-                holder.AddComponent<Boards>();
-                holder.AddComponent<EventNotifacation>();
-                holder.AddComponent<JoinNotifacation>();
-                holder.AddComponent<LeaveNotifacation>();
-                holder.AddComponent<MasterChangeNotifacation>();
-                holder.AddComponent<Configs>();
-
-
                 Menu.Menu.LoadOnce();
                 CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start functions");
 
@@ -124,6 +113,7 @@ namespace Colossal {
                     { typeof(Timer), PluginConfig.Timer },
                     { typeof(Tracers), PluginConfig.tracers },
                     { typeof(BoneESP), PluginConfig.boneesp },
+                    { typeof(firstperson), PluginConfig.firstperson },
 
                 };
                 foreach (var kvp in componentConditions)

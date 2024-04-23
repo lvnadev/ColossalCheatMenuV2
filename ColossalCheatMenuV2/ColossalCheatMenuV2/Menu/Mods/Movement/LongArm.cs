@@ -33,7 +33,7 @@ namespace Colossal.Mods {
                     return;
                 }
             } else {
-                Destroy(GorillaTagger.Instance.GetComponent<LongArm>());
+                Destroy(holder.GetComponent<LongArm>());
                 GorillaTagger.Instance.transform.localScale = new Vector3(1, 1, 1);
             }
         }

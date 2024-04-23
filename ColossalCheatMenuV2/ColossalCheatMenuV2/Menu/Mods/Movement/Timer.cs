@@ -79,7 +79,7 @@ namespace Colossal.Mods
                 if(Time.timeScale != 1)
                     Time.timeScale = 1;
 
-                Destroy(GorillaTagger.Instance.GetComponent<Timer>());
+                Destroy(holder.GetComponent<Timer>());
             }
         }
     }

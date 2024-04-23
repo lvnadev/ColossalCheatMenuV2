@@ -78,6 +78,8 @@ namespace Colossal.Mods
                         }
                     }
                 }
+
+                Destroy(holder.GetComponent<Chams>());
                 /*ThrowableBug[] bug = Resources.FindObjectsOfTypeAll<ThrowableBug>();
                 foreach (ThrowableBug bugthing in bug)
                 {

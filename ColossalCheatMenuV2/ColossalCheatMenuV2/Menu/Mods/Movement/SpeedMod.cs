@@ -14,8 +14,6 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if(Menu.Menu.Speed[0].stringsliderind != null)
-            {
                 switch (Menu.Menu.Speed[0].stringsliderind)
                 {
                     case 1:
@@ -137,12 +135,11 @@ namespace Colossal.Mods
                         //    break;
                     }
                 }
-                else if (!ControllerInputPoller.instance.leftGrab && Menu.Menu.Speed[1].stringsliderind != 0)
+                else if (!ControllerInputPoller.instance.leftGrab && Menu.Menu.Speed[2].stringsliderind != 0)
                     if (GorillaTagger.Instance.offlineVRRig.mainSkin.material.name.Contains("fected"))
                         GorillaLocomotion.Player.Instance.maxJumpSpeed = 8.5f;
                     else
                         GorillaLocomotion.Player.Instance.maxJumpSpeed = 6.5f;
-            }
         }
     }
 }

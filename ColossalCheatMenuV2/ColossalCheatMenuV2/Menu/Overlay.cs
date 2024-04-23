@@ -105,6 +105,8 @@ namespace Colossal.Menu.ClientHub {
                 HUDObj2.transform.rotation = MainCamera.transform.rotation;
                 HUDObj2ROOM.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
                 HUDObj2ROOM.transform.rotation = MainCamera.transform.rotation;
+                //HUDObj2.transform.SetParent(MainCamera.transform);
+                //HUDObj2ROOM.transform.SetParent(MainCamera.transform);
 
                 deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
                 float fps = 1.0f / deltaTime;

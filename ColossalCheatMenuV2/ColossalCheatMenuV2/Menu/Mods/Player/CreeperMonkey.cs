@@ -23,47 +23,21 @@ namespace Colossal.Mods
                     float num = float.PositiveInfinity;
                     foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
                     {
-                        if (vrrig != GorillaTagger.Instance.offlineVRRig)
+                        if (!vrrig.isOfflineVRRig)
                         {
                             float sqrMagnitude = (vrrig.transform.position - GorillaLocomotion.Player.Instance.transform.position).sqrMagnitude;
                             if (sqrMagnitude < num)
                             {
                                 num = sqrMagnitude;
-                                foreach (VRRig vrrig2 in GorillaParent.instance.vrrigs)
-                                {
-                                    vrrig2.headConstraint.transform.LookAt(vrrig.headMesh.transform.position);
-                                }
+                                GorillaTagger.Instance.offlineVRRig.headConstraint.LookAt(vrrig.headMesh.transform);
+                                GorillaTagger.Instance.rightHandTransform.position = vrrig.headMesh.transform.position;
                             }
                         }
                     }
-                }
-                if (!SteamVR_Actions.gorillaTag_RightTriggerClick.GetState(SteamVR_Input_Sources.RightHand))
-                {
-                    return;
-                }
-                float num2 = float.PositiveInfinity;
-                using (List<VRRig>.Enumerator enumerator3 = GorillaParent.instance.vrrigs.GetEnumerator())
-                {
-                    while (enumerator3.MoveNext())
-                    {
-                        VRRig vrrig3 = enumerator3.Current;
-                        if (vrrig3 != GorillaTagger.Instance.offlineVRRig)
-                        {
-                            float sqrMagnitude2 = (vrrig3.transform.position - GorillaLocomotion.Player.Instance.transform.position).sqrMagnitude;
-                            if (sqrMagnitude2 < num2)
-                            {
-                                num2 = sqrMagnitude2;
-                                foreach (VRRig vrrig4 in GorillaParent.instance.vrrigs)
-                                {
-                                    vrrig4.rightHandTransform.position = vrrig3.headMesh.transform.position;
-                                }
-                            }
-                        }
-                    }
-                    return;
                 }
             }
-            UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<CreeperMonkey>());
+            else
+                Destroy(holder.GetComponent<CreeperMonkey>());
         }
     }
 }

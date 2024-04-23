@@ -37,6 +37,7 @@ namespace Colossal.Menu
         public static bool noexpressions = false;
         public static bool tracers = false;
         public static bool boneesp = false;
+        public static bool firstperson = false;
 
         // Group 3
         public static bool nofinger = false;
@@ -70,12 +71,17 @@ namespace Colossal.Menu
         public static int TagAuraAmmount = 2;
         public static int WallWalkAmmount = 2;
         public static int TimerSpeed = 0;
+        public static int FirstPersonFOV = 0;
+        public static int ExcelFlySpeed = 0;
+        public static int TracerPosition = 0;
+        public static int TracerSize = 0;
 
         //group 6
         public static bool driftmode = false;
         public static bool noti = true;
         public static bool overlay = true;
         public static bool csghostclient = true;
+        public static bool tooltips = true;
     }
 
     internal class Configs : MonoBehaviour
@@ -158,6 +164,7 @@ namespace Colossal.Menu
                             PluginConfig.noexpressions,
                             PluginConfig.tracers,
                             PluginConfig.boneesp,
+                            PluginConfig.firstperson,
 
                             // Group 3
                             PluginConfig.nofinger,
@@ -182,6 +189,7 @@ namespace Colossal.Menu
                             PluginConfig.noti,
                             PluginConfig.overlay,
                             PluginConfig.csghostclient,
+                            PluginConfig.tooltips,
 
                             //group 6
                             PluginConfig.MenuColour,
@@ -195,6 +203,10 @@ namespace Colossal.Menu
                             PluginConfig.TagAuraAmmount,
                             PluginConfig.WallWalkAmmount,
                             PluginConfig.TimerSpeed,
+                            PluginConfig.FirstPersonFOV,
+                            PluginConfig.ExcelFlySpeed,
+                            PluginConfig.TracerPosition,
+                            PluginConfig.TracerSize,
                         };
 
                 string jsonContent = JsonConvert.SerializeObject(values, Formatting.Indented);
@@ -218,7 +230,7 @@ namespace Colossal.Menu
                 string json = File.ReadAllText(filePath);
                 List<object> values = JsonConvert.DeserializeObject<List<object>>(json);
 
-                if (values.Count != 49)
+                if (values.Count != 56)
                 {
                     Console.WriteLine($"Error loading plugin configuration from {filePath}: Incorrect number of values.");
                     Notifacations.SendNotification($"<color=blue>[CONFIG]</color> ERROR : {filePath}");
@@ -257,40 +269,46 @@ namespace Colossal.Menu
                 Menu.Visual[5].AssociatedBool = Convert.ToBoolean(values[18]);
                 Menu.Visual[6].AssociatedBool = Convert.ToBoolean(values[19]);
                 Menu.Visual[7].AssociatedBool = Convert.ToBoolean(values[20]);
+                Menu.Visual[8].AssociatedBool = Convert.ToBoolean(values[21]);
 
-                Menu.Player[0].AssociatedBool = Convert.ToBoolean(values[21]);
-                Menu.Player[1].AssociatedBool = Convert.ToBoolean(values[22]);
-                Menu.Player[2].AssociatedBool = Convert.ToBoolean(values[23]);
-                Menu.Player[3].AssociatedBool = Convert.ToBoolean(values[24]);
-                Menu.Player[4].AssociatedBool = Convert.ToBoolean(values[25]);
-                Menu.Player[5].AssociatedBool = Convert.ToBoolean(values[26]);
-                Menu.Player[6].AssociatedBool = Convert.ToBoolean(values[27]);
-                Menu.Player[7].AssociatedBool = Convert.ToBoolean(values[28]);
-                Menu.Player[8].AssociatedBool = Convert.ToBoolean(values[29]);
-                Menu.Player[9].AssociatedBool = Convert.ToBoolean(values[30]);
+                Menu.Player[0].AssociatedBool = Convert.ToBoolean(values[22]);
+                Menu.Player[1].AssociatedBool = Convert.ToBoolean(values[23]);
+                Menu.Player[2].AssociatedBool = Convert.ToBoolean(values[24]);
+                Menu.Player[3].AssociatedBool = Convert.ToBoolean(values[25]);
+                Menu.Player[4].AssociatedBool = Convert.ToBoolean(values[26]);
+                Menu.Player[5].AssociatedBool = Convert.ToBoolean(values[27]);
+                Menu.Player[6].AssociatedBool = Convert.ToBoolean(values[28]);
+                Menu.Player[7].AssociatedBool = Convert.ToBoolean(values[29]);
+                Menu.Player[8].AssociatedBool = Convert.ToBoolean(values[30]);
+                Menu.Player[9].AssociatedBool = Convert.ToBoolean(values[31]);
 
-                Menu.Modders[0].AssociatedBool = Convert.ToBoolean(values[31]);
-                Menu.Modders[1].AssociatedBool = Convert.ToBoolean(values[32]);
-                Menu.Modders[2].AssociatedBool = Convert.ToBoolean(values[33]);
-                Menu.Modders[3].AssociatedBool = Convert.ToBoolean(values[34]);
+                Menu.Modders[0].AssociatedBool = Convert.ToBoolean(values[32]);
+                Menu.Modders[1].AssociatedBool = Convert.ToBoolean(values[33]);
+                Menu.Modders[2].AssociatedBool = Convert.ToBoolean(values[34]);
+                Menu.Modders[3].AssociatedBool = Convert.ToBoolean(values[35]);
 
-                Menu.MainMenu[7].AssociatedBool = Convert.ToBoolean(values[35]);
-                Menu.MainMenu[8].AssociatedBool = Convert.ToBoolean(values[36]);
-                Menu.MainMenu[9].AssociatedBool = Convert.ToBoolean(values[37]);
-                Menu.MainMenu[10].AssociatedBool = Convert.ToBoolean(values[38]);
+                Menu.MainMenu[7].AssociatedBool = Convert.ToBoolean(values[36]);
+                Menu.MainMenu[8].AssociatedBool = Convert.ToBoolean(values[37]);
+                Menu.MainMenu[9].AssociatedBool = Convert.ToBoolean(values[38]);
+                Menu.MainMenu[10].AssociatedBool = Convert.ToBoolean(values[39]);
+                Menu.MainMenu[11].AssociatedBool = Convert.ToBoolean(values[40]);
 
-                Menu.ColourSettings[0].stringsliderind = Convert.ToInt32(values[39]);
-                Menu.Settings[2].stringsliderind = Convert.ToInt32(values[40]);
-                Menu.ColourSettings[1].stringsliderind = Convert.ToInt32(values[41]);
-                Menu.ColourSettings[2].stringsliderind = Convert.ToInt32(values[42]);
-                Menu.ColourSettings[3].stringsliderind = Convert.ToInt32(values[43]);
-                Menu.ColourSettings[4].stringsliderind = Convert.ToInt32(values[44]);
+                Menu.ColourSettings[0].stringsliderind = Convert.ToInt32(values[41]);
+                Menu.Settings[2].stringsliderind = Convert.ToInt32(values[42]);
+                Menu.ColourSettings[1].stringsliderind = Convert.ToInt32(values[43]);
+                Menu.ColourSettings[2].stringsliderind = Convert.ToInt32(values[44]);
+                Menu.ColourSettings[3].stringsliderind = Convert.ToInt32(values[45]);
+                Menu.ColourSettings[4].stringsliderind = Convert.ToInt32(values[46]);
 
-                Menu.MiscSettings[0].stringsliderind = Convert.ToInt32(values[45]);
-                Menu.MiscSettings[1].stringsliderind = Convert.ToInt32(values[46]);
-                Menu.MiscSettings[2].stringsliderind = Convert.ToInt32(values[47]);
-                Menu.MiscSettings[3].stringsliderind = Convert.ToInt32(values[48]);
-                Menu.MiscSettings[4].stringsliderind = Convert.ToInt32(values[49]);
+                Menu.MiscSettings[0].stringsliderind = Convert.ToInt32(values[47]);
+                Menu.MiscSettings[1].stringsliderind = Convert.ToInt32(values[48]);
+                Menu.MiscSettings[2].stringsliderind = Convert.ToInt32(values[49]);
+                Menu.MiscSettings[3].stringsliderind = Convert.ToInt32(values[50]);
+                Menu.MiscSettings[4].stringsliderind = Convert.ToInt32(values[51]);
+                Menu.MiscSettings[5].stringsliderind = Convert.ToInt32(values[52]);
+                Menu.MiscSettings[6].stringsliderind = Convert.ToInt32(values[53]);
+                Menu.MiscSettings[7].stringsliderind = Convert.ToInt32(values[54]);
+                Menu.MiscSettings[8].stringsliderind = Convert.ToInt32(values[55]);
 
                 Notifacations.SendNotification($"<color=blue>[CONFIG]</color> LOADED : {Menu.Settings[3].StringArray[Menu.Settings[3].stringsliderind]}");
                 Console.WriteLine($"loaded {Menu.Settings[3].StringArray[Menu.Settings[3].stringsliderind]}");

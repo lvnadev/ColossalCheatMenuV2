@@ -14,6 +14,8 @@ namespace Colossal.Mods
     public class Tracers : MonoBehaviour
     {
         private Color espcolor;
+        private Vector3 pos;
+        private float size;
         public void Update()
         {
             if (PluginConfig.tracers)
@@ -39,6 +41,36 @@ namespace Colossal.Mods
                         espcolor = new Color(0.6f, 0f, 0.8f, 0.4f);
                         break;
                 }
+                switch (PluginConfig.TracerPosition)
+                {
+                    case 0:
+                        pos = GorillaTagger.Instance.rightHandTransform.position;
+                        break;
+                    case 1:
+                        pos = GorillaTagger.Instance.leftHandTransform.position;
+                        break;
+                    case 2:
+                        pos = GorillaTagger.Instance.headCollider.transform.position + (Vector3.up * 0.2f);
+                        break;
+                }
+                switch (PluginConfig.TracerSize)
+                {
+                    case 0:
+                        size = 0.01f;
+                        break;
+                    case 1:
+                        size = 0.025f;
+                        break;
+                    case 2:
+                        size = 0.05f;
+                        break;
+                    case 3:
+                        size = 0.065f;
+                        break;
+                    case 4:
+                        size = 0.08f;
+                        break;
+                }
 
                 foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
                 {
@@ -60,11 +92,11 @@ namespace Colossal.Mods
                             lineRenderer.endColor = espcolor;
                         }
 
-                        lineRenderer.startWidth = 0.05f;
-                        lineRenderer.endWidth = 0.05f;
+                        lineRenderer.startWidth = size;
+                        lineRenderer.endWidth = size;
                         lineRenderer.positionCount = 2;
                         lineRenderer.useWorldSpace = true;
-                        lineRenderer.SetPosition(0, GorillaTagger.Instance.rightHandTransform.position);
+                        lineRenderer.SetPosition(0, pos);
                         lineRenderer.SetPosition(1, vrrig.transform.position);
                         lineRenderer.material.shader = Shader.Find("GUI/Text Shader");
                         GameObject.Destroy(gameObject, Time.deltaTime);
@@ -73,7 +105,7 @@ namespace Colossal.Mods
             }
             else
             {
-                Destroy(GorillaTagger.Instance.GetComponent<Tracers>());
+                Destroy(holder.GetComponent<Tracers>());
             }
         }
     }

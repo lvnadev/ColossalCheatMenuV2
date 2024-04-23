@@ -79,7 +79,7 @@ namespace Colossal.Mods
             }
             else
             {
-                Destroy(GorillaTagger.Instance.GetComponent<FloatyMonkey>());
+                Destroy(holder.GetComponent<FloatyMonkey>());
             }
         }
     }

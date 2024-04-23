@@ -87,6 +87,7 @@
     <Compile Include="Menu\Mods\Player\TagGun.cs" />
     <Compile Include="Menu\Mods\Movement\TFly.cs" />
     <Compile Include="Menu\Mods\Movement\WallWalk.cs" />
+    <Compile Include="Menu\Mods\Visual\FirstPerson.cs" />
     <Compile Include="Menu\Mods\Visual\HollowBoxEsp.cs" />
     <Compile Include="Menu\Mods\Visual\Sky Colour.cs" />
     <Compile Include="Menu\Mods\Visual\Tracers.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Menu\NotifacationLib\Notifacations\MasterChangeNotifacation.cs" />
     <Compile Include="Menu\NotifacationLib\Notifacations\ReportNotifacation.cs" />
     <Compile Include="Menu\Overlay.cs" />
+    <Compile Include="Menu\ToolTips.cs" />
     <Compile Include="Patches\Heroin.cs" />
     <Compile Include="Patches\Bepinex\BepinexPatch.cs" />
     <Compile Include="Patches\Events.cs" />

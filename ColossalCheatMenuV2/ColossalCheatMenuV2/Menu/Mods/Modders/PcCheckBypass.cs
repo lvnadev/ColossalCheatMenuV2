@@ -25,7 +25,7 @@ namespace Colossal.Mods {
                 {
                     GameObject.Find("Mountain/Geometry/goodigloo").SetActive(true);
                 }
-                UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<PcCheckBypass>());
+                Destroy(holder.GetComponent<PcCheckBypass>());
             }
         }
     }

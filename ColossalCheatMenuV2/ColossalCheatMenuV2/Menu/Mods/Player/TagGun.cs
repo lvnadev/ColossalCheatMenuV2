@@ -22,24 +22,24 @@ namespace Colossal.Mods
         {
             if (PluginConfig.taggun && PhotonNetwork.InRoom)
             {
-                switch (Menu.Menu.ColourSettings[2].stringsliderind)
-                {
-                    case 0:
-                        lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
-                        break;
-                    case 1:
-                        lineMaterial.color = new Color(1f, 0f, 0f, 0.5f);
-                        break;
-                    case 2:
-                        lineMaterial.color = new Color(1f, 1f, 0f, 0.5f);
-                        break;
-                    case 3:
-                        lineMaterial.color = new Color(0f, 1f, 0f, 0.5f);
-                        break;
-                    case 4:
-                        lineMaterial.color = new Color(0f, 0f, 1f, 0.5f);
-                        break;
-                }
+                //switch (PluginConfig.BeamColour)
+                //{
+                //    case 0:
+                //        lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
+                //        break;
+                //    case 1:
+                //        lineMaterial.color = new Color(1f, 0f, 0f, 0.5f);
+                //        break;
+                //    case 2:
+                //        lineMaterial.color = new Color(1f, 1f, 0f, 0.5f);
+                //        break;
+                //    case 3:
+                //        lineMaterial.color = new Color(0f, 1f, 0f, 0.5f);
+                //        break;
+                //    case 4:
+                //        lineMaterial.color = new Color(0f, 0f, 1f, 0.5f);
+                //        break;
+                //}
 
                 if (this.pointer == null)
                 {
@@ -95,7 +95,7 @@ namespace Colossal.Mods
             }
             else
             {
-                UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<TagGun>());
+                UnityEngine.Object.Destroy(holder.GetComponent<TagGun>());
                 if (this.pointer != null)
                 {
                     UnityEngine.Object.Destroy(this.pointer);

@@ -16,16 +16,14 @@ namespace Colossal.Mods
         {
             if (PluginConfig.upsidedownmonkey)
             {
-                if(GorillaLocomotion.Player.Instance.transform.rotation != Quaternion.Euler(0f, 0f, 180f))
-                    GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+                GorillaLocomotion.Player.Instance.PlayerRotationOverride = Quaternion.Euler(0f, 0f, 180f);
                 GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * (Time.deltaTime * (20f / Time.deltaTime)), ForceMode.Acceleration);
             }
             else
             {
-                if (GorillaLocomotion.Player.Instance.transform.rotation != Quaternion.Euler(0f, 0f, 0f))
-                    GorillaLocomotion.Player.Instance.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                GorillaLocomotion.Player.Instance.PlayerRotationOverride = Quaternion.Euler(0f, 0f, 0f);
 
-                UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<UpsideDownMonkey>());
+                UnityEngine.Object.Destroy(holder.GetComponent<UpsideDownMonkey>());
             }
         }
     }

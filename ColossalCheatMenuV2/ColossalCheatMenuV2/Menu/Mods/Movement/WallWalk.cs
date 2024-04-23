@@ -99,7 +99,7 @@ namespace Colossal.Mods
             }
             else
             {
-                Destroy(GorillaTagger.Instance.GetComponent<WallWalk>());
+                Destroy(holder.GetComponent<WallWalk>());
             }
         }
     }

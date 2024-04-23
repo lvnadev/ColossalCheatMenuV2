@@ -122,7 +122,7 @@ namespace Colossal.Mods
             }
             else
             {
-                Destroy(GorillaTagger.Instance.GetComponent<BoneESP>());
+                Destroy(holder.GetComponent<BoneESP>());
             }
         }
     }

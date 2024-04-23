@@ -14,7 +14,7 @@ namespace Colossal.Mods
     {
         public void Update()
         {
-            if (PluginConfig.pccheckbypass)
+            if (PluginConfig.fakequestmenu)
             {
                 if(!GorillaLocomotion.Player.Instance.inOverlay)
                     GorillaLocomotion.Player.Instance.inOverlay = true;
@@ -24,7 +24,7 @@ namespace Colossal.Mods
                 if(GorillaLocomotion.Player.Instance.inOverlay)
                     GorillaLocomotion.Player.Instance.inOverlay = false;
 
-                Destroy(GorillaTagger.Instance.GetComponent<FakeQuestMenu>());
+                Destroy(holder.GetComponent<FakeQuestMenu>());
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Colossal;
+using GorillaNetworking;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,7 +35,7 @@ namespace Colossal.Menu
             {
                 if (GameObject.Find("Environment Objects/LocalObjects_Prefab").transform.Find("TreeRoom").gameObject.activeSelf && !Boards.tempbool)
                 {
-                    GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/StaticUnlit/motdscreen").GetComponent<Renderer>().material = Boards.boardmat;
+                    GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/forestatlas (combined by EdMeshCombinerSceneProcessor)").GetComponent<Renderer>().material = Boards.boardmat;
                     GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/StaticUnlit/screen").GetComponent<Renderer>().material = Boards.boardmat;
                     GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/Wall Monitors Screens/wallmonitorforest").GetComponent<Renderer>().material = Boards.boardmat;
                     GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/Wall Monitors Screens/wallmonitorcave").GetComponent<Renderer>().material = Boards.boardmat;
@@ -100,7 +101,7 @@ namespace Colossal.Menu
             }
             else if (GameObject.Find("Environment Objects/LocalObjects_Prefab").transform.Find("TreeRoom").gameObject.activeSelf && Boards.tempbool)
             {
-                GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/StaticUnlit/motdscreen").GetComponent<Renderer>().material = Boards.defaultboardmat;
+                GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/forestatlas (combined by EdMeshCombinerSceneProcessor)").GetComponent<Renderer>().material = Boards.defaultboardmat;
                 GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/StaticUnlit/screen").GetComponent<Renderer>().material = Boards.defaultboardmat;
                 GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/Wall Monitors Screens/wallmonitorforest").GetComponent<Renderer>().material = Boards.defaultboardmat;
                 GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/Wall Monitors Screens/wallmonitorcave").GetComponent<Renderer>().material = Boards.defaultboardmat;

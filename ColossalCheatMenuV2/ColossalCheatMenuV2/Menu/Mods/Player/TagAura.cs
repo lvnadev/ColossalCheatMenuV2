@@ -1,4 +1,5 @@
 ﻿using Colossal.Menu;
+using Colossal.Patches;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Colossal.Mods {
         public void Update() {
             if(PluginConfig.tagaura)
             {
-                switch (Menu.Menu.MiscSettings[2].stringsliderind)
+                switch (PluginConfig.TagAuraAmmount)
                 {
                     case 0:
                         ammount = 4.5f;
@@ -43,37 +44,37 @@ namespace Colossal.Mods {
                         ammount = 1f;
                         break;
                 }
-                switch (Menu.Menu.ColourSettings[2].stringsliderind)
-                {
-                    case 0:
-                        lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
-                        break;
-                    case 1:
-                        lineMaterial.color = new Color(1f, 0f, 0f, 0.5f);
-                        break;
-                    case 2:
-                        lineMaterial.color = new Color(1f, 1f, 0f, 0.5f);
-                        break;
-                    case 3:
-                        lineMaterial.color = new Color(0f, 1f, 0f, 0.5f);
-                        break;
-                    case 4:
-                        lineMaterial.color = new Color(0f, 0f, 1f, 0.5f);
-                        break;
-                }
+                //switch (PluginConfig.BeamColour)
+                //{
+                //    case 0:
+                //        lineMaterial.color = new Color(0.6f, 0f, 0.8f, 0.5f);
+                //        break;
+                //    case 1:
+                //        lineMaterial.color = new Color(1f, 0f, 0f, 0.5f);
+                //        break;
+                //    case 2:
+                //        lineMaterial.color = new Color(1f, 1f, 0f, 0.5f);
+                //        break;
+                //    case 3:
+                //        lineMaterial.color = new Color(0f, 1f, 0f, 0.5f);
+                //        break;
+                //    case 4:
+                //        lineMaterial.color = new Color(0f, 0f, 1f, 0.5f);
+                //        break;
+                //}
 
                 if (ammount > 0)
                 {
                     if(PhotonNetwork.InRoom)
                     {
-                        foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
+                        if (GorillaTagger.Instance.offlineVRRig.mainSkin.material.name.ToLower().Contains("fected"))
                         {
-                            if (!vrrig.isOfflineVRRig)
+                            foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
                             {
-                                float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
-                                if (distance <= GorillaGameManager.instance.tagDistanceThreshold / ammount && !vrrig.mainSkin.material.name.Contains("fected"))
+                                if(!vrrig.mainSkin.material.name.Contains("fected"))
                                 {
-                                    if (GorillaTagger.Instance.offlineVRRig.mainSkin.material.name.Contains("fected"))
+                                    float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
+                                    if (distance <= GorillaGameManager.instance.tagDistanceThreshold / ammount && !vrrig.isMyPlayer)
                                     {
                                         if (PluginConfig.csghostclient)
                                         {
@@ -100,6 +101,9 @@ namespace Colossal.Mods {
                                                 }
                                             }
                                         }
+
+                                        if (DisableRig.disablerig)
+                                            DisableRig.disablerig = false;
                                         GorillaLocomotion.Player.Instance.rightControllerTransform.position = vrrig.transform.position;
                                     }
                                 }
@@ -110,7 +114,16 @@ namespace Colossal.Mods {
             }
             else
             {
-                Destroy(GorillaTagger.Instance.GetComponent<TagAura>());
+                if (!DisableRig.disablerig)
+                    DisableRig.disablerig = true;
+
+                if (radiusLine != null)
+                {
+                    Destroy(radiusLine.gameObject);
+                    radiusLine = null;
+                }
+
+                Destroy(holder.GetComponent<TagAura>());
             }
         }
     }

@@ -20,11 +20,6 @@ namespace Colossal.Mods
         {
             if (PluginConfig.invismonkey && PhotonNetwork.InRoom)
             {
-                if (!PluginConfig.invismonkey || !PhotonNetwork.InRoom)
-                {
-                    UnityEngine.Object.Destroy(GorillaTagger.Instance.GetComponent<InvisMonkey>());
-                    return;
-                }
                 if (ControllerInputPoller.instance.leftControllerSecondaryButton)
                 {
                     if(ghost == null) 
@@ -37,18 +32,12 @@ namespace Colossal.Mods
                     ghost.GetComponent<VRRig>().mainSkin.material.shader = Shader.Find("GUI/Text Shader");
 
                     GorillaTagger.Instance.offlineVRRig.transform.position = new Vector3(GorillaLocomotion.Player.Instance.headCollider.transform.position.x, -646.46466f, GorillaLocomotion.Player.Instance.headCollider.transform.position.z);
-                    if (GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
-                        GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = false;
-                    if (GorillaTagger.Instance.offlineVRRig.headMesh.active)
-                        GorillaTagger.Instance.offlineVRRig.headMesh.active = false;
-                    if (GorillaTagger.Instance.offlineVRRig.showName)
-                        GorillaTagger.Instance.offlineVRRig.showName = false;
-                    return;
-                } else
+                }
+                else
                 {
                     if (ghost != null)
                         GhostManager.DestroyGhost(ghost);
-                    if(!DisableRig.disablerig)
+                    if (!DisableRig.disablerig)
                         DisableRig.disablerig = true;
                 }
             }
@@ -59,14 +48,7 @@ namespace Colossal.Mods
                 if(!DisableRig.disablerig)
                     DisableRig.disablerig = true;
 
-                if (!GorillaTagger.Instance.offlineVRRig.mainSkin.enabled)
-                    GorillaTagger.Instance.offlineVRRig.mainSkin.enabled = true;
-                if(!GorillaTagger.Instance.offlineVRRig.headMesh.active)
-                    GorillaTagger.Instance.offlineVRRig.headMesh.active = true;
-                if(!GorillaTagger.Instance.offlineVRRig.showName)
-                    GorillaTagger.Instance.offlineVRRig.showName = true;
-
-                Destroy(GorillaTagger.Instance.GetComponent<InvisMonkey>());
+                Destroy(holder.GetComponent<InvisMonkey>());
             }
         }
     }

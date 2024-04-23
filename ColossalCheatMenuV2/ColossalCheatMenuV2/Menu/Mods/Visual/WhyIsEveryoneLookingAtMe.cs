@@ -12,14 +12,14 @@ namespace Colossal.Mods {
     public class WhyIsEveryoneLookingAtMe : MonoBehaviour {
         public void Update() {
             if (PluginConfig.whyiseveryonelookingatme) {
-                foreach (VRRig vrrig in GorillaParent.instance.vrrigs) {
-                    if (!vrrig.isOfflineVRRig) {
-                        vrrig.AddComponent<FacePlayer>();
-                    }
+                foreach (VRRig vrrig in GorillaParent.instance.vrrigs) 
+                {
+                    if (!vrrig.isOfflineVRRig) 
+                        vrrig.headConstraint.LookAt(GorillaTagger.Instance.headCollider.transform);
                 }
-            } else {
-                Destroy(GorillaTagger.Instance.GetComponent<WhyIsEveryoneLookingAtMe>());
-            }
+            } 
+            else 
+                Destroy(holder.GetComponent<WhyIsEveryoneLookingAtMe>());
         }
     }
 }

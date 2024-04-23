@@ -46,7 +46,7 @@ namespace Colossal.Mods {
                 this.waterbox.transform.position = new Vector3(0f, -6969f, 0f);
             }
             else {
-                Destroy(GorillaTagger.Instance.GetComponent<WateryAir>());
+                Destroy(holder.GetComponent<WateryAir>());
                 if (waterbox != null) {
                     GameObject.Destroy(waterbox);
                     waterbox = null;

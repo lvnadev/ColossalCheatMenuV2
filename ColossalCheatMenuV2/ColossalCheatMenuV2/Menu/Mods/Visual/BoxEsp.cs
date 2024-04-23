@@ -98,6 +98,8 @@ namespace Colossal.Mods
                     }
                 }
             }
+            else
+                Destroy(holder.GetComponent<BoxEsp>());
         }
     }
 }

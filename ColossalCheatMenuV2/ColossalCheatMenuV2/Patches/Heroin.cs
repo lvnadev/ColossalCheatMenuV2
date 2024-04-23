@@ -14,7 +14,7 @@ namespace Colossal.Patches
     {
         public static void Postfix(string failMessage)
         {
-            if (failMessage.Contains("ACCOUNT"))
+            if (failMessage.ToLower().Contains("ACCOUNT"))
             {
                 Debug.Log("[COLOSSAL] Updating boards for banned account");
 
@@ -40,7 +40,7 @@ namespace Colossal.Patches
                     }
                 }
             }
-            else if (failMessage.Contains("IP"))
+            else if (failMessage.ToLower().Contains("IP"))
             {
                 Debug.Log("[COLOSSAL] Updating boards for banned ip");
 
