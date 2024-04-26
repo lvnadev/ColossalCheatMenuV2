@@ -24,6 +24,7 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nToggles noti",
             $"<color={Menu.MenuColour}>Passive</color>\nToggles overlay",
             $"<color={Menu.MenuColour}>Passive</color>\nToggles all colossal visuals",
+            $"<color={Menu.MenuColour}>Passive</color>\nToggles tooltips",
         };
 
         public static string[] Movementtips = new string[]
@@ -43,6 +44,7 @@ namespace Colossal.Menu
         {
             $"<color={Menu.MenuColour}>Passive</color>\nSpeed up time",
             $"<color={Menu.MenuColour}>R Secondary</color>\nScale gravity",
+            $"<color={Menu.MenuColour}>L Or R Grip</color>\nClimb Gorillas",
         };
         public static string[] Speedtips = new string[]
         {

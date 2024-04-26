@@ -250,10 +250,11 @@ namespace Colossal.Menu {
                     Movement[9] = new MenuOption { DisplayName = "WASD Fly", _type = "toggle", AssociatedBool = false };
                     Movement[10] = new MenuOption { DisplayName = "Next ->", _type = "submenu", AssociatedString = "Movement2" };
                     Movement[11] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-                    Movement2 = new MenuOption[3];
+                    Movement2 = new MenuOption[4];
                     Movement2[0] = new MenuOption { DisplayName = "Timer", _type = "toggle", AssociatedBool = false };
                     Movement2[1] = new MenuOption { DisplayName = "FloatyMonkey", _type = "toggle", AssociatedBool = false };
-                    Movement2[2] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    Movement2[2] = new MenuOption { DisplayName = "Climbable Gorillas", _type = "toggle", AssociatedBool = false };
+                    Movement2[3] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
                     Speed = new MenuOption[4];
                     Speed[0] = new MenuOption { DisplayName = "Speed", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } }; //quick "Fix" but apperantly anything above was detected... -Lars
                     Speed[1] = new MenuOption { DisplayName = "Speed (LG)", _type = "STRINGslider", StringArray = new string[] { "Off", "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
@@ -332,8 +333,8 @@ namespace Colossal.Menu {
                     MiscSettings[4] = new MenuOption { DisplayName = "Timer Speed", _type = "STRINGslider", StringArray = new string[] { "1.03x", "1.06x", "1.09x", "1.1x", "1.13x", "1.16x", "1.19x", "1.2x", "1.23x", "1.26", "1.29", "1.3x", "2x", "3x", "4x", "5x" } };
                     MiscSettings[5] = new MenuOption { DisplayName = "First Person FOV", _type = "STRINGslider", StringArray = new string[] { "60", "70" ,"80", "90", "100", "110", "120", "130", "140"} };
                     MiscSettings[6] = new MenuOption { DisplayName = "ExcelFly Speed", _type = "STRINGslider", StringArray = new string[] { "Super Slow", "Slow", "Medium", "Fast", "Super Fast" } };
-                    MiscSettings[7] = new MenuOption { DisplayName = "Tracer Position", _type = "STRINGslider", StringArray = new string[] { "RHand", "LHand", "Head" } };
-                    MiscSettings[8] = new MenuOption { DisplayName = "Tracer Size", _type = "STRINGslider", StringArray = new string[] { "Super Small", "Small", "Medium", "Large", "Giant" } };
+                    MiscSettings[7] = new MenuOption { DisplayName = "Tracer Position", _type = "STRINGslider", StringArray = new string[] { "RHand", "LHand", "Head", "Screen" } };
+                    MiscSettings[8] = new MenuOption { DisplayName = "Tracer Size", _type = "STRINGslider", StringArray = new string[] { "Extremely Small", "Super Small", "Small", "Medium", "Large", "Giant", "Huge" } };
                     MiscSettings[9] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
                     MenuState = "Main";
@@ -514,9 +515,9 @@ namespace Colossal.Menu {
                             if (rightGrab && !Menu.inputcooldown)
                             {
                                 if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
-                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() - 1;
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() + 1;
                                 else
-                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind - 1;
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1;
                                 Menu.inputcooldown = true;
                             }
                             UpdateMenuState(new MenuOption(), null, null);
@@ -552,6 +553,7 @@ namespace Colossal.Menu {
                 //Movement2
                 PluginConfig.Timer = Movement2[0].AssociatedBool;
                 PluginConfig.FloatyMonkey = Movement2[1].AssociatedBool;
+                PluginConfig.ClimbableGorillas = Movement2[2].AssociatedBool;
 
                 //Visual
                 PluginConfig.chams = Visual[0].AssociatedBool;

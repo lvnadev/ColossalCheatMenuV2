@@ -70,7 +70,8 @@ namespace Colossal.Mods
                         ammount = 4f;
                         break;
                     case 16:
-                        ammount = 10;
+                        //ammount = 10;
+                        ammount = -Physics.gravity.y; // think this is more accurate
                         break;
                 }
 
