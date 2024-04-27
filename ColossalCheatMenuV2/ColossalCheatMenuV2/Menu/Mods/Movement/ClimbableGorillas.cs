@@ -17,32 +17,21 @@ namespace Colossal.Mods
 {
     public class ClimbableGorillas : MonoBehaviour
     {
-        bool doonce = false;
+        void Start()
+        {
+            foreach (GameObject Gos in Resources.FindObjectsOfTypeAll<GameObject>())
+                if (Gos.name == "BodyTrigger")
+                    if (Gos.GetComponent<GorillaClimbable>() == null)
+                        Gos.AddComponent<GorillaClimbable>();
+        }
         public void Update()
         {
-            if (PluginConfig.ClimbableGorillas)
-            {
-                if (!doonce)
-                {
-                    foreach (GameObject Gos in Resources.FindObjectsOfTypeAll<GameObject>())
-                        if (Gos.name == "BodyTrigger")
-                            if (Gos.GetComponent<GorillaClimbable>() == null)
-                                Gos.AddComponent<GorillaClimbable>();
-
-                    doonce = true;
-                }
-                    
-                
-                //looks goofy as hell LMAO
-            }
-            else
+            if(!PluginConfig.ClimbableGorillas)
             {
                 foreach (GameObject Gos in Resources.FindObjectsOfTypeAll<GameObject>())
                     if (Gos.name == "BodyTrigger")
                         if (Gos.GetComponent<GorillaClimbable>() != null)
                             Destroy(Gos.GetComponent<GorillaClimbable>());
-
-                doonce = false;
 
                 Destroy(holder.GetComponent<ClimbableGorillas>());
             }
