@@ -17,30 +17,32 @@ namespace Colossal.Mods
 {
     public class ClimbableGorillas : MonoBehaviour
     {
+        bool doonce = false;
         public void Update()
         {
             if (PluginConfig.ClimbableGorillas)
             {
-                foreach (VRRig rigs in GorillaParent.instance.vrrigs)
+                if (!doonce)
                 {
-                    if (rigs != GorillaTagger.Instance.offlineVRRig && rigs != null)
-                    {
-                        if (rigs.transform.GetChild(0).GetChild(5).GetChild(34).GetComponent<GorillaClimbable>() == null)
-                            rigs.transform.GetChild(0).GetChild(5).GetChild(34).AddComponent<GorillaClimbable>();
-                    }
+                    foreach (GameObject Gos in Resources.FindObjectsOfTypeAll<GameObject>())
+                        if (Gos.name == "BodyTrigger")
+                            if (Gos.GetComponent<GorillaClimbable>() == null)
+                                Gos.AddComponent<GorillaClimbable>();
+
+                    doonce = true;
                 }
-                //prolly like the worst way to do this but someone else can fix <3
+                    
+                
+                //looks goofy as hell LMAO
             }
             else
             {
-                foreach (VRRig rigs in GorillaParent.instance.vrrigs)
-                {
-                    if (rigs != GorillaTagger.Instance.offlineVRRig && rigs != null)
-                    {
-                        if (rigs.transform.GetChild(0).GetChild(5).GetChild(34).GetComponent<GorillaClimbable>() == null)
-                            Destroy(rigs.transform.GetChild(0).GetChild(5).GetChild(34).GetComponent<GorillaClimbable>());
-                    }
-                }
+                foreach (GameObject Gos in Resources.FindObjectsOfTypeAll<GameObject>())
+                    if (Gos.name == "BodyTrigger")
+                        if (Gos.GetComponent<GorillaClimbable>() != null)
+                            Destroy(Gos.GetComponent<GorillaClimbable>());
+
+                doonce = false;
 
                 Destroy(holder.GetComponent<ClimbableGorillas>());
             }

@@ -114,6 +114,7 @@ namespace Colossal {
                     { typeof(Tracers), PluginConfig.tracers },
                     { typeof(BoneESP), PluginConfig.boneesp },
                     { typeof(firstperson), PluginConfig.firstperson },
+                    { typeof(ClimbableGorillas), PluginConfig.ClimbableGorillas },
 
                 };
                 foreach (var kvp in componentConditions)

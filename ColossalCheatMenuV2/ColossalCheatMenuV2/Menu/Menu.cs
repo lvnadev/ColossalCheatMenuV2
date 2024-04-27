@@ -514,8 +514,8 @@ namespace Colossal.Menu {
                         {
                             if (rightGrab && !Menu.inputcooldown)
                             {
-                                if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
-                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() + 1;
+                                if ((CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1) == CurrentViewingMenu[SelectedOptionIndex].StringArray.Count())
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = 0;
                                 else
                                     CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1;
                                 Menu.inputcooldown = true;
