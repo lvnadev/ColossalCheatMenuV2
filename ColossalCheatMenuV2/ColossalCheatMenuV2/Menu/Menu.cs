@@ -356,8 +356,7 @@ namespace Colossal.Menu {
                     Menu.agreement = true;
                     Menu.LoadOnce();
 
-                    //Startup.startani = true;
-                    Startup.Accept();
+                    Startup.startani = true;
 
                     Debug.Log("menu");
                 }
@@ -369,8 +368,7 @@ namespace Colossal.Menu {
                     Menu.agreement = true;
                     Menu.LoadOnce();
 
-                    //Startup.startani = true;
-                    Startup.Accept();
+                    Startup.startani = true;
 
                     Debug.Log("menu");
                     return;

@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Colossal
 {
@@ -16,9 +15,9 @@ namespace Colossal
     {
         public static GameObject prefabInstance;
         private static float timer;
-        private static LayerMask defaultlocomotionlayers;
+        private static LayerMask jailthing;
 
-        private static GameObject enviroment = GameObject.Find("Environment Objects");
+        private static GameObject enviroment;
         public static bool startani = false;
         public static void LoadAssets()
         {
@@ -31,56 +30,44 @@ namespace Colossal
             GameObject prefab = assetBundle.LoadAsset<GameObject>("startup");
             prefabInstance = GameObject.Instantiate(prefab);
 
-            // dumbass alert
-            defaultlocomotionlayers = GorillaLocomotion.Player.Instance.locomotionEnabledLayers;
-            if (defaultlocomotionlayers == GorillaLocomotion.Player.Instance.locomotionEnabledLayers)
-                GorillaLocomotion.Player.Instance.locomotionEnabledLayers = 0;
+            // Jails you
+            jailthing = GorillaLocomotion.Player.Instance.locomotionEnabledLayers;
+            GorillaLocomotion.Player.Instance.locomotionEnabledLayers = 0;
 
             prefabInstance.transform.position = new Vector3(GorillaLocomotion.Player.Instance.transform.position.x, GorillaLocomotion.Player.Instance.transform.position.y, GorillaLocomotion.Player.Instance.transform.position.z - 2.5f);
             prefabInstance.transform.rotation = GorillaLocomotion.Player.Instance.transform.rotation;
 
-            if (enviroment != null)
+            if (GameObject.Find("Environment Objects") != null)
+            {
+                enviroment = GameObject.Find("Environment Objects");
                 enviroment.SetActive(false);
+            }
 
             assetBundle.Unload(false);
         }
-        public static async void Accept()
+        public void Update()
         {
-            prefabInstance.GetComponent<Animator>().SetTrigger("Agreed");
+            timer += Time.deltaTime;
 
-            await Task.Delay(1500);
+            if (prefabInstance != null && !Menu.Menu.agreement && startani)
+            {
+                prefabInstance.GetComponent<Animator>().SetTrigger("Agreed");
 
-            GameObject.Find("Startup(Clone)").SetActive(false);
+                timer = 0;
+                if (timer >= 1.5f)
+                {
+                    prefabInstance.SetActive(false);
 
-            if (enviroment != null)
-                enviroment.SetActive(true);
+                    if (enviroment != null)
+                        enviroment.SetActive(true);
 
-            GorillaLocomotion.Player.Instance.locomotionEnabledLayers = defaultlocomotionlayers;
+                    GorillaLocomotion.Player.Instance.locomotionEnabledLayers = jailthing;
 
-            Menu.Menu.agreement = true;
+                    Menu.Menu.agreement = true;
+                }
+            }
+            else
+                Debug.Log("[COLOSSAL] Prefab is null");
         }
-        //public void Update()
-        //{
-        //    timer += Time.deltaTime;
-
-        //    if (prefabInstance != null && !Menu.Menu.agreement && startani)
-        //    {
-        //        prefabInstance.GetComponent<Animator>().SetTrigger("Agreed");
-
-        //        if (timer >= 1.5f)
-        //        {
-        //            prefabInstance.SetActive(false);
-
-        //            if (enviroment != null)
-        //                enviroment.SetActive(true);
-
-        //            GorillaLocomotion.Player.Instance.locomotionEnabledLayers = defaultlocomotionlayers;
-
-        //            Menu.Menu.agreement = true;
-        //        }
-        //    }
-        //    else
-        //        prefabInstance = GameObject.Find("Startup(Clone)");
-        //}
     }
 }
