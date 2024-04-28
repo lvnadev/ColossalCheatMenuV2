@@ -60,9 +60,8 @@ namespace Colossal {
             if (!oculus)
             {
                 Startup.LoadAssets();
-                holder.AddComponent<Startup>();
 
-                Menu.Menu.LoadOnce();
+                //Menu.Menu.LoadOnce();
                 CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start functions");
 
                 CustomConsole.LogToConsole("[COLOSSAL] Getting configs");
