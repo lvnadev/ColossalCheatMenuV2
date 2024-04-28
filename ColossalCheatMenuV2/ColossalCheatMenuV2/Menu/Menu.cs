@@ -25,10 +25,6 @@ using System.Runtime.Remoting.Messaging;
 using Colossal.Patches;
 using PlayFab.ClientModels;
 using static UnityEngine.Random;
-using System.Collections;
-using POpusCodec.Enums;
-using Photon;
-using Photon.Pun.UtilityScripts;
 
 namespace Colossal.Menu {
     public class MenuOption {
@@ -132,7 +128,50 @@ namespace Colossal.Menu {
         }
         public static void LoadOnce() {
             try {
+<<<<<<< HEAD
                 if(agreement) {
+=======
+                if (!agreement) {
+                    Debug.Log("Aggreement Is False");
+
+                    MainCamera = GameObject.Find("Main Camera");
+                    HUDObj = new GameObject();
+                    HUDObj2 = new GameObject();
+                    HUDObj2.name = "CLIENT_HUB_AGREEMENT";
+                    HUDObj.name = "CLIENT_HUB_AGREEMENT";
+                    HUDObj.AddComponent<Canvas>();
+                    HUDObj.AddComponent<CanvasScaler>();
+                    HUDObj.AddComponent<GraphicRaycaster>();
+                    HUDObj.GetComponent<Canvas>().enabled = true;
+                    HUDObj.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+                    HUDObj.GetComponent<Canvas>().worldCamera = MainCamera.GetComponent<Camera>();
+                    HUDObj.GetComponent<RectTransform>().sizeDelta = new Vector2(5, 5);
+                    HUDObj.GetComponent<RectTransform>().position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
+                    HUDObj2.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z - 4.6f);
+                    HUDObj.transform.parent = HUDObj2.transform;
+                    HUDObj.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 1.6f);
+                    var Temp = HUDObj.GetComponent<RectTransform>().rotation.eulerAngles;
+                    Temp.y = -270f;
+                    HUDObj.transform.localScale = new Vector3(1f, 1f, 1f);
+                    HUDObj.GetComponent<RectTransform>().rotation = Quaternion.Euler(Temp);
+                    GameObject TestText = new GameObject();
+                    TestText.transform.parent = HUDObj.transform;
+                    Testtext = TestText.AddComponent<Text>();
+                    Testtext.text = "<color=magenta><CONTROLS (DRIFT MODE)></color>\nLeft Joystick (Hold): Control\nRight Grip: Select\nRight Trigger: Move\nBoth Joysticks: Toggle\n\n<color=magenta><CONTROLS></color>\nRight Joystick (Right): Select\nRight Joystick (Down): Move\nBoth Joysticks: Toggle\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>";
+                    Testtext.fontSize = 10;
+                    Testtext.font = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/UI/CodeOfConduct/COC Text").GetComponent<Text>().font;
+                    Testtext.rectTransform.sizeDelta = new Vector2(260, 300);
+                    Testtext.rectTransform.localScale = new Vector3(0.01f, 0.01f, 1f);
+                    Testtext.rectTransform.localPosition = new Vector3(-2.4f, -0.4f, 1f);
+                    Testtext.material = AlertText;
+                    NotifiText = Testtext;
+                    Testtext.alignment = TextAnchor.UpperLeft;
+
+                    //HUDObj2.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
+                    //HUDObj2.transform.rotation = MainCamera.transform.rotation;
+                    HUDObj2.transform.transform.SetParent(MainCamera.transform);
+                } else {
+>>>>>>> parent of 0fd3f0d (Added the asset bundles)
                     Debug.Log("Aggreement Is True");
 
                     // Adding once the menu has been made or like whatever because it causes errors
@@ -344,7 +383,10 @@ namespace Colossal.Menu {
             }
             
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 0fd3f0d (Added the asset bundles)
         public static void Load() {
             if(!Startup.ballzandcock)
             {
@@ -354,8 +396,15 @@ namespace Colossal.Menu {
 
             if (!agreement)
             {
+<<<<<<< HEAD
                 //if(GameObject.Find("CLIENT_HUB_AGREEMENT") == null) //watch as this breaks the whole menu
                 //    Menu.LoadOnce();
+=======
+                if(GameObject.Find("CLIENT_HUB_AGREEMENT") == null) //watch as this breaks the whole menu
+                    Menu.LoadOnce();
+                Menu.HUDObj2.transform.transform.position = new Vector3(Menu.MainCamera.transform.position.x, Menu.MainCamera.transform.position.y, Menu.MainCamera.transform.position.z);
+                Menu.HUDObj2.transform.rotation = Menu.MainCamera.transform.rotation;
+>>>>>>> parent of 0fd3f0d (Added the asset bundles)
                 bool state = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand);
                 bool state2 = SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand);
                 if (state && state2 && !Menu.menutogglecooldown)
@@ -363,10 +412,13 @@ namespace Colossal.Menu {
                     Menu.menutogglecooldown = true;
                     Menu.agreement = true;
                     Menu.LoadOnce();
+<<<<<<< HEAD
 
                     Startup.Accept();
 
                     Debug.Log("menu");
+=======
+>>>>>>> parent of 0fd3f0d (Added the asset bundles)
                 }
                 else
                     Menu.menutogglecooldown = false;
@@ -375,10 +427,13 @@ namespace Colossal.Menu {
                     Menu.menutogglecooldown = true;
                     Menu.agreement = true;
                     Menu.LoadOnce();
+<<<<<<< HEAD
 
                     Startup.Accept();
 
                     Debug.Log("menu");
+=======
+>>>>>>> parent of 0fd3f0d (Added the asset bundles)
                     return;
                 }
             }
