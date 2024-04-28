@@ -75,8 +75,6 @@ namespace Colossal {
 
                 Menu.Menu.LoadOnceOculus();
             }
-
-            Startup.LoadAssets(); // Load The Startup Thingy
         }
         public void Update() {
             if(!oculus)

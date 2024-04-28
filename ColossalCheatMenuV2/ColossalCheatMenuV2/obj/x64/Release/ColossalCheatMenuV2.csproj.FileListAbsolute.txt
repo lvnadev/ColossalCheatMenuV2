@@ -733,5 +733,3 @@ C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2
 C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.csproj.CopyComplete
 C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.dll
 C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.pdb
-C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\UnityEngine.AccessibilityModule.dll
-C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\UnityEngine.ARModule.dll

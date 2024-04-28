@@ -25,10 +25,6 @@ using System.Runtime.Remoting.Messaging;
 using Colossal.Patches;
 using PlayFab.ClientModels;
 using static UnityEngine.Random;
-using System.Collections;
-using POpusCodec.Enums;
-using Photon;
-using Photon.Pun.UtilityScripts;
 
 namespace Colossal.Menu {
     public class MenuOption {
@@ -137,9 +133,7 @@ namespace Colossal.Menu {
                 if (!agreement) {
                     Debug.Log("Aggreement Is False");
 
-                    GorillaLocomotion.Player.Instance.transform.position = new Vector3(Startup.prefabInstance.transform.position.x, Startup.prefabInstance.transform.position.y, Startup.prefabInstance.transform.position.z + 2.5f);
-
-                    /* MainCamera = GameObject.Find("Main Camera");
+                    MainCamera = GameObject.Find("Main Camera");
                     HUDObj = new GameObject();
                     HUDObj2 = new GameObject();
                     HUDObj2.name = "CLIENT_HUB_AGREEMENT";
@@ -174,7 +168,7 @@ namespace Colossal.Menu {
 
                     //HUDObj2.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
                     //HUDObj2.transform.rotation = MainCamera.transform.rotation;
-                    HUDObj2.transform.transform.SetParent(MainCamera.transform); */
+                    HUDObj2.transform.transform.SetParent(MainCamera.transform);
                 } else {
                     Debug.Log("Aggreement Is True");
 
@@ -382,24 +376,11 @@ namespace Colossal.Menu {
             }
             
         }
-
-        //public static IEnumerator AcceptAgreement() //fuck you colossus idk how else to code this
-        //{
-        //    Startup.prefabInstance.GetComponent<Animator>().SetTrigger("Agreed");
-        //    yield return new WaitForSeconds(1.5f);
-        //    LayerMask Default = GorillaLocomotion.Player.Instance.locomotionEnabledLayers;
-        //    GorillaLocomotion.Player.Instance.locomotionEnabledLayers = 0;
-        //    GorillaLocomotion.Player.Instance.transform.position = new Vector3(-41.4174f, -2.2224f, -76.5318f);
-        //    Startup.prefabInstance.SetActive(false);
-        //    yield return new WaitForSeconds(0.0001f);
-        //    GorillaLocomotion.Player.Instance.locomotionEnabledLayers = Default;
-        //}
-
         public static void Load() {
             if (!agreement)
             {
-                //if(GameObject.Find("CLIENT_HUB_AGREEMENT") == null) //watch as this breaks the whole menu
-                //    Menu.LoadOnce();
+                if(GameObject.Find("CLIENT_HUB_AGREEMENT") == null) //watch as this breaks the whole menu
+                    Menu.LoadOnce();
                 Menu.HUDObj2.transform.transform.position = new Vector3(Menu.MainCamera.transform.position.x, Menu.MainCamera.transform.position.y, Menu.MainCamera.transform.position.z);
                 Menu.HUDObj2.transform.rotation = Menu.MainCamera.transform.rotation;
                 bool state = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand);
@@ -410,8 +391,6 @@ namespace Colossal.Menu {
                     Menu.agreement = true;
                     UnityEngine.Object.Destroy(GameObject.Find("CLIENT_HUB_AGREEMENT"));
                     Menu.LoadOnce();
-
-                    Startup.Accept();
                 }
                 else
                     Menu.menutogglecooldown = false;
@@ -421,8 +400,6 @@ namespace Colossal.Menu {
                     Menu.agreement = true;
                     UnityEngine.Object.Destroy(GameObject.Find("CLIENT_HUB_AGREEMENT"));
                     Menu.LoadOnce();
-
-                    Startup.Accept();
                     return;
                 }
             }
