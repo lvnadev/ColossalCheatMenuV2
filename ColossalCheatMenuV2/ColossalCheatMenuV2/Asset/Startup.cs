@@ -12,20 +12,17 @@ using System.Threading.Tasks;
 
 namespace Colossal
 {
-    class Startup
+    class Startup : MonoBehaviour
     {
         public static GameObject prefabInstance;
         private static float timer;
         private static LayerMask defaultlocomotionlayers;
 
-        public static GameObject enviroment = GameObject.Find("Environment Objects");
-        public static Vector3 trans = GorillaLocomotion.Player.Instance.transform.position;
-        public static bool ballzandcock = false;
+        private static GameObject enviroment = GameObject.Find("Environment Objects");
+        public static bool startani = false;
         public static void LoadAssets()
         {
             Debug.Log("Load assets");
-
-            GorillaTagger.Instance.thirdPersonCamera.active = false;
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Stream stream = assembly.GetManifestResourceStream("ColossalCheatMenuV2.Asset.startup");
@@ -39,7 +36,7 @@ namespace Colossal
             if (defaultlocomotionlayers == GorillaLocomotion.Player.Instance.locomotionEnabledLayers)
                 GorillaLocomotion.Player.Instance.locomotionEnabledLayers = 0;
 
-            prefabInstance.transform.position = new Vector3(trans.x + 2.5f, trans.y, trans.z);
+            prefabInstance.transform.position = new Vector3(GorillaLocomotion.Player.Instance.transform.position.x, GorillaLocomotion.Player.Instance.transform.position.y, GorillaLocomotion.Player.Instance.transform.position.z - 2.5f);
             prefabInstance.transform.rotation = GorillaLocomotion.Player.Instance.transform.rotation;
 
             if (enviroment != null)
@@ -49,20 +46,41 @@ namespace Colossal
         }
         public static async void Accept()
         {
-            GameObject.Find("Startup(Clone)").GetComponent<Animator>().SetTrigger("Agreed");
+            prefabInstance.GetComponent<Animator>().SetTrigger("Agreed");
 
-            await Task.Delay(2500);
+            await Task.Delay(1500);
+
+            GameObject.Find("Startup(Clone)").SetActive(false);
+
             if (enviroment != null)
-            {
                 enviroment.SetActive(true);
-                ballzandcock = true;
-            }
-
-            //GameObject.Find("Startup(Clone)").SetActive(false);
 
             GorillaLocomotion.Player.Instance.locomotionEnabledLayers = defaultlocomotionlayers;
 
             Menu.Menu.agreement = true;
         }
+        //public void Update()
+        //{
+        //    timer += Time.deltaTime;
+
+        //    if (prefabInstance != null && !Menu.Menu.agreement && startani)
+        //    {
+        //        prefabInstance.GetComponent<Animator>().SetTrigger("Agreed");
+
+        //        if (timer >= 1.5f)
+        //        {
+        //            prefabInstance.SetActive(false);
+
+        //            if (enviroment != null)
+        //                enviroment.SetActive(true);
+
+        //            GorillaLocomotion.Player.Instance.locomotionEnabledLayers = defaultlocomotionlayers;
+
+        //            Menu.Menu.agreement = true;
+        //        }
+        //    }
+        //    else
+        //        prefabInstance = GameObject.Find("Startup(Clone)");
+        //}
     }
 }

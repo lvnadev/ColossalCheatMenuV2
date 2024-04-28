@@ -138,10 +138,8 @@ namespace Colossal.Menu {
                     // Adding once the menu has been made or like whatever because it causes errors
                     if (Plugin.holder.GetComponent<SpeedMod>() == null)
                         Plugin.holder.AddComponent<SpeedMod>();
-                    if (Plugin.holder.GetComponent<SkyColour>() == null && Startup.enviroment.active)
+                    if (Plugin.holder.GetComponent<SkyColour>() == null)
                         Plugin.holder.AddComponent<SkyColour>();
-                    else
-                        Debug.Log("[COLOSSAL] SkyColour is null or envir isnt active");
 
                     // Adding here so you dont see them before you accepted the aggreement
                     if (Plugin.holder.GetComponent<Overlay>() == null)
@@ -346,12 +344,6 @@ namespace Colossal.Menu {
         }
 
         public static void Load() {
-            if(!Startup.ballzandcock)
-            {
-                GorillaLocomotion.Player.Instance.transform.position = Startup.trans;
-                GorillaLocomotion.Player.Instance.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
-            }
-
             if (!agreement)
             {
                 //if(GameObject.Find("CLIENT_HUB_AGREEMENT") == null) //watch as this breaks the whole menu
@@ -364,6 +356,7 @@ namespace Colossal.Menu {
                     Menu.agreement = true;
                     Menu.LoadOnce();
 
+                    //Startup.startani = true;
                     Startup.Accept();
 
                     Debug.Log("menu");
@@ -376,6 +369,7 @@ namespace Colossal.Menu {
                     Menu.agreement = true;
                     Menu.LoadOnce();
 
+                    //Startup.startani = true;
                     Startup.Accept();
 
                     Debug.Log("menu");
