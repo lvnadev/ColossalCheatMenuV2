@@ -46,7 +46,6 @@ namespace Colossal {
             Debug.Log("[COLOSSAL] Spawned Holder");
             holder = new GameObject();
             holder.name = "Holder";
-            holder.AddComponent<Boards>();
             holder.AddComponent<EventNotifacation>();
             holder.AddComponent<JoinNotifacation>();
             holder.AddComponent<LeaveNotifacation>();
@@ -60,6 +59,9 @@ namespace Colossal {
 
             if (!oculus)
             {
+                Startup.LoadAssets();
+                holder.AddComponent<Startup>();
+
                 Menu.Menu.LoadOnce();
                 CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start functions");
 
@@ -75,8 +77,6 @@ namespace Colossal {
 
                 Menu.Menu.LoadOnceOculus();
             }
-
-            Startup.LoadAssets(); // Load The Startup Thingy
         }
         public void Update() {
             if(!oculus)
