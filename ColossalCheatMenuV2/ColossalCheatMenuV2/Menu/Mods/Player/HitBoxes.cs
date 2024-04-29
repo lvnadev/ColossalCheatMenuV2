@@ -42,7 +42,7 @@ namespace Colossal.Mods
                         ammount = 0.15f;
                         break;
                     case 6:
-                        ammount = 0.2f;
+                        ammount = 0.3f;
                         break;
                 }
             }

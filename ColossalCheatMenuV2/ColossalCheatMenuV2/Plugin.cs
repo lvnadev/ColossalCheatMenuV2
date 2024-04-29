@@ -11,6 +11,7 @@ using Colossal.Menu.ClientHub;
 using Colossal.Menu.ClientHub.Notifacation;
 using Colossal.Mods;
 using Colossal.Patches;
+using ColossalCheatMenuV2.Mods;
 using GorillaNetworking;
 using Photon.Pun;
 using PlayFab;
@@ -116,7 +117,7 @@ namespace Colossal {
                     { typeof(firstperson), PluginConfig.firstperson },
                     { typeof(ClimbableGorillas), PluginConfig.ClimbableGorillas },
                     { typeof(HitBoxes), PluginConfig.hitboxes },
-
+                    { typeof(NearPulse), PluginConfig.NearPulse },
                 };
                 foreach (var kvp in componentConditions)
                 {

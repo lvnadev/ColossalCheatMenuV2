@@ -253,11 +253,12 @@ namespace Colossal.Menu {
                     Movement[9] = new MenuOption { DisplayName = "WASD Fly", _type = "toggle", AssociatedBool = false };
                     Movement[10] = new MenuOption { DisplayName = "Next ->", _type = "submenu", AssociatedString = "Movement2" };
                     Movement[11] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-                    Movement2 = new MenuOption[4];
+                    Movement2 = new MenuOption[5];
                     Movement2[0] = new MenuOption { DisplayName = "Timer", _type = "toggle", AssociatedBool = false };
                     Movement2[1] = new MenuOption { DisplayName = "FloatyMonkey", _type = "toggle", AssociatedBool = false };
                     Movement2[2] = new MenuOption { DisplayName = "Climbable Gorillas", _type = "toggle", AssociatedBool = false };
-                    Movement2[3] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    Movement2[3] = new MenuOption { DisplayName = "Near Pulse", _type = "toggle", AssociatedBool = false };
+                    Movement2[4] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
                     Speed = new MenuOption[5];
                     Speed[0] = new MenuOption { DisplayName = "Speed", _type = "toggle", AssociatedBool = false };
                     Speed[1] = new MenuOption { DisplayName = "Speed (LG)", _type = "toggle", AssociatedBool = false };
@@ -338,7 +339,7 @@ namespace Colossal.Menu {
                     ModSettings[2] = new MenuOption { DisplayName = "Player Settings", _type = "submenu", AssociatedString = "PlayerSettings" };
                     ModSettings[3] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
-                    MovementSettings = new MenuOption[11];
+                    MovementSettings = new MenuOption[12];
                     MovementSettings[0] = new MenuOption { DisplayName = "WASD Fly Speed", _type = "STRINGslider", StringArray = new string[] { "5", "7", "10", "13", "16" } };
                     MovementSettings[1] = new MenuOption { DisplayName = "FloatMonkey Ammount", _type = "STRINGslider", StringArray = new string[] { "1.1", "1.2", "1.4", "1.6", "1.8", "2", "2.2", "2.4", "2.6", "2.8", "3", "3.2", "3.4", "3.6", "3.8", "4", "Anti Grav" } };
                     MovementSettings[2] = new MenuOption { DisplayName = "WallWalk Ammount", _type = "STRINGslider", StringArray = new string[] { "6.8", "7", "7.5", "7.8", "8", "8.5", "8.8", "9", "9.5", "9.8" } };
@@ -349,7 +350,8 @@ namespace Colossal.Menu {
                     MovementSettings[7] = new MenuOption { DisplayName = "Speed (RG) Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
                     MovementSettings[8] = new MenuOption { DisplayName = "Near Speed Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
                     MovementSettings[9] = new MenuOption { DisplayName = "Near Speed Distance", _type = "STRINGslider", StringArray = new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" } };
-                    MovementSettings[10] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    MovementSettings[10] = new MenuOption { DisplayName = "Near Pulse Distance", _type = "STRINGslider", StringArray = new string[] { "5", "10", "15", "20" } };
+                    MovementSettings[11] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
                     VisualSettings = new MenuOption[4];
                     VisualSettings[0] = new MenuOption { DisplayName = "First Person FOV", _type = "STRINGslider", StringArray = new string[] { "60", "70", "80", "90", "100", "110", "120", "130", "140" } };
@@ -579,6 +581,7 @@ namespace Colossal.Menu {
                 PluginConfig.speedrgammount = MovementSettings[7].stringsliderind;
                 PluginConfig.nearspeedmmount = MovementSettings[8].stringsliderind;
                 PluginConfig.nearspeeddistance = MovementSettings[9].stringsliderind;
+                PluginConfig.NearPulseDistance = MovementSettings[10].stringsliderind;
 
                 PluginConfig.FirstPersonFOV = VisualSettings[0].stringsliderind;
                 PluginConfig.TracerPosition = VisualSettings[1].stringsliderind;
