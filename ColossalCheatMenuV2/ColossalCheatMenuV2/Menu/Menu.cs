@@ -350,7 +350,8 @@ namespace Colossal.Menu {
                     MovementSettings[7] = new MenuOption { DisplayName = "Speed (RG) Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
                     MovementSettings[8] = new MenuOption { DisplayName = "Near Speed Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
                     MovementSettings[9] = new MenuOption { DisplayName = "Near Speed Distance", _type = "STRINGslider", StringArray = new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" } };
-                    MovementSettings[10] = new MenuOption { DisplayName = "Near Pulse Distance", _type = "STRINGslider", StringArray = new string[] { "5", "10", "15", "20" } };
+                    MovementSettings[10] = new MenuOption { DisplayName = "Near Pulse Distance", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } };
+                    MovementSettings[10] = new MenuOption { DisplayName = "Near Pulse Ammount", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } };
                     MovementSettings[11] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
                     VisualSettings = new MenuOption[4];

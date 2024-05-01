@@ -86,6 +86,7 @@ namespace Colossal.Menu
         public static int nearspeedmmount = 0;
         public static int nearspeeddistance = 0;
         public static int NearPulseDistance = 0;
+        public static int NearPulseAmmount = 0;
 
         //group 6
         public static bool noti = true;
@@ -226,6 +227,7 @@ namespace Colossal.Menu
                             PluginConfig.nearspeedmmount,
                             PluginConfig.nearspeeddistance,
                             PluginConfig.NearPulseDistance,
+                            PluginConfig.NearPulseAmmount,
                            
                             //group 8
                             PluginConfig.FirstPersonFOV,
@@ -343,13 +345,14 @@ namespace Colossal.Menu
                 Menu.MovementSettings[8].stringsliderind = Convert.ToInt32(values[59]);
                 Menu.MovementSettings[9].stringsliderind = Convert.ToInt32(values[60]);
                 Menu.MovementSettings[10].stringsliderind = Convert.ToInt32(values[61]);
+                Menu.MovementSettings[11].stringsliderind = Convert.ToInt32(values[62]);
 
-                Menu.VisualSettings[0].stringsliderind = Convert.ToInt32(values[62]);
-                Menu.VisualSettings[1].stringsliderind = Convert.ToInt32(values[63]);
-                Menu.VisualSettings[2].stringsliderind = Convert.ToInt32(values[64]);
+                Menu.VisualSettings[0].stringsliderind = Convert.ToInt32(values[63]);
+                Menu.VisualSettings[1].stringsliderind = Convert.ToInt32(values[64]);
+                Menu.VisualSettings[2].stringsliderind = Convert.ToInt32(values[65]);
 
-                Menu.PlayerSettings[0].stringsliderind = Convert.ToInt32(values[65]);
-                Menu.PlayerSettings[1].stringsliderind = Convert.ToInt32(values[66]);
+                Menu.PlayerSettings[0].stringsliderind = Convert.ToInt32(values[66]);
+                Menu.PlayerSettings[1].stringsliderind = Convert.ToInt32(values[67]);
 
 
                 Notifacations.SendNotification($"<color=blue>[CONFIG]</color> LOADED : {Menu.Settings[3].StringArray[Menu.Settings[3].stringsliderind]}");
