@@ -31,7 +31,7 @@ namespace Colossal {
         public static GameObject hud;
         public static GameObject holder;
 
-        public static float version = 5.5f;
+        public static float version = 5.6f;
         public static bool sussy = false;
         public static bool oculus = false;
 
