@@ -14,8 +14,17 @@ namespace Colossal.Mods
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (PluginConfig.nofinger)
+            if (PluginConfig.nofinger || FakeQuestMenu.fakeQuestMenuFinger)
             {
+                if (ControllerInputPoller.instance.leftControllerGripFloat != 0)
+                    ControllerInputPoller.instance.leftControllerGripFloat = 0f;
+                if (ControllerInputPoller.instance.rightControllerGripFloat != 0f)
+                    ControllerInputPoller.instance.rightControllerGripFloat = 0f;
+                if (ControllerInputPoller.instance.leftControllerIndexFloat != 0f)
+                    ControllerInputPoller.instance.leftControllerIndexFloat = 0f;
+                if (ControllerInputPoller.instance.rightControllerIndexFloat != 0f)
+                    ControllerInputPoller.instance.rightControllerIndexFloat = 0f;
+
                 return false;
             }
             return true;
@@ -27,8 +36,17 @@ namespace Colossal.Mods
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (PluginConfig.nofinger)
+            if (PluginConfig.nofinger && FakeQuestMenu.fakeQuestMenuFinger)
             {
+                if (ControllerInputPoller.instance.leftControllerGripFloat != 0)
+                    ControllerInputPoller.instance.leftControllerGripFloat = 0f;
+                if (ControllerInputPoller.instance.rightControllerGripFloat != 0f)
+                    ControllerInputPoller.instance.rightControllerGripFloat = 0f;
+                if (ControllerInputPoller.instance.leftControllerIndexFloat != 0f)
+                    ControllerInputPoller.instance.leftControllerIndexFloat = 0f;
+                if (ControllerInputPoller.instance.rightControllerIndexFloat != 0f)
+                    ControllerInputPoller.instance.rightControllerIndexFloat = 0f;
+
                 return false;
             }
             return true;
@@ -40,8 +58,17 @@ namespace Colossal.Mods
         [HarmonyPrefix]
         public static bool Prefix()
         {
-            if (PluginConfig.nofinger)
+            if (PluginConfig.nofinger || FakeQuestMenu.fakeQuestMenuFinger)
             {
+                if(ControllerInputPoller.instance.leftControllerGripFloat != 0)
+                    ControllerInputPoller.instance.leftControllerGripFloat = 0f;
+                if (ControllerInputPoller.instance.rightControllerGripFloat != 0f)
+                    ControllerInputPoller.instance.rightControllerGripFloat = 0f;
+                if (ControllerInputPoller.instance.leftControllerIndexFloat != 0f)
+                    ControllerInputPoller.instance.leftControllerIndexFloat = 0f;
+                if (ControllerInputPoller.instance.rightControllerIndexFloat != 0f)
+                    ControllerInputPoller.instance.rightControllerIndexFloat = 0f;
+
                 return false;
             }
             return true;

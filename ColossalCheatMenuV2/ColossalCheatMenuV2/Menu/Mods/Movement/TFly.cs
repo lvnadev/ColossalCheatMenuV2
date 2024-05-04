@@ -1,5 +1,6 @@
 ﻿
 using Colossal.Menu;
+using Colossal.Patches;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Colossal.Mods
                 {
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity = new Vector3(0f, 0.01f, 0f);
                 }
-                if (SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand))
+                if (Controls.RightJoystick())
                 {
                     GorillaLocomotion.Player.Instance.transform.position += GorillaLocomotion.Player.Instance.rightControllerTransform.forward * 0.45f;
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity = Vector3.zero;

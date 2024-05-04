@@ -25,6 +25,7 @@ using System.Runtime.Remoting.Messaging;
 using Colossal.Patches;
 using PlayFab.ClientModels;
 using static UnityEngine.Random;
+using Colossal.Patches;
 
 namespace Colossal.Menu {
     public class MenuOption {
@@ -122,9 +123,8 @@ namespace Colossal.Menu {
             NotifiText = Testtext;
             Testtext.alignment = TextAnchor.UpperLeft;
 
-            //HUDObj2.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
-            //HUDObj2.transform.rotation = MainCamera.transform.rotation;
-            HUDObj2.transform.transform.SetParent(MainCamera.transform);
+            HUDObj2.transform.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
+            HUDObj2.transform.rotation = MainCamera.transform.rotation;
         }
         public static void LoadOnce() {
             Debug.Log("Load Once Ran");
@@ -156,7 +156,7 @@ namespace Colossal.Menu {
                     GameObject TestText = new GameObject();
                     TestText.transform.parent = HUDObj.transform;
                     Testtext = TestText.AddComponent<Text>();
-                    Testtext.text = "<color=magenta><CONTROLS (DRIFT MODE)></color>\nLeft Joystick (Hold): Control\nRight Grip: Select\nRight Trigger: Move\nBoth Joysticks: Toggle\n\n<color=magenta><CONTROLS></color>\nRight Joystick (Right): Select\nRight Joystick (Down): Move\nBoth Joysticks: Toggle\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>";
+                    Testtext.text = "<color=magenta><CONTROLS></color>\nLeft Joystick (Hold): Control\nRight Grip: Select\nRight Trigger: Move\nBoth Joysticks: Toggle\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>";
                     Testtext.fontSize = 10;
                     Testtext.font = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/UI/CodeOfConduct/COC Text").GetComponent<Text>().font;
                     Testtext.rectTransform.sizeDelta = new Vector2(260, 300);
@@ -386,9 +386,8 @@ namespace Colossal.Menu {
                     Menu.LoadOnce();
                 Menu.HUDObj2.transform.transform.position = new Vector3(Menu.MainCamera.transform.position.x, Menu.MainCamera.transform.position.y, Menu.MainCamera.transform.position.z);
                 Menu.HUDObj2.transform.rotation = Menu.MainCamera.transform.rotation;
-                bool state = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand) || Controls.OculusLeftJoystick();
-                bool state2 = SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand) || Controls.OculusRightJoystick();
-                if (state && state2 && !Menu.menutogglecooldown)
+
+                if (Controls.LeftJoystick() && Controls.RightJoystick() && !Menu.menutogglecooldown)
                 {
                     Menu.menutogglecooldown = true;
                     Menu.agreement = true;
@@ -408,9 +407,7 @@ namespace Colossal.Menu {
             }
             else
             {
-                bool state = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand) || Controls.OculusLeftJoystick();
-                bool state2 = SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand) || Controls.OculusRightJoystick();
-                if (state && state2 && !Menu.menutogglecooldown)
+                if (Controls.LeftJoystick() && Controls.RightJoystick() && !Menu.menutogglecooldown)
                 {
                     Menu.menutogglecooldown = true;
                     Menu.HUDObj2.active = !Menu.HUDObj2.active;
@@ -418,7 +415,7 @@ namespace Colossal.Menu {
 
                     Menu.UpdateMenuState(new MenuOption(), null, null);
                 }
-                if (!state && !state2 && Menu.menutogglecooldown)
+                if (!Controls.LeftJoystick() && !Controls.RightJoystick() && Menu.menutogglecooldown)
                     Menu.menutogglecooldown = false;
                 if (Menu.GUIToggled)
                 {
@@ -474,11 +471,9 @@ namespace Colossal.Menu {
 
 
                     //VR CONTROLS
-                    bool rightGrab = ControllerInputPoller.instance.rightGrab;
-                    if (SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand) || Controls.OculusLeftJoystick())
+                    if (Controls.LeftJoystick())
                     {
-                        bool trigger = SteamVR_Actions.gorillaTag_RightTriggerClick.GetState(SteamVR_Input_Sources.RightHand) || Controls.OculusTrigger();
-                        if (trigger && !Menu.inputcooldown)
+                        if (Controls.RightTrigger() && !Menu.inputcooldown)
                         {
                             Menu.inputcooldown = true;
                             if (Menu.SelectedOptionIndex + 1 == Menu.CurrentViewingMenu.Count<MenuOption>())
@@ -487,12 +482,12 @@ namespace Colossal.Menu {
                                 Menu.SelectedOptionIndex++;
                             Menu.UpdateMenuState(new MenuOption(), null, null);
                         }
-                        if (!trigger && !rightGrab && Menu.inputcooldown)
+                        if (!Controls.RightTrigger() && !ControllerInputPoller.instance.rightGrab && Menu.inputcooldown)
                             Menu.inputcooldown = false;
 
                         if (CurrentViewingMenu[SelectedOptionIndex]._type == "STRINGslider")
                         {
-                            if (rightGrab && !Menu.inputcooldown)
+                            if (ControllerInputPoller.instance.rightGrab && !Menu.inputcooldown)
                             {
                                 if ((CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1) == CurrentViewingMenu[SelectedOptionIndex].StringArray.Count())
                                     CurrentViewingMenu[SelectedOptionIndex].stringsliderind = 0;
@@ -502,7 +497,7 @@ namespace Colossal.Menu {
                             }
                             UpdateMenuState(new MenuOption(), null, null);
                         }
-                        if (rightGrab && !Menu.inputcooldown)
+                        if (ControllerInputPoller.instance.rightGrab && !Menu.inputcooldown)
                         {
                             Menu.inputcooldown = true;
                             Menu.UpdateMenuState(Menu.CurrentViewingMenu[Menu.SelectedOptionIndex], null, "optionhit");

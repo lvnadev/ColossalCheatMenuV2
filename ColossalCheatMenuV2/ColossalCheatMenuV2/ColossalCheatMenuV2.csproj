@@ -103,6 +103,7 @@
     <Compile Include="Menu\NotifacationLib\Notifacations\ReportNotifacation.cs" />
     <Compile Include="Menu\Overlay.cs" />
     <Compile Include="Menu\ToolTips.cs" />
+    <Compile Include="Patches\Controls.cs" />
     <Compile Include="Patches\Heroin.cs" />
     <Compile Include="Patches\Bepinex\BepinexPatch.cs" />
     <Compile Include="Patches\Events.cs" />

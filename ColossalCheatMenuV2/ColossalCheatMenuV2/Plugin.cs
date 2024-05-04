@@ -23,8 +23,16 @@ using static Valve.VR.SteamVR_ExternalCamera;
 namespace Colossal {
     //[BepInPlugin("org.ColossusYTTV.ColossalCheatMenuV2", "ColossalCheatMenuV2", "1.0.0")]
     public class Plugin : MonoBehaviour {
-        //public static int called = 0;
-        //public static float instantate = 0;
+        
+        /*
+         * TODO:
+         * 
+         * Lock rotations with fake quest menu.
+         * Fix NearPulse
+         * Make a ball to visualize the HitBoxes mod
+         * Fix RGB menu theme
+         * 
+         */
 
         public static float reporttimer = 0;
 
@@ -53,14 +61,15 @@ namespace Colossal {
             holder.AddComponent<LeaveNotifacation>();
             holder.AddComponent<MasterChangeNotifacation>();
             holder.AddComponent<Configs>();
+            holder.AddComponent<Controls>();
 
 
             string[] oculusDlls = Directory.GetFiles(Environment.CurrentDirectory, "OculusXRPlugin.dll", SearchOption.AllDirectories);
             if (oculusDlls.Length > 0)
                 oculus = true;
 
-            if (!oculus)
-            {
+            //if (!oculus)
+            //{
                 Menu.Menu.LoadOnce();
                 CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start functions");
 
@@ -68,18 +77,18 @@ namespace Colossal {
                 Configs.GetConfigFileNames();
 
                 hud = GameObject.Find("CLIENT_HUB");
-            }
-            else
-            {
-                // Doing this for now because I am to lazy to fix fucking inputs 😭
-                CustomConsole.LogToConsole("[COLOSSAL] YOU ARE PLAYING ON OCLULUS. PLEASE LAUNCH ON THE STEAM PORT OF THE GAME!");
+            //}
+            //else
+            //{
+            //    // Doing this for now because I am to lazy to fix fucking inputs 😭
+            //    CustomConsole.LogToConsole("[COLOSSAL] YOU ARE PLAYING ON OCLULUS. PLEASE LAUNCH ON THE STEAM PORT OF THE GAME!");
 
-                Menu.Menu.LoadOnceOculus();
-            }
+            //    Menu.Menu.LoadOnceOculus();
+            //}
         }
         public void Update() {
-            if(!oculus)
-            {
+            //if(!oculus)
+            //{
                 Menu.Menu.Load();
                 Dictionary<Type, bool> componentConditions = new Dictionary<Type, bool>
                 {
@@ -134,7 +143,7 @@ namespace Colossal {
                         holder = new GameObject();
                     }
                 } 
-            }
+            //}
         }
 
         public void AutoUpdate()

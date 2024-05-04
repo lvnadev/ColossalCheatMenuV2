@@ -12,17 +12,24 @@ namespace Colossal.Mods
 {
     public class FakeQuestMenu : MonoBehaviour
     {
+        public static bool fakeQuestMenuFinger = false;
         public void Update()
         {
             if (PluginConfig.fakequestmenu)
             {
                 if(!GorillaLocomotion.Player.Instance.inOverlay)
                     GorillaLocomotion.Player.Instance.inOverlay = true;
+
+                if (!fakeQuestMenuFinger)
+                    fakeQuestMenuFinger = true;
             }
             else
             {
                 if(GorillaLocomotion.Player.Instance.inOverlay)
                     GorillaLocomotion.Player.Instance.inOverlay = false;
+
+                if (fakeQuestMenuFinger)
+                    fakeQuestMenuFinger = false;
 
                 Destroy(holder.GetComponent<FakeQuestMenu>());
             }

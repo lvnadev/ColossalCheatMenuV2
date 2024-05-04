@@ -1,5 +1,6 @@
 ﻿
 using Colossal.Menu;
+using Colossal.Patches;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Colossal.Mods
         {
             if (PluginConfig.creepermonkey)
             {
-                if (SteamVR_Actions.gorillaTag_LeftTriggerClick.GetState(SteamVR_Input_Sources.LeftHand))
+                if (Controls.LeftTrigger())
                 {
                     float num = float.PositiveInfinity;
                     foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
