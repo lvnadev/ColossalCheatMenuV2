@@ -45,6 +45,7 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nSpeed up time",
             $"<color={Menu.MenuColour}>R Secondary</color>\nScale gravity",
             $"<color={Menu.MenuColour}>L Or R Grip</color>\nClimb Gorillas",
+            $"<color={Menu.MenuColour}>Passive</color>\nFly away from tagged players",
         };
         public static string[] Speedtips = new string[]
         {

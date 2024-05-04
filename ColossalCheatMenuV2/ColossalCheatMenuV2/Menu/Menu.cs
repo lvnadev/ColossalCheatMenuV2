@@ -386,8 +386,8 @@ namespace Colossal.Menu {
                     Menu.LoadOnce();
                 Menu.HUDObj2.transform.transform.position = new Vector3(Menu.MainCamera.transform.position.x, Menu.MainCamera.transform.position.y, Menu.MainCamera.transform.position.z);
                 Menu.HUDObj2.transform.rotation = Menu.MainCamera.transform.rotation;
-                bool state = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand);
-                bool state2 = SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand);
+                bool state = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand) || Controls.OculusLeftJoystick();
+                bool state2 = SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand) || Controls.OculusRightJoystick();
                 if (state && state2 && !Menu.menutogglecooldown)
                 {
                     Menu.menutogglecooldown = true;
@@ -408,9 +408,9 @@ namespace Colossal.Menu {
             }
             else
             {
-                bool state3 = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand);
-                bool state4 = SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand);
-                if (state3 && state4 && !Menu.menutogglecooldown)
+                bool state = SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand) || Controls.OculusLeftJoystick();
+                bool state2 = SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand) || Controls.OculusRightJoystick();
+                if (state && state2 && !Menu.menutogglecooldown)
                 {
                     Menu.menutogglecooldown = true;
                     Menu.HUDObj2.active = !Menu.HUDObj2.active;
@@ -418,7 +418,7 @@ namespace Colossal.Menu {
 
                     Menu.UpdateMenuState(new MenuOption(), null, null);
                 }
-                if (!state3 && !state4 && Menu.menutogglecooldown)
+                if (!state && !state2 && Menu.menutogglecooldown)
                     Menu.menutogglecooldown = false;
                 if (Menu.GUIToggled)
                 {
@@ -475,9 +475,9 @@ namespace Colossal.Menu {
 
                     //VR CONTROLS
                     bool rightGrab = ControllerInputPoller.instance.rightGrab;
-                    if (SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand))
+                    if (SteamVR_Actions.gorillaTag_LeftJoystickClick.GetState(SteamVR_Input_Sources.LeftHand) || Controls.OculusLeftJoystick())
                     {
-                        bool trigger = SteamVR_Actions.gorillaTag_RightTriggerClick.GetState(SteamVR_Input_Sources.RightHand);
+                        bool trigger = SteamVR_Actions.gorillaTag_RightTriggerClick.GetState(SteamVR_Input_Sources.RightHand) || Controls.OculusTrigger();
                         if (trigger && !Menu.inputcooldown)
                         {
                             Menu.inputcooldown = true;
