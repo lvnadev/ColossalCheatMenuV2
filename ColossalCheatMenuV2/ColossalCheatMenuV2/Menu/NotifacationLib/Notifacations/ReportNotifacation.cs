@@ -13,13 +13,14 @@ namespace Colossal.Menu.ClientHub.Notifacation {
     [HarmonyPatch(typeof(GorillaNot), "SendReport")]
     internal class ReportNotifacation {
         private static List<string> notifiedPlayers = new List<string>();
+        private static float reporttiemr = 0;
 
         [HarmonyPrefix]
         private static void Postfix(string susReason, string susId, string susNick) {
-            if (!notifiedPlayers.Contains(susId) && PluginConfig.noti && !susReason.Contains("PlayHandTap")) {
+            if (!notifiedPlayers.Contains(susId) && PluginConfig.Notifications && !susReason.Contains("PlayHandTap")) {
                 notifiedPlayers.Add(susId);
                 Notifacations.SendNotification($"<color=yellow>[ANTICHEAT]</color> Name: {susNick}");
-                if(Plugin.reporttimer <= 20) {
+                if(reporttiemr <= 20) {
                     notifiedPlayers.Remove(susId);
                 }
             }

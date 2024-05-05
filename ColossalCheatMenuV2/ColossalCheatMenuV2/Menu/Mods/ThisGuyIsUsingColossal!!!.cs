@@ -19,7 +19,7 @@ namespace Colossal.Menu
         {
             if (PhotonNetwork.InRoom && GorillaTagger.Instance.myVRRig != null)
             {
-                if(PluginConfig.csghostclient && !GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
+                if(PluginConfig.CSVisuals && !GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
                     GorillaTagger.Instance.myVRRig.Controller.SetCustomProperties(hash);
                 else if(GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
                     GorillaTagger.Instance.myVRRig.Controller.CustomProperties.Remove(hash);
@@ -30,7 +30,7 @@ namespace Colossal.Menu
             {
                 if (vrrig != null && !vrrig.isOfflineVRRig && !processedVRRigs.Contains(vrrig))
                 {
-                    if (PluginConfig.csghostclient)
+                    if (PluginConfig.CSVisuals)
                     {
                         if (vrrig.Creator.CustomProperties.ContainsKey("colossal"))
                         {

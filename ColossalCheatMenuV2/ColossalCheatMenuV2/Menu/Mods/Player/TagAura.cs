@@ -76,7 +76,7 @@ namespace Colossal.Mods {
                                     float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.transform.position);
                                     if (distance <= GorillaGameManager.instance.tagDistanceThreshold / ammount && !vrrig.isMyPlayer)
                                     {
-                                        if (PluginConfig.csghostclient)
+                                        if (PluginConfig.CSVisuals)
                                         {
                                             if (radiusLine == null)
                                             {

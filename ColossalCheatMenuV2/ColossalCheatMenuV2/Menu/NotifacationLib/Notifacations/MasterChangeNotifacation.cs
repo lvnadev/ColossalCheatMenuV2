@@ -19,7 +19,7 @@ namespace Colossal.Menu.ClientHub.Notifacation {
         {
             base.OnMasterClientSwitched(newMasterClient);
 
-            if (PluginConfig.noti)
+            if (PluginConfig.Notifications)
             {
                 if (mastername != newMasterClient.NickName)
                 {

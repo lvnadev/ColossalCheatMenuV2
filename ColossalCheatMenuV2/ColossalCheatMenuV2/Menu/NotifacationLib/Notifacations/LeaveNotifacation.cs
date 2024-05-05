@@ -16,7 +16,7 @@ namespace Colossal.Menu.ClientHub.Notifacation {
         {
             base.OnPlayerLeftRoom(otherPlayer);
 
-            if (!notifiedPlayers.Contains(otherPlayer) && PluginConfig.noti)
+            if (!notifiedPlayers.Contains(otherPlayer) && PluginConfig.Notifications)
             {
                 notifiedPlayers.Add(otherPlayer);
                 Notifacations.SendNotification($"<color=cyan>[LEAVE]</color> Name: {otherPlayer.NickName}");

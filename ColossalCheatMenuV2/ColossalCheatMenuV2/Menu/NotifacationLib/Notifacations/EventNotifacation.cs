@@ -26,7 +26,7 @@ namespace Colossal.Menu.ClientHub.Notifacation
 
         void OnEvent(EventData eventData)
         {
-            if (PluginConfig.noti)
+            if (PluginConfig.Notifications)
             {
                 if(eventData.Code != 202 || eventData.Code != 206 || eventData.Code != 201 || eventData.Code != 205 || eventData.Code != 255)
                     Notifacations.SendNotification($"<color=yellow>[EVENT]</color> Code: {eventData}");

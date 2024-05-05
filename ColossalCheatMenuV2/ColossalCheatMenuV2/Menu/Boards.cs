@@ -31,7 +31,7 @@ namespace Colossal.Menu
 
         public void Update()
         {
-            if (PluginConfig.csghostclient)
+            if (PluginConfig.CSVisuals)
             {
                 if (GameObject.Find("Environment Objects/LocalObjects_Prefab").transform.Find("TreeRoom").gameObject.activeSelf && !Boards.tempbool)
                 {

@@ -72,7 +72,7 @@ namespace Colossal.Menu
 
             GameObject.Destroy(vrrig.GetComponent<Rigidbody>());
 
-            if (!PluginConfig.csghostclient)
+            if (!PluginConfig.CSVisuals)
             {
                 vrrig.mainSkin.enabled = false;
                 vrrig.headMesh.active = false;

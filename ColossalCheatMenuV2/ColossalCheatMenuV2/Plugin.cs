@@ -11,6 +11,7 @@ using Colossal.Menu.ClientHub;
 using Colossal.Menu.ClientHub.Notifacation;
 using Colossal.Mods;
 using Colossal.Patches;
+using ColossalCheatMenuV2.Menu;
 using ColossalCheatMenuV2.Mods;
 using GorillaNetworking;
 using Photon.Pun;
@@ -34,13 +35,10 @@ namespace Colossal {
          * 
          */
 
-        public static float reporttimer = 0;
-
-
-        public static GameObject hud;
         public static GameObject holder;
+        public static Font gtagfont;
 
-        public static float version = 5.5f;
+        public static float version = 5.6f;
         public static bool sussy = false;
         public static bool oculus = false;
 
@@ -62,35 +60,35 @@ namespace Colossal {
             holder.AddComponent<MasterChangeNotifacation>();
             holder.AddComponent<Configs>();
             holder.AddComponent<Controls>();
+            holder.AddComponent<GUICreator>();
 
 
             string[] oculusDlls = Directory.GetFiles(Environment.CurrentDirectory, "OculusXRPlugin.dll", SearchOption.AllDirectories);
             if (oculusDlls.Length > 0)
                 oculus = true;
 
-            //if (!oculus)
-            //{
+
+            CustomConsole.LogToConsole("[COLOSSAL] Getting configs");
+            Configs.GetConfigFileNames();
+
+            gtagfont = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/UI/CodeOfConduct/COC Text").GetComponent<Text>().font;
+
+            if (gtagfont != null && holder != null)
+            {
                 Menu.Menu.LoadOnce();
-                CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start functions");
+                CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start");
 
-                CustomConsole.LogToConsole("[COLOSSAL] Getting configs");
-                Configs.GetConfigFileNames();
+                Overlay.SpawnOverlay();
+                CustomConsole.LogToConsole("[COLOSSAL] Loaded overlay");
 
-                hud = GameObject.Find("CLIENT_HUB");
-            //}
-            //else
-            //{
-            //    // Doing this for now because I am to lazy to fix fucking inputs 😭
-            //    CustomConsole.LogToConsole("[COLOSSAL] YOU ARE PLAYING ON OCLULUS. PLEASE LAUNCH ON THE STEAM PORT OF THE GAME!");
-
-            //    Menu.Menu.LoadOnceOculus();
-            //}
+                Notifacations.SpawnNoti();
+                CustomConsole.LogToConsole("[COLOSSAL] Loaded noti");
+            }
         }
-        public void Update() {
-            //if(!oculus)
-            //{
-                Menu.Menu.Load();
-                Dictionary<Type, bool> componentConditions = new Dictionary<Type, bool>
+        public void Update() 
+        {
+            Menu.Menu.Load();
+            Dictionary<Type, bool> componentConditions = new Dictionary<Type, bool>
                 {
                     { typeof(CustomConsole), true },
                     { typeof(ThisGuyIsUsingColossal), true },
@@ -128,22 +126,21 @@ namespace Colossal {
                     { typeof(HitBoxes), PluginConfig.hitboxes },
                     { typeof(NearPulse), PluginConfig.NearPulse },
                 };
-                foreach (var kvp in componentConditions)
+            foreach (var kvp in componentConditions)
+            {
+                if (holder != null)
                 {
-                    if (holder != null)
+                    if (kvp.Value && holder.GetComponent(kvp.Key) == null)
                     {
-                        if (kvp.Value && holder.GetComponent(kvp.Key) == null)
-                        {
-                            holder.AddComponent(kvp.Key);
-                        }
+                        holder.AddComponent(kvp.Key);
                     }
-                    else
-                    {
-                        CustomConsole.LogToConsole("Holder is null");
-                        holder = new GameObject();
-                    }
-                } 
-            //}
+                }
+                else
+                {
+                    CustomConsole.LogToConsole("Holder is null");
+                    holder = new GameObject();
+                }
+            }
         }
 
         public void AutoUpdate()
