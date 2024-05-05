@@ -231,7 +231,7 @@ namespace Colossal.Menu {
                     ModSettings[2] = new MenuOption { DisplayName = "Player Settings", _type = "submenu", AssociatedString = "PlayerSettings" };
                     ModSettings[3] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
-                    MovementSettings = new MenuOption[12];
+                    MovementSettings = new MenuOption[13];
                     MovementSettings[0] = new MenuOption { DisplayName = "WASD Fly Speed", _type = "STRINGslider", StringArray = new string[] { "5", "7", "10", "13", "16" } };
                     MovementSettings[1] = new MenuOption { DisplayName = "FloatMonkey Ammount", _type = "STRINGslider", StringArray = new string[] { "1.1", "1.2", "1.4", "1.6", "1.8", "2", "2.2", "2.4", "2.6", "2.8", "3", "3.2", "3.4", "3.6", "3.8", "4", "Anti Grav" } };
                     MovementSettings[2] = new MenuOption { DisplayName = "WallWalk Ammount", _type = "STRINGslider", StringArray = new string[] { "6.8", "7", "7.5", "7.8", "8", "8.5", "8.8", "9", "9.5", "9.8" } };
@@ -243,8 +243,8 @@ namespace Colossal.Menu {
                     MovementSettings[8] = new MenuOption { DisplayName = "Near Speed Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
                     MovementSettings[9] = new MenuOption { DisplayName = "Near Speed Distance", _type = "STRINGslider", StringArray = new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" } };
                     MovementSettings[10] = new MenuOption { DisplayName = "Near Pulse Distance", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } };
-                    MovementSettings[10] = new MenuOption { DisplayName = "Near Pulse Ammount", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } };
-                    MovementSettings[11] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    MovementSettings[11] = new MenuOption { DisplayName = "Near Pulse Ammount", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } };
+                    MovementSettings[12] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
                     VisualSettings = new MenuOption[4];
                     VisualSettings[0] = new MenuOption { DisplayName = "First Person FOV", _type = "STRINGslider", StringArray = new string[] { "60", "70", "80", "90", "100", "110", "120", "130", "140" } };
@@ -476,6 +476,7 @@ namespace Colossal.Menu {
                 Movement2[0].AssociatedBool = PluginConfig.Timer;
                 Movement2[1].AssociatedBool = PluginConfig.FloatyMonkey;
                 Movement2[2].AssociatedBool = PluginConfig.ClimbableGorillas;
+                Movement2[3].AssociatedBool = PluginConfig.NearPulse;
 
                 //Visual
                 Visual[0].AssociatedBool = PluginConfig.chams;
@@ -525,6 +526,7 @@ namespace Colossal.Menu {
                 MovementSettings[8].stringsliderind = PluginConfig.nearspeedmmount;
                 MovementSettings[9].stringsliderind = PluginConfig.nearspeeddistance;
                 MovementSettings[10].stringsliderind = PluginConfig.NearPulseDistance;
+                MovementSettings[11].stringsliderind = PluginConfig.NearPulseAmmount;
 
                 VisualSettings[0].stringsliderind = PluginConfig.FirstPersonFOV;
                 VisualSettings[1].stringsliderind = PluginConfig.TracerPosition;

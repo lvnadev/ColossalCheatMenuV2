@@ -29,10 +29,12 @@ namespace Colossal {
          * TODO:
          * 
          * Lock rotations with fake quest menu.
-         * Fix NearPulse
          * Make a ball to visualize the HitBoxes mod
          * Fix RGB menu theme
-         * 
+            near speed ammount not scrolling
+            add movement settings page 2
+            sky colour not scrolling
+            config not scrolling
          */
 
         public static GameObject holder;
