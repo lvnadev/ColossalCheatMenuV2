@@ -68,9 +68,6 @@ namespace Colossal {
                 oculus = true;
 
 
-            CustomConsole.LogToConsole("[COLOSSAL] Getting configs");
-            Configs.GetConfigFileNames();
-
             gtagfont = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/UI/CodeOfConduct/COC Text").GetComponent<Text>().font;
 
             if (gtagfont != null && holder != null)

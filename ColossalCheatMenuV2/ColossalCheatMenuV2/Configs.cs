@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Playables;
+using static Valve.VR.SteamVR_ExternalCamera;
 namespace Colossal.Menu
 {
     public static class PluginConfig
@@ -63,7 +64,7 @@ namespace Colossal.Menu
         public static bool fakequestmenu = false;
 
         //group 5
-        public static int MenuPos = 0;
+        public static int MenuPosition = 0;
         public static int MenuColour = 0;
         public static bool MenuRGB = false;
         public static int GhostColour = 0;

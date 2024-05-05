@@ -212,7 +212,7 @@ namespace Colossal.Menu {
                     Settings[0] = new MenuOption { DisplayName = "Colour Settings", _type = "submenu", AssociatedString = "ColourSettings" };
                     Settings[1] = new MenuOption { DisplayName = "Mod Settings", _type = "submenu", AssociatedString = "ModSettings" };
                     Settings[2] = new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Right", "Middle" } };
-                    Settings[3] = new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = Configs.GetConfigFileNames() };
+                    Settings[3] = new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = new string[0] };
                     Settings[4] = new MenuOption { DisplayName = "Load Config", _type = "button", AssociatedString = "loadconfig" };
                     Settings[5] = new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" };
                     Settings[6] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
@@ -276,8 +276,6 @@ namespace Colossal.Menu {
             {
                 if(AgreementHub == null) //watch as this breaks the whole menu
                     Menu.LoadOnce();
-                //Menu.HUDObj2.transform.transform.position = new Vector3(Menu.MainCamera.transform.position.x, Menu.MainCamera.transform.position.y, Menu.MainCamera.transform.position.z);
-                //Menu.HUDObj2.transform.rotation = Menu.MainCamera.transform.rotation;
 
                 if (Controls.LeftJoystick() && Controls.RightJoystick() && !Menu.menutogglecooldown || Keyboard.current.enterKey.wasPressedThisFrame)
                 {
@@ -292,7 +290,6 @@ namespace Colossal.Menu {
                 if (Controls.LeftJoystick() && Controls.RightJoystick() && !Menu.menutogglecooldown)
                 {
                     Menu.menutogglecooldown = true;
-                    //Menu.HUDObj2.active = !Menu.HUDObj2.active;
                     MenuHub.active = !MenuHub.active;
                     Menu.GUIToggled = !Menu.GUIToggled;
 
@@ -302,10 +299,6 @@ namespace Colossal.Menu {
                     Menu.menutogglecooldown = false;
                 if (Menu.GUIToggled)
                 {
-                    //Menu.HUDObj2.transform.position = new Vector3(Menu.MainCamera.transform.position.x, Menu.MainCamera.transform.position.y, Menu.MainCamera.transform.position.z);
-                    //Menu.HUDObj2.transform.rotation = Menu.MainCamera.transform.rotation;
-
-
                     //KEYBOARD CONTROLS
                     Keyboard current = Keyboard.current;
                     if (current.upArrowKey.wasPressedThisFrame)
@@ -335,10 +328,34 @@ namespace Colossal.Menu {
                     {
                         if (current.leftArrowKey.wasPressedThisFrame)
                         {
-                            if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
-                                CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() - 1;
-                            else
-                                CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind - 1;
+                            foreach (var prop in typeof(PluginConfig).GetFields(BindingFlags.Public | BindingFlags.Static))
+                            {
+                                if (prop.Name.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower() == CurrentViewingMenu[SelectedOptionIndex].DisplayName.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower())
+                                {
+                                    object currentValue = prop.GetValue(null);
+                                    int? currentIntValue = currentValue as int?;
+
+                                    if (currentIntValue.HasValue)
+                                    {
+                                        int newValue = currentIntValue.Value - 1;
+                                        int stringArrayCount = CurrentViewingMenu[SelectedOptionIndex].StringArray.Length;
+
+                                        if (newValue >= stringArrayCount)
+                                            newValue = 0;
+
+                                        prop.SetValue(null, newValue);
+
+                                        CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
+                                    }
+                                    else
+                                    {
+                                        Debug.LogError($"Field '{prop.Name}' is not of type int.");
+                                    }
+
+                                    break;
+                                }
+                            }
+
                             Menu.inputcooldown = true;
                         }
                         if (current.rightArrowKey.wasPressedThisFrame)
@@ -489,7 +506,7 @@ namespace Colossal.Menu {
                 Modders[3].AssociatedBool = PluginConfig.fakequestmenu;
 
                 //Settings
-                Settings[2].stringsliderind = PluginConfig.MenuPos;
+                Settings[2].stringsliderind = PluginConfig.MenuPosition;
                 //Colour Settings
                 ColourSettings[0].stringsliderind = PluginConfig.MenuColour;
                 ColourSettings[1].stringsliderind = PluginConfig.GhostColour;
@@ -578,6 +595,7 @@ namespace Colossal.Menu {
         static void UpdateMenuState(MenuOption option, string _MenuState, string OperationType) {
             try {
                 ToolTips.HandToolTips(MenuState, SelectedOptionIndex);
+                Settings[3].StringArray = Configs.GetConfigFileNames();
 
                 if (OperationType == "optionhit") 
                 {
