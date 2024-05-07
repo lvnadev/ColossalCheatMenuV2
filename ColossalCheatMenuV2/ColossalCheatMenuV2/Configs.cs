@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -64,13 +65,21 @@ namespace Colossal.Menu
         public static bool fakequestmenu = false;
 
         //group 5
+        public static bool Notifications = true;
+        public static bool overlay = true;
+        public static bool CSVisuals = true;
+        public static bool tooltips = true;
+
+        //group 6
         public static int MenuPosition = 0;
+        public static int selectedconfig = 0;
         public static int MenuColour = 0;
-        public static bool MenuRGB = false;
         public static int GhostColour = 0;
         public static int BeamColour = 0;
         public static int ESPColour = 0;
         public static int GhostOpacity = 2;
+        public static int HitBoxesOpacity = 0;
+        public static int HitBoxesColour = 0;
 
         public static int WASDFlySpeed = 2;
         public static int FloatMonkeyAmmount = 0;
@@ -85,16 +94,11 @@ namespace Colossal.Menu
         public static int speedammount = 0;
         public static int speedlgammount = 0;
         public static int speedrgammount = 0;
-        public static int nearspeedmmount = 0;
+        public static int nearspeedammount = 0;
         public static int nearspeeddistance = 0;
         public static int NearPulseDistance = 0;
         public static int NearPulseAmmount = 0;
-
-        //group 6
-        public static bool Notifications = true;
-        public static bool overlay = true;
-        public static bool CSVisuals = true;
-        public static bool tooltips = true;
+        public static int skycolour = 0;
     }
 
     internal class Configs : MonoBehaviour
@@ -108,6 +112,8 @@ namespace Colossal.Menu
             string[] result;
             try
             {
+                CustomConsole.LogToConsole("[COLOSSAL] Getting Config Files");
+
                 string[] files = Directory.GetFiles(Configs.folderPath, "*" + Configs.fileExtension);
                 string[] array = new string[files.Length];
                 for (int i = 0; i < files.Length; i++)
@@ -138,7 +144,17 @@ namespace Colossal.Menu
         {
             try
             {
-                string filePath = Path.Combine(folderPath, $"{fileName}{fileExtension}");
+                CustomConsole.LogToConsole("[COLOSSAL] Saving Config");
+
+                string[] existingFiles = Directory.GetFiles(folderPath, "*" + fileExtension);
+                int nextFileNumber = 1;
+                while (existingFiles.Any(file => Path.GetFileNameWithoutExtension(file).EndsWith(nextFileNumber.ToString())))
+                {
+                    nextFileNumber++;
+                }
+                string newFileName = $"{fileName}_{nextFileNumber}{fileExtension}";
+                string filePath = Path.Combine(folderPath, newFileName);
+
                 var values = new Dictionary<string, object>();
                 foreach (var prop in typeof(PluginConfig).GetFields(BindingFlags.Public | BindingFlags.Static))
                 {
@@ -158,6 +174,8 @@ namespace Colossal.Menu
         {
             try
             {
+                CustomConsole.LogToConsole("[COLOSSAL] Loading Config");
+
                 if (File.Exists(filePath))
                 {
                     string json = File.ReadAllText(filePath);
@@ -175,9 +193,10 @@ namespace Colossal.Menu
                             prop.SetValue(null, parsedValue); // Set value directly
 
                             CustomConsole.LogToConsole($"Set {prop.FieldType} '{prop.Name}' to '{parsedValue}'.");
-                            Notifacations.SendNotification($"<color=blue>[CONFIG]</color> LOADED : {Menu.Settings[3].StringArray[Menu.Settings[3].stringsliderind]}");
                         }
                     }
+
+                    Notifacations.SendNotification($"<color=blue>[CONFIG]</color> LOADED : {Menu.Settings[3].StringArray[Menu.Settings[3].stringsliderind]}");
                 }
                 else
                 {

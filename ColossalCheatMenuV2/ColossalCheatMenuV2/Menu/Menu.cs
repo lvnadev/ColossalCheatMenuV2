@@ -29,6 +29,8 @@ using Colossal.Patches;
 using ColossalCheatMenuV2.Menu;
 using Newtonsoft.Json;
 using Unity.XR.OpenVR.SimpleJSON;
+using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 
 namespace Colossal.Menu {
     public class MenuOption {
@@ -217,13 +219,15 @@ namespace Colossal.Menu {
                     Settings[5] = new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" };
                     Settings[6] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
-                    ColourSettings = new MenuOption[6];
+                    ColourSettings = new MenuOption[8];
                     ColourSettings[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue", "RGB" } };
                     ColourSettings[1] = new MenuOption { DisplayName = "Ghost Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
                     ColourSettings[2] = new MenuOption { DisplayName = "Beam Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
                     ColourSettings[3] = new MenuOption { DisplayName = "ESP Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
                     ColourSettings[4] = new MenuOption { DisplayName = "Ghost Opacity", _type = "STRINGslider", StringArray = new string[] { "100%", "80%", "60%", "30%", "20%", "0%" } };
-                    ColourSettings[5] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    ColourSettings[5] = new MenuOption { DisplayName = "HitBoxes Opacity", _type = "STRINGslider", StringArray = new string[] { "100%", "80%", "60%", "30%", "20%", "0%" } };
+                    ColourSettings[6] = new MenuOption { DisplayName = "HitBoxes Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
+                    ColourSettings[7] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
                     ModSettings = new MenuOption[4];
                     ModSettings[0] = new MenuOption { DisplayName = "Movement Settings", _type = "submenu", AssociatedString = "MovementSettings" };
@@ -482,6 +486,7 @@ namespace Colossal.Menu {
                 Visual[0].AssociatedBool = PluginConfig.chams;
                 Visual[1].AssociatedBool = PluginConfig.boxesp;
                 Visual[2].AssociatedBool = PluginConfig.hollowboxesp;
+                Visual[3].stringsliderind = PluginConfig.skycolour;
                 Visual[4].AssociatedBool = PluginConfig.whyiseveryonelookingatme;
                 Visual[5].AssociatedBool = PluginConfig.noexpressions;
                 Visual[6].AssociatedBool = PluginConfig.tracers;
@@ -499,6 +504,7 @@ namespace Colossal.Menu {
                 Player[7].AssociatedBool = PluginConfig.tagall;
                 Player[8].AssociatedBool = PluginConfig.freezemonkey;
                 Player[9].AssociatedBool = PluginConfig.desync;
+                Player[10].AssociatedBool = PluginConfig.hitboxes;
 
                 //Modders
                 Modders[0].AssociatedBool = PluginConfig.breaknametags;
@@ -508,6 +514,7 @@ namespace Colossal.Menu {
 
                 //Settings
                 Settings[2].stringsliderind = PluginConfig.MenuPosition;
+                Settings[3].stringsliderind = PluginConfig.selectedconfig;
                 //Colour Settings
                 ColourSettings[0].stringsliderind = PluginConfig.MenuColour;
                 ColourSettings[1].stringsliderind = PluginConfig.GhostColour;
@@ -523,7 +530,7 @@ namespace Colossal.Menu {
                 MovementSettings[5].stringsliderind = PluginConfig.speedammount;
                 MovementSettings[6].stringsliderind = PluginConfig.speedlgammount;
                 MovementSettings[7].stringsliderind = PluginConfig.speedrgammount;
-                MovementSettings[8].stringsliderind = PluginConfig.nearspeedmmount;
+                MovementSettings[8].stringsliderind = PluginConfig.nearspeedammount;
                 MovementSettings[9].stringsliderind = PluginConfig.nearspeeddistance;
                 MovementSettings[10].stringsliderind = PluginConfig.NearPulseDistance;
                 MovementSettings[11].stringsliderind = PluginConfig.NearPulseAmmount;
@@ -566,32 +573,6 @@ namespace Colossal.Menu {
                 }
                 else
                     Debug.Log("Null for some reason");
-
-
-                if (PluginConfig.MenuRGB)
-                    menurgb += Time.deltaTime;
-                else
-                {
-                    if (menurgb != 0)
-                        menurgb = 0;
-                }
-                if (PluginConfig.MenuRGB)
-                {
-                        MenuColourString = "magenta";
-                    if (menurgb >= 0.2f)
-                        MenuColourString = "red";
-                    if (menurgb >= 0.3f)
-                        MenuColourString = "green";
-                    if (menurgb >= 0.4f)
-                        MenuColourString = "blue";
-                    if (menurgb >= 0.5f)
-                        MenuColourString = "cyan";
-                    if (menurgb >= 0.6f)
-                        MenuColourString = "yellow";
-
-                    if (menurgb >= 0.6f)
-                        menurgb = 0;
-                }
             }
         }
         static void UpdateMenuState(MenuOption option, string _MenuState, string OperationType) {
@@ -649,6 +630,8 @@ namespace Colossal.Menu {
                         foreach (var prop in typeof(PluginConfig).GetFields(BindingFlags.Public | BindingFlags.Static))
                         {
                             values[prop.Name] = prop.GetValue(null);
+
+                            Debug.Log(prop.Name);
 
                             if (values.ContainsKey(prop.Name))
                             {
@@ -753,45 +736,54 @@ namespace Colossal.Menu {
                     }
 
 
-                    switch (ColourSettings[0].stringsliderind)
+                    if(PluginConfig.MenuColour != 6)
+                    {
+                        if (menurgb != 0)
+                            menurgb = 0;
+                    }
+                    switch (PluginConfig.MenuColour)
                     {
                         case 0:
-                            if (PluginConfig.MenuRGB)
-                                PluginConfig.MenuRGB = false;
                             MenuColour = "magenta";
                             break;
                         case 1:
-                            if (PluginConfig.MenuRGB)
-                                PluginConfig.MenuRGB = false;
                             MenuColour = "red";
                             break;
                         case 2:
-                            if (PluginConfig.MenuRGB)
-                                PluginConfig.MenuRGB = false;
                             MenuColour = "yellow";
                             break;
                         case 3:
-                            if (PluginConfig.MenuRGB)
-                                PluginConfig.MenuRGB = false;
                             MenuColour = "green";
                             break;
                         case 4:
-                            if (PluginConfig.MenuRGB)
-                                PluginConfig.MenuRGB = false;
                             MenuColour = "blue";
                             break;
                         case 5:
-                            PluginConfig.MenuRGB = true;
+                            menurgb += Time.deltaTime;
+
+                            MenuColourString = "magenta";
+                            if (menurgb >= 0.2f)
+                                MenuColourString = "red";
+                            if (menurgb >= 0.3f)
+                                MenuColourString = "green";
+                            if (menurgb >= 0.4f)
+                                MenuColourString = "blue";
+                            if (menurgb >= 0.5f)
+                                MenuColourString = "cyan";
+                            if (menurgb >= 0.6f)
+                                MenuColourString = "yellow";
+
+                            if (menurgb >= 0.6f)
+                                menurgb = 0;
+
                             break;
                     }
-                    switch (Settings[2].stringsliderind)
+                    switch (PluginConfig.MenuPosition)
                     {
                         case 0:
-                            //Testtext.rectTransform.localPosition = new Vector3(-2.4f, 1f, 2f);
                             MenuHubText.rectTransform.localPosition = new Vector3(2.1f, 1f, 2f);
                             break;
                         case 1:
-                            //Testtext.rectTransform.localPosition = new Vector3(-0.8f, 0f, 0f);
                             MenuHubText.rectTransform.localPosition = new Vector3(1, 0.5f, 2f);
                             break;
                     }

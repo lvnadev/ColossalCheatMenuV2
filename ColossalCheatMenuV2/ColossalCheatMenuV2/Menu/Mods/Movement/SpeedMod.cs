@@ -164,7 +164,7 @@ namespace Colossal.Mods
                         {
                             if (PluginConfig.nearspeeddistance <= Vector3.Distance(GorillaTagger.Instance.transform.position, vrrig.transform.position))
                             {
-                                switch (PluginConfig.nearspeedmmount)
+                                switch (PluginConfig.nearspeedammount)
                                 {
                                     case 0:
                                         GorillaLocomotion.Player.Instance.maxJumpSpeed = 7.2f;
