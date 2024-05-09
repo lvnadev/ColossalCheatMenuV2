@@ -10,42 +10,42 @@ namespace Colossal.Menu
 {
     public class ThisGuyIsUsingColossal : MonoBehaviour
     {
-        Hashtable hash = new Hashtable
-        {
-            { "colossal", "colossal" }
-        };
+        //Hashtable hash = new Hashtable
+        //{
+        //    { "colossal", "colossal" }
+        //};
 
-        void Update()
-        {
-            if (PhotonNetwork.InRoom && GorillaTagger.Instance.myVRRig != null)
-            {
-                if(PluginConfig.CSVisuals && !GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
-                    GorillaTagger.Instance.myVRRig.Controller.SetCustomProperties(hash);
-                else if(GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
-                    GorillaTagger.Instance.myVRRig.Controller.CustomProperties.Remove(hash);
-            }
+        //void Update()
+        //{
+        //    if (PhotonNetwork.InRoom && GorillaTagger.Instance.myVRRig != null)
+        //    {
+        //        if(PluginConfig.CSVisuals && !GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
+        //            GorillaTagger.Instance.myVRRig.Controller.SetCustomProperties(hash);
+        //        else if(GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
+        //            GorillaTagger.Instance.myVRRig.Controller.CustomProperties.Remove(hash);
+        //    }
 
-            HashSet<VRRig> processedVRRigs = new HashSet<VRRig>();
-            foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
-            {
-                if (vrrig != null && !vrrig.isOfflineVRRig && !processedVRRigs.Contains(vrrig))
-                {
-                    if (PluginConfig.CSVisuals)
-                    {
-                        if (vrrig.Creator.CustomProperties.ContainsKey("colossal"))
-                        {
-                            vrrig.playerText.color = Color.magenta;
-                            vrrig.playerText.text = "[CCM] " + vrrig.Creator.NickName;
-                        }
-                    }
-                    else
-                    {
-                        vrrig.playerText.color = Color.white;
-                        vrrig.playerText.text = vrrig.Creator.NickName;
-                    }
-                    processedVRRigs.Add(vrrig);
-                }
-            }
-        }
+        //    HashSet<VRRig> processedVRRigs = new HashSet<VRRig>();
+        //    foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
+        //    {
+        //        if (vrrig != null && !vrrig.isOfflineVRRig && !processedVRRigs.Contains(vrrig))
+        //        {
+        //            if (PluginConfig.CSVisuals)
+        //            {
+        //                if (vrrig.Creator.CustomProperties.ContainsKey("colossal"))
+        //                {
+        //                    vrrig.playerText.color = Color.magenta;
+        //                    vrrig.playerText.text = "[CCM] " + vrrig.Creator.NickName;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                vrrig.playerText.color = Color.white;
+        //                vrrig.playerText.text = vrrig.Creator.NickName;
+        //            }
+        //            processedVRRigs.Add(vrrig);
+        //        }
+        //    }
+        //}
     }
 }
