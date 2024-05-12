@@ -1,4 +1,4 @@
-﻿using ColossalCheatMenuV2.Menu;
+﻿
 using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
@@ -25,8 +25,8 @@ namespace Colossal.Menu.ClientHub {
 
         public static void SpawnOverlay()
         {
-            (OverlayHub, OverlayHubText) = GUICreator.CreateTextGUI("", "OverlayHub", new Vector3(-2f, -1.2f, 3.6f), Camera.main.transform, TextAnchor.UpperLeft);
-            (OverlayHubRoom, OverlayHubTextRoom) = GUICreator.CreateTextGUI("", "OverlayHubRoom", new Vector3(0f, -1.2f, 3.6f), Camera.main.transform, TextAnchor.UpperLeft);
+            (OverlayHub, OverlayHubText) = GUICreator.CreateTextGUI("", "OverlayHub", new Vector3(-1.2f, -1.4f, 3f), Camera.main.transform, TextAnchor.UpperLeft);
+            (OverlayHubRoom, OverlayHubTextRoom) = GUICreator.CreateTextGUI("", "OverlayHubRoom", new Vector3(1.76f, -1.3f, 3f), Camera.main.transform, TextAnchor.UpperLeft);
         }
 
         public void Update() {

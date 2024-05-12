@@ -1,21 +1,18 @@
 ﻿using Colossal;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ColossalCheatMenuV2.Menu
+namespace Colossal.Menu
 {
     internal class GUICreator : MonoBehaviour
     {
         private static Material mat = new Material(Shader.Find("GUI/Text Shader"));
+
         public static (GameObject, Text) CreateTextGUI(string text, string name, Vector3 localpos, Transform transform, TextAnchor alignment)
         {
             GameObject HUDObj = new GameObject();
-
             HUDObj.name = name;
 
             Canvas canvas = HUDObj.AddComponent<Canvas>();
@@ -41,9 +38,11 @@ namespace ColossalCheatMenuV2.Menu
             MenuText.material = mat;
             MenuText.alignment = alignment;
 
-            HUDObj.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 2.1f);
-            HUDObj.transform.rotation = transform.rotation;
-            HUDObj.transform.SetParent(transform);
+            // Calculate the position relative to the main camera
+            Vector3 cameraOffset = Camera.main.transform.rotation * localpos;
+            HUDObj.transform.SetParent(Camera.main.transform);
+            HUDObj.transform.position = Camera.main.transform.position + cameraOffset;
+            HUDObj.transform.rotation = Camera.main.transform.rotation;
 
             return (HUDObj, MenuText);
         }
