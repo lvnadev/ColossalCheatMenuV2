@@ -87,7 +87,7 @@ namespace Colossal {
             Dictionary<Type, bool> componentConditions = new Dictionary<Type, bool>
                 {
                     { typeof(CustomConsole), true },
-                    { typeof(ThisGuyIsUsingColossal), false }, // MIGHT be causing banned so its false
+                    { typeof(ThisGuyIsUsingColossal), true },
                     { typeof(LongArm), PluginConfig.longarms },
                     { typeof(WhyIsEveryoneLookingAtMe), PluginConfig.whyiseveryonelookingatme },
                     { typeof(ExcelFly), PluginConfig.excelfly },
