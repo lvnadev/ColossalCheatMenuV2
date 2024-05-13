@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Colossal.Mods
+namespace ColossalCheatMenuV2.Mods
 {
     class NearPulse : MonoBehaviour
     {
@@ -21,15 +21,14 @@ namespace Colossal.Mods
                 {
                     if (!vrrig.isOfflineVRRig && !GorillaTagger.Instance.offlineVRRig.mainSkin.material.name.ToLower().Contains("fected"))
                     {
-                        float distance = Vector3.Distance(GorillaTagger.Instance.transform.position, vrrig.transform.position);
+                        float distance = Vector3.Distance(GorillaTagger.Instance.offlineVRRig.transform.position, vrrig.head.headTransform.position);
                         if (vrrig.mainSkin.material.name.ToLower().Contains("fected") && distance <= PluginConfig.NearPulseDistance)
                         {
-                            GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.AddExplosionForce(PluginConfig.NearPulseAmmount * 1000, vrrig.transform.position, PluginConfig.NearPulseDistance * 1000);
+                            GorillaTagger.Instance.gameObject.GetComponent<Rigidbody>().AddExplosionForce(PluginConfig.NearPulseAmmount * 1000, vrrig.head.headTransform.position, PluginConfig.NearPulseDistance * 1000);
                         }
                     }
                 }
-                //can someone fix this - Starry
-                // Fixed it for ya pookie <333 - Colossus
+                //can someone fix this
             }
             else
                 Destroy(Plugin.holder.GetComponent<NearPulse>());;
