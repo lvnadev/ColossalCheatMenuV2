@@ -53,7 +53,7 @@ namespace Colossal.Mods
                 }
 
 
-                switch (PluginConfig.GhostOpacity)
+                switch (PluginConfig.HitBoxesOpacity)
                 {
                     case 0:
                         opacity = 100;
@@ -74,7 +74,7 @@ namespace Colossal.Mods
                         opacity = 0;
                         break;
                 }
-                switch (PluginConfig.GhostColour)
+                switch (PluginConfig.HitBoxesColour)
                 {
                     case 0:
                         color = new Color32(204, 51, 255, opacity);
@@ -119,6 +119,8 @@ namespace Colossal.Mods
                 {
                     visualizerL.GetComponent<Renderer>().material.color = color;
 
+                    if (visualizerL.transform.position != GorillaLocomotion.Player.Instance.leftControllerTransform.transform.position)
+                        visualizerL.transform.position = GorillaLocomotion.Player.Instance.leftControllerTransform.transform.position;
                     visualizerL.transform.SetParent(GorillaLocomotion.Player.Instance.leftControllerTransform);
                     visualizerL.transform.localScale = new Vector3(ammount, ammount, ammount);
                 }
@@ -126,6 +128,8 @@ namespace Colossal.Mods
                 {
                     visualizerR.GetComponent<Renderer>().material.color = color;
 
+                    if (visualizerR.transform.position != GorillaLocomotion.Player.Instance.rightControllerTransform.transform.position)
+                        visualizerR.transform.position = GorillaLocomotion.Player.Instance.rightControllerTransform.transform.position;
                     visualizerR.transform.SetParent(GorillaLocomotion.Player.Instance.rightControllerTransform);
                     visualizerR.transform.localScale = new Vector3(ammount, ammount, ammount);
                 }

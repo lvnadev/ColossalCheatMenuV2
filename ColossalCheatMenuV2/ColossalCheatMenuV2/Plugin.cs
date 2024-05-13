@@ -3,35 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
-using System.Security.Policy;
-using System.Threading.Tasks;
 using Colossal.Menu;
 using Colossal.Menu.ClientHub;
 using Colossal.Menu.ClientHub.Notifacation;
 using Colossal.Mods;
 using Colossal.Patches;
-using ColossalCheatMenuV2.Menu;
-using ColossalCheatMenuV2.Mods;
-using GorillaNetworking;
-using Photon.Pun;
-using PlayFab;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Random;
-using static Valve.VR.SteamVR_ExternalCamera;
 
 namespace Colossal {
     //[BepInPlugin("org.ColossusYTTV.ColossalCheatMenuV2", "ColossalCheatMenuV2", "1.0.0")]
     public class Plugin : MonoBehaviour {
         
         /*
-         * TODO:
-         * 
-         * Lock rotations with fake quest menu.
-            add movement settings page 2
-            config not scrolling
-            fix near pulse
+             TODO: 
+                Lock rotations with fake quest menu.
+                add movement settings page 2
+                config not scrolling
+                fix near pulse
+
+                Fix menu positioning (Overlay, noti and menu).
          */
 
         public static GameObject holder;

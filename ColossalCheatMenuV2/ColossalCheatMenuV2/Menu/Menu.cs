@@ -26,7 +26,6 @@ using Colossal.Patches;
 using PlayFab.ClientModels;
 using static UnityEngine.Random;
 using Colossal.Patches;
-using ColossalCheatMenuV2.Menu;
 using Newtonsoft.Json;
 using Unity.XR.OpenVR.SimpleJSON;
 using System.Diagnostics;
@@ -523,6 +522,8 @@ namespace Colossal.Menu {
                 ColourSettings[2].stringsliderind = PluginConfig.BeamColour;
                 ColourSettings[3].stringsliderind = PluginConfig.ESPColour;
                 ColourSettings[4].stringsliderind = PluginConfig.GhostOpacity;
+                ColourSettings[5].stringsliderind = PluginConfig.HitBoxesOpacity;
+                ColourSettings[6].stringsliderind = PluginConfig.HitBoxesColour;
                 //Misc Settings
                 MovementSettings[0].stringsliderind = PluginConfig.WASDFlySpeed;
                 MovementSettings[1].stringsliderind = PluginConfig.FloatMonkeyAmmount;
@@ -783,10 +784,10 @@ namespace Colossal.Menu {
                     switch (PluginConfig.MenuPosition)
                     {
                         case 0:
-                            MenuHubText.rectTransform.localPosition = new Vector3(2.1f, 1f, 2f);
+                            MenuHubText.rectTransform.localPosition = new Vector3(1.68f, 0.35f, 2.2f);
                             break;
                         case 1:
-                            MenuHubText.rectTransform.localPosition = new Vector3(1, 0.5f, 2f);
+                            MenuHubText.rectTransform.localPosition = new Vector3(-2.4f, 0f, 3.6f);
                             break;
                     }
                 }
