@@ -151,8 +151,7 @@ namespace Colossal.Menu {
                     Movement2[1] = new MenuOption { DisplayName = "FloatyMonkey", _type = "toggle", AssociatedBool = PluginConfig.FloatyMonkey };
                     Movement2[2] = new MenuOption { DisplayName = "Climbable Gorillas", _type = "toggle", AssociatedBool = PluginConfig.ClimbableGorillas };
                     Movement2[3] = new MenuOption { DisplayName = "Near Pulse", _type = "toggle", AssociatedBool = PluginConfig.NearPulse };
-                    Movement2[4] = new MenuOption { DisplayName = "Player Scale", _type = "toggle", AssociatedBool = PluginConfig.PlayerScale };
-                    Movement2[5] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    Movement2[4] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
                     Speed = new MenuOption[5];
                     Speed[0] = new MenuOption { DisplayName = "Speed", _type = "toggle", AssociatedBool = PluginConfig.speed };
                     Speed[1] = new MenuOption { DisplayName = "Speed (LG)", _type = "toggle", AssociatedBool = PluginConfig.speedlg };
@@ -481,7 +480,6 @@ namespace Colossal.Menu {
                 Movement2[1].AssociatedBool = PluginConfig.FloatyMonkey;
                 Movement2[2].AssociatedBool = PluginConfig.ClimbableGorillas;
                 Movement2[3].AssociatedBool = PluginConfig.NearPulse;
-                Movement2[4].AssociatedBool = PluginConfig.PlayerScale;
 
                 //Visual
                 Visual[0].AssociatedBool = PluginConfig.chams;
