@@ -34,6 +34,7 @@ namespace Colossal.Menu
         public static bool Timer = false;
         public static bool ClimbableGorillas = false;
         public static bool NearPulse = false;
+        public static bool PlayerScale = false;
 
         // Group 2
         public static bool chams = false;

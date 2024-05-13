@@ -112,6 +112,7 @@ namespace Colossal {
                     { typeof(ClimbableGorillas), PluginConfig.ClimbableGorillas },
                     { typeof(HitBoxes), PluginConfig.hitboxes },
                     { typeof(NearPulse), PluginConfig.NearPulse },
+                    { typeof(PlayerScale), PluginConfig.PlayerScale },
                 };
             foreach (var kvp in componentConditions)
             {

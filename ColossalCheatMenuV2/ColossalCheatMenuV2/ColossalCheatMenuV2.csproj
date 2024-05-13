@@ -64,6 +64,7 @@
     <Compile Include="Menu\Mods\Movement\NearPulse.cs" />
     <Compile Include="Menu\Mods\Movement\SpinBot.cs" />
     <Compile Include="Menu\Mods\Movement\ClimbableGorillas.cs" />
+    <Compile Include="Menu\Mods\Movement\PlayerScale.cs" />
     <Compile Include="Menu\Mods\Movement\Timer.cs" />
     <Compile Include="Menu\Mods\Movement\WASDFly.cs" />
     <Compile Include="Menu\Mods\Player\Desync.cs" />
