@@ -42,7 +42,7 @@ namespace Colossal.Mods
                         break;
                 }
 
-                speed *= GorillaLocomotion.Player.Instance.scale;
+                //speed *= GorillaLocomotion.Player.Instance.scale; it works but its reversed????? (slower when bigger)
 
                 if (ControllerInputPoller.instance.leftControllerPrimaryButton)
                     GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.velocity += -GorillaLocomotion.Player.Instance.leftControllerTransform.right / speed;

@@ -77,6 +77,7 @@ namespace Colossal.Menu
                 vrrig.mainSkin.enabled = false;
                 vrrig.headMesh.active = false;
                 vrrig.showName = false;
+                vrrig.handTapSound = null;
             }
             else
             {
@@ -88,6 +89,7 @@ namespace Colossal.Menu
                     vrrig.mainSkin.enabled = true;
                 if(!vrrig.showName)
                     vrrig.showName = true;
+                vrrig.handTapSound = null;
             }
 
 

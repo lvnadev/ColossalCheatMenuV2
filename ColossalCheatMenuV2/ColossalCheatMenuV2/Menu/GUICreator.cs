@@ -41,9 +41,15 @@ namespace ColossalCheatMenuV2.Menu
             MenuText.material = mat;
             MenuText.alignment = alignment;
 
-            HUDObj.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 2.1f);
-            HUDObj.transform.rotation = transform.rotation;
-            HUDObj.transform.SetParent(transform);
+            //HUDObj.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 2.1f);
+            //HUDObj.transform.rotation = transform.rotation;
+            //HUDObj.transform.SetParent(transform);
+
+            // Calculate the position relative to the main camera
+            Vector3 cameraOffset = Camera.main.transform.rotation * localpos;
+            HUDObj.transform.SetParent(Camera.main.transform);
+            HUDObj.transform.position = Camera.main.transform.position + cameraOffset;
+            HUDObj.transform.rotation = Camera.main.transform.rotation;
 
             return (HUDObj, MenuText);
         }
