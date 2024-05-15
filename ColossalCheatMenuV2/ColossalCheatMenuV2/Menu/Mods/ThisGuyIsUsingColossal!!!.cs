@@ -19,24 +19,21 @@ namespace Colossal.Menu
         {
             if (PhotonNetwork.InRoom && GorillaTagger.Instance.myVRRig != null)
             {
-                if(PluginConfig.CSVisuals && !GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
+                if(!PluginConfig.fullghostmode && !GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
                     GorillaTagger.Instance.myVRRig.Controller.SetCustomProperties(hash);
-                else if(GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
-                    GorillaTagger.Instance.myVRRig.Controller.CustomProperties.Remove(hash);
+                if (PluginConfig.fullghostmode && GorillaTagger.Instance.myVRRig.Controller.CustomProperties.ContainsKey("colossal"))
+                    GorillaTagger.Instance.myVRRig.Controller.CustomProperties.Remove("colossal");
             }
 
             HashSet<VRRig> processedVRRigs = new HashSet<VRRig>();
             foreach (VRRig vrrig in GorillaParent.instance.vrrigs)
             {
-                if (vrrig != null && !vrrig.isOfflineVRRig && !processedVRRigs.Contains(vrrig))
+                if (vrrig != null && !processedVRRigs.Contains(vrrig))
                 {
-                    if (PluginConfig.CSVisuals)
+                    if (vrrig.Creator.CustomProperties.ContainsKey("colossal"))
                     {
-                        if (vrrig.Creator.CustomProperties.ContainsKey("colossal"))
-                        {
-                            vrrig.playerText.color = Color.magenta;
-                            vrrig.playerText.text = "[CCM] " + vrrig.Creator.NickName;
-                        }
+                        vrrig.playerText.color = Color.magenta;
+                        vrrig.playerText.text = "[CCM] " + vrrig.Creator.NickName;
                     }
                     else
                     {

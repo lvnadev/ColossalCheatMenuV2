@@ -41,15 +41,16 @@ namespace Colossal {
         public static bool sussy = false;
         public static bool oculus = false;
 
+
         public void Start()
         {
-            Debug.Log("[COLOSSAL] Plugin Start Call");
+            CustomConsole.LogToConsole("[COLOSSAL] Plugin Start Call");
 
 
             AutoUpdate();
 
 
-            Debug.Log("[COLOSSAL] Spawned Holder");
+            CustomConsole.LogToConsole("[COLOSSAL] Spawned Holder");
             holder = new GameObject();
             holder.name = "Holder";
             holder.AddComponent<Boards>();

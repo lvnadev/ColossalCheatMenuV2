@@ -22,6 +22,11 @@ namespace Colossal.Mods
 
                 if (!fakeQuestMenuFinger)
                     fakeQuestMenuFinger = true;
+
+                if (GorillaTagger.Instance.rightHandTransform.transform.rotation != new Quaternion(0, 0, 0, 0))
+                    GorillaTagger.Instance.rightHandTransform.transform.rotation = new Quaternion(0, 0, 0, 0);
+                if (GorillaTagger.Instance.leftHandTransform.transform.rotation != new Quaternion(0, 0, 0, 0))
+                    GorillaTagger.Instance.leftHandTransform.transform.rotation = new Quaternion(0, 0, 0, 0);
             }
             else
             {

@@ -131,7 +131,7 @@ namespace Colossal.Menu {
                     //MainMenu[8] = new MenuOption { DisplayName = "AntiCrash", _type = "toggle", AssociatedBool = true };
                     MainMenu[7] = new MenuOption { DisplayName = "Notifications", _type = "toggle", AssociatedBool = PluginConfig.Notifications };
                     MainMenu[8] = new MenuOption { DisplayName = "Overlay", _type = "toggle", AssociatedBool = PluginConfig.overlay };
-                    MainMenu[9] = new MenuOption { DisplayName = "CS Visuals", _type = "toggle", AssociatedBool = PluginConfig.CSVisuals };
+                    MainMenu[9] = new MenuOption { DisplayName = "Full Ghost Mode", _type = "toggle", AssociatedBool = PluginConfig.fullghostmode };
                     MainMenu[10] = new MenuOption { DisplayName = "Tool Tips", _type = "toggle", AssociatedBool = PluginConfig.tooltips };
 
                     Movement = new MenuOption[12];
@@ -333,31 +333,42 @@ namespace Colossal.Menu {
                     {
                         if (current.leftArrowKey.wasPressedThisFrame)
                         {
-                            foreach (var prop in typeof(PluginConfig).GetFields(BindingFlags.Public | BindingFlags.Static))
+                            if (CurrentViewingMenu[SelectedOptionIndex].DisplayName == Settings[3].DisplayName)
                             {
-                                if (prop.Name.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower() == CurrentViewingMenu[SelectedOptionIndex].DisplayName.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower())
+                                if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() - 1;
+                                else
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind - 1;
+                                inputcooldown = true;
+                            }
+                            else
+                            {
+                                foreach (var prop in typeof(PluginConfig).GetFields(BindingFlags.Public | BindingFlags.Static))
                                 {
-                                    object currentValue = prop.GetValue(null);
-                                    int? currentIntValue = currentValue as int?;
-
-                                    if (currentIntValue.HasValue)
+                                    if (prop.Name.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower() == CurrentViewingMenu[SelectedOptionIndex].DisplayName.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower())
                                     {
-                                        int newValue = currentIntValue.Value - 1;
-                                        int stringArrayCount = CurrentViewingMenu[SelectedOptionIndex].StringArray.Length;
+                                        object currentValue = prop.GetValue(null);
+                                        int? currentIntValue = currentValue as int?;
 
-                                        if (newValue >= stringArrayCount)
-                                            newValue = 0;
+                                        if (currentIntValue.HasValue)
+                                        {
+                                            int newValue = currentIntValue.Value - 1;
+                                            int stringArrayCount = CurrentViewingMenu[SelectedOptionIndex].StringArray.Length;
 
-                                        prop.SetValue(null, newValue);
+                                            if (newValue >= stringArrayCount)
+                                                newValue = 0;
 
-                                        CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
+                                            prop.SetValue(null, newValue);
+
+                                            CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
+                                        }
+                                        else
+                                        {
+                                            Debug.LogError($"Field '{prop.Name}' is not of type int.");
+                                        }
+
+                                        break;
                                     }
-                                    else
-                                    {
-                                        Debug.LogError($"Field '{prop.Name}' is not of type int.");
-                                    }
-
-                                    break;
                                 }
                             }
 
@@ -365,58 +376,15 @@ namespace Colossal.Menu {
                         }
                         if (current.rightArrowKey.wasPressedThisFrame)
                         {
-                            foreach (var prop in typeof(PluginConfig).GetFields(BindingFlags.Public | BindingFlags.Static))
+                            if (CurrentViewingMenu[SelectedOptionIndex].DisplayName == Settings[3].DisplayName)
                             {
-                                if (prop.Name.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower() == CurrentViewingMenu[SelectedOptionIndex].DisplayName.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower())
-                                {
-                                    object currentValue = prop.GetValue(null);
-                                    int? currentIntValue = currentValue as int?;
-
-                                    if (currentIntValue.HasValue)
-                                    {
-                                        int newValue = currentIntValue.Value + 1;
-                                        int stringArrayCount = CurrentViewingMenu[SelectedOptionIndex].StringArray.Length;
-
-                                        if (newValue >= stringArrayCount)
-                                            newValue = 0;
-                                        
-                                        prop.SetValue(null, newValue);
-
-                                        CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
-                                    }
-                                    else
-                                    {
-                                        Debug.LogError($"Field '{prop.Name}' is not of type int.");
-                                    }
-
-                                    break;
-                                }
+                                if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() + 1;
+                                else
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1;
+                                inputcooldown = true;
                             }
-
-                            Menu.inputcooldown = true;
-                        }
-                        UpdateMenuState(new MenuOption(), null, null);
-                    }
-
-
-                    //VR CONTROLS
-                    if (Controls.LeftJoystick())
-                    {
-                        if (Controls.RightTrigger() && !Menu.inputcooldown)
-                        {
-                            Menu.inputcooldown = true;
-                            if (Menu.SelectedOptionIndex + 1 == Menu.CurrentViewingMenu.Count<MenuOption>())
-                                Menu.SelectedOptionIndex = 0;
                             else
-                                Menu.SelectedOptionIndex++;
-                            Menu.UpdateMenuState(new MenuOption(), null, null);
-                        }
-                        if (!Controls.RightTrigger() && !ControllerInputPoller.instance.rightGrab && Menu.inputcooldown)
-                            Menu.inputcooldown = false;
-
-                        if (CurrentViewingMenu[SelectedOptionIndex]._type == "STRINGslider")
-                        {
-                            if (ControllerInputPoller.instance.rightGrab && !Menu.inputcooldown)
                             {
                                 foreach (var prop in typeof(PluginConfig).GetFields(BindingFlags.Public | BindingFlags.Static))
                                 {
@@ -445,6 +413,71 @@ namespace Colossal.Menu {
                                         break;
                                     }
                                 }
+                            }
+
+                            Menu.inputcooldown = true;
+                        }
+                        UpdateMenuState(new MenuOption(), null, null);
+                    }
+
+
+                    //VR CONTROLS
+                    if (Controls.LeftJoystick())
+                    {
+                        if (Controls.RightTrigger() && !Menu.inputcooldown)
+                        {
+                            Menu.inputcooldown = true;
+                            if (Menu.SelectedOptionIndex + 1 == Menu.CurrentViewingMenu.Count<MenuOption>())
+                                Menu.SelectedOptionIndex = 0;
+                            else
+                                Menu.SelectedOptionIndex++;
+                            Menu.UpdateMenuState(new MenuOption(), null, null);
+                        }
+                        if (!Controls.RightTrigger() && !ControllerInputPoller.instance.rightGrab && Menu.inputcooldown)
+                            Menu.inputcooldown = false;
+
+                        if (CurrentViewingMenu[SelectedOptionIndex]._type == "STRINGslider")
+                        {
+                            if (ControllerInputPoller.instance.rightGrab && !Menu.inputcooldown)
+                            {
+                                if(CurrentViewingMenu[SelectedOptionIndex].DisplayName == Settings[3].DisplayName)
+                                {
+                                    if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
+                                        CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() + 1;
+                                    else
+                                        CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1;
+                                    inputcooldown = true;
+                                }
+                                else
+                                {
+                                    foreach (var prop in typeof(PluginConfig).GetFields(BindingFlags.Public | BindingFlags.Static))
+                                    {
+                                        if (prop.Name.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower() == CurrentViewingMenu[SelectedOptionIndex].DisplayName.Replace(" ", "").Replace("(", "").Replace(")", "").ToLower())
+                                        {
+                                            object currentValue = prop.GetValue(null);
+                                            int? currentIntValue = currentValue as int?;
+
+                                            if (currentIntValue.HasValue)
+                                            {
+                                                int newValue = currentIntValue.Value + 1;
+                                                int stringArrayCount = CurrentViewingMenu[SelectedOptionIndex].StringArray.Length;
+
+                                                if (newValue >= stringArrayCount)
+                                                    newValue = 0;
+
+                                                prop.SetValue(null, newValue);
+
+                                                CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
+                                            }
+                                            else
+                                            {
+                                                Debug.LogError($"Field '{prop.Name}' is not of type int.");
+                                            }
+
+                                            break;
+                                        }
+                                    }
+                                }
 
                                 Menu.inputcooldown = true;
                             }
@@ -460,7 +493,7 @@ namespace Colossal.Menu {
                 //PluginConfig.anticrash = MainMenu[8].AssociatedBool;
                 MainMenu[7].AssociatedBool = PluginConfig.Notifications;
                 MainMenu[8].AssociatedBool = PluginConfig.overlay;
-                MainMenu[9].AssociatedBool = PluginConfig.CSVisuals;
+                MainMenu[9].AssociatedBool = PluginConfig.fullghostmode;
                 MainMenu[10].AssociatedBool = PluginConfig.tooltips;
 
                 //Movement
@@ -516,7 +549,6 @@ namespace Colossal.Menu {
 
                 //Settings
                 Settings[2].stringsliderind = PluginConfig.MenuPosition;
-                Settings[3].stringsliderind = PluginConfig.selectedconfig;
                 //Colour Settings
                 ColourSettings[0].stringsliderind = PluginConfig.MenuColour;
                 ColourSettings[1].stringsliderind = PluginConfig.GhostColour;

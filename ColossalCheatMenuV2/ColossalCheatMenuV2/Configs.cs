@@ -68,12 +68,11 @@ namespace Colossal.Menu
         //group 5
         public static bool Notifications = true;
         public static bool overlay = true;
-        public static bool CSVisuals = true;
+        public static bool fullghostmode = false;
         public static bool tooltips = true;
 
         //group 6
         public static int MenuPosition = 0;
-        public static int selectedconfig = 0;
         public static int MenuColour = 0;
         public static int GhostColour = 0;
         public static int BeamColour = 0;

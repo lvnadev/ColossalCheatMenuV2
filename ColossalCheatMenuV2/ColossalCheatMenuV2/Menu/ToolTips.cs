@@ -22,9 +22,8 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Submenu</color>\nMenu settings",
             $"<color={Menu.MenuColour}>Passive</color>\nToggles noti",
             $"<color={Menu.MenuColour}>Passive</color>\nToggles overlay",
-            $"<color={Menu.MenuColour}>Passive</color>\nToggles all colossal visuals",
+            $"<color={Menu.MenuColour}>Passive</color>\nToggles all visuals (Screen share proof)",
             $"<color={Menu.MenuColour}>Passive</color>\nToggles tooltips",
-            $"<color={Menu.MenuColour}>Passive</color>\nToggles the startup animation",
         };
 
         public static string[] Movementtips = new string[]
@@ -46,6 +45,7 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>R Secondary</color>\nScale gravity",
             $"<color={Menu.MenuColour}>L Or R Grip</color>\nClimb Gorillas",
             $"<color={Menu.MenuColour}>Passive</color>\nFly away from tagged players",
+            $"<color={Menu.MenuColour}>R Joystick > L Trigger & R Trigger</color>\nScale yourself",
         };
         public static string[] Speedtips = new string[]
         {
@@ -65,6 +65,7 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nTurn off facial features",
             $"<color={Menu.MenuColour}>Passive</color>\nPoints tracers at monkies",
             $"<color={Menu.MenuColour}>Passive</color>\nHighlight monkies through walls",
+            $"<color={Menu.MenuColour}>Passive</color>\nMakes computer view first person",
         };
 
         public static string[] Playertips = new string[]
@@ -87,7 +88,7 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nBreaks nametag mods",
             $"<color={Menu.MenuColour}>Passive</color>\nBreaks modcheck mods",
             $"<color={Menu.MenuColour}>Passive</color>\nDisables Igloo to pass a PC check",
-            $"<color={Menu.MenuColour}>Passive</color>\nMoves hands like quest menu is open",
+            $"<color={Menu.MenuColour}>Passive</color>\nFakes having your quest menu open",
         };
 
         public static string[] Computertips = new string[]
@@ -210,7 +211,7 @@ namespace Colossal.Menu
         }
         public static void HandToolTips(string category, int selectedIndex)
         {
-            if (Menu.GUIToggled && PluginConfig.tooltips)
+            if (Menu.GUIToggled && PluginConfig.tooltips && !PluginConfig.fullghostmode)
             {
                 if(Menu.agreement)
                 {

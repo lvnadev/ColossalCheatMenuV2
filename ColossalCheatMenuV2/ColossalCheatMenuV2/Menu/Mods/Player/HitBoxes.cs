@@ -53,7 +53,7 @@ namespace Colossal.Mods
                 }
 
 
-                switch (PluginConfig.GhostOpacity)
+                switch (PluginConfig.HitBoxesOpacity)
                 {
                     case 0:
                         opacity = 100;
@@ -74,7 +74,7 @@ namespace Colossal.Mods
                         opacity = 0;
                         break;
                 }
-                switch (PluginConfig.GhostColour)
+                switch (PluginConfig.HitBoxesColour)
                 {
                     case 0:
                         color = new Color32(204, 51, 255, opacity);
@@ -106,6 +106,8 @@ namespace Colossal.Mods
                     Destroy(visualizerL.GetComponent<Collider>());
 
                     visualizerL.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+
+                    visualizerL.transform.position = GorillaLocomotion.Player.Instance.leftControllerTransform.transform.position;
                 }
                 if (visualizerR == null)
                 {
@@ -113,6 +115,8 @@ namespace Colossal.Mods
                     Destroy(visualizerR.GetComponent<Collider>());
 
                     visualizerR.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
+
+                    visualizerR.transform.position = GorillaLocomotion.Player.Instance.leftControllerTransform.transform.position;
                 }
 
                 if (visualizerL != null)

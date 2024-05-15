@@ -30,7 +30,7 @@ namespace Colossal.Menu.ClientHub {
         }
 
         public void Update() {
-            if (PluginConfig.overlay && Menu.agreement) 
+            if (PluginConfig.overlay && Menu.agreement && !PluginConfig.fullghostmode) 
             {
                 deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
                 float fps = 1.0f / deltaTime;

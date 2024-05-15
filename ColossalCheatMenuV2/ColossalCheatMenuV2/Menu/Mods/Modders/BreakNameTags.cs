@@ -15,20 +15,30 @@ namespace Colossal.Mods
     public class BreakNameTags : MonoBehaviour
     {
         bool once = false;
-        string name = "GET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\n";
+        string fuckedname = "GET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\nGET FUCKED BY COLOSSAL CHEAT MENU V2 GET FUCKED BY COLOSSAL CHEAT MENU V2\n";
+        string normalname;
+        public void Start() => normalname = PhotonNetwork.NickName;
         public void Update()
         {
-            if (PluginConfig.breaknametags && !once && PhotonNetwork.InRoom)
+            if (PluginConfig.breaknametags)
             {
-                PhotonNetwork.LocalPlayer.NickName = name;
-                GorillaComputer.instance.currentName = name;
-                GorillaComputer.instance.savedName = name;
-                PlayerPrefs.SetString("GorillaLocomotion.PlayerName", name);
-                once = true;
+                if(PhotonNetwork.InRoom && PhotonNetwork.LocalPlayer.NickName != fuckedname)
+                {
+                    PhotonNetwork.LocalPlayer.NickName = fuckedname;
+                    GorillaComputer.instance.currentName = fuckedname;
+                    GorillaComputer.instance.savedName = fuckedname;
+                    PlayerPrefs.SetString("GorillaLocomotion.PlayerName", fuckedname);
+                }
             }
             else
             {
-                once = false;
+                if (PhotonNetwork.LocalPlayer.NickName != normalname)
+                {
+                    PhotonNetwork.LocalPlayer.NickName = normalname;
+                    GorillaComputer.instance.currentName = normalname;
+                    GorillaComputer.instance.savedName = normalname;
+                    PlayerPrefs.SetString("GorillaLocomotion.PlayerName", normalname);
+                }
                 Destroy(holder.GetComponent<BreakNameTags>());
             }
         }
