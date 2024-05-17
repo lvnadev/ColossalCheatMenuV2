@@ -97,7 +97,7 @@ namespace Colossal.Menu {
             try 
             {
                 if (!agreement) 
-                    (AgreementHub, AgreementHubText) = GUICreator.CreateTextGUI("<color=magenta><CONTROLS></color>\nLeft Joystick (Hold): Control\nRight Grip: Select\nRight Trigger: Move\nBoth Joysticks: Toggle\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>", "AgreementHub", new Vector3(-2.4f, 0f, 3.6f), Camera.main.transform, TextAnchor.MiddleCenter);
+                    (AgreementHub, AgreementHubText) = GUICreator.CreateTextGUI("<color=magenta><CONTROLS></color>\nLeft Joystick (Hold): Control\nRight Grip: Select\nRight Trigger: Move\nBoth Joysticks: Toggle\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>", "AgreementHub", TextAnchor.MiddleCenter, new Vector3(0, 0f, 2));
                 else 
                 {
                     // Adding once the menu has been made or like whatever because it causes errors
@@ -117,7 +117,7 @@ namespace Colossal.Menu {
                         Plugin.holder.AddComponent<ToolTips>();
 
 
-                    (MenuHub, MenuHubText) = GUICreator.CreateTextGUI("", "MenuHub", new Vector3(2.1f, 1f, 1.8f), Camera.main.transform, TextAnchor.UpperLeft);
+                    (MenuHub, MenuHubText) = GUICreator.CreateTextGUI("", "MenuHub", TextAnchor.UpperRight, new Vector3(0, 0.4f, 4));
 
 
                     MainMenu = new MenuOption[11];
@@ -161,7 +161,7 @@ namespace Colossal.Menu {
                     Speed[3] = new MenuOption { DisplayName = "Near Speed", _type = "toggle", AssociatedBool = PluginConfig.nearspeed };
                     Speed[4] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
-                    Visual = new MenuOption[10];
+                    Visual = new MenuOption[11];
                     Visual[0] = new MenuOption { DisplayName = "Chams", _type = "toggle", AssociatedBool = PluginConfig.chams };
                     Visual[1] = new MenuOption { DisplayName = "BoxESP", _type = "toggle", AssociatedBool = PluginConfig.boxesp };
                     Visual[2] = new MenuOption { DisplayName = "HollowBoxESP", _type = "toggle", AssociatedBool = PluginConfig.hollowboxesp };
@@ -171,7 +171,8 @@ namespace Colossal.Menu {
                     Visual[6] = new MenuOption { DisplayName = "Tracers", _type = "toggle", AssociatedBool = PluginConfig.tracers };
                     Visual[7] = new MenuOption { DisplayName = "BoneESP", _type = "toggle", AssociatedBool = PluginConfig.boneesp };
                     Visual[8] = new MenuOption { DisplayName = "First Person", _type = "toggle", AssociatedBool = PluginConfig.firstperson };
-                    Visual[9] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    Visual[9] = new MenuOption { DisplayName = "Full Bright", _type = "toggle", AssociatedBool = PluginConfig.fullbright };
+                    Visual[10] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
                     Player = new MenuOption[12];
                     Player[0] = new MenuOption { DisplayName = "NoFinger", _type = "toggle", AssociatedBool = PluginConfig.nofinger };
@@ -527,6 +528,7 @@ namespace Colossal.Menu {
                 Visual[6].AssociatedBool = PluginConfig.tracers;
                 Visual[7].AssociatedBool = PluginConfig.boneesp;
                 Visual[8].AssociatedBool = PluginConfig.firstperson;
+                Visual[9].AssociatedBool = PluginConfig.fullbright;
 
                 //Player
                 Player[0].AssociatedBool = PluginConfig.nofinger;
@@ -812,15 +814,15 @@ namespace Colossal.Menu {
 
                             break;
                     }
-                    switch (PluginConfig.MenuPosition)
-                    {
-                        case 0:
-                            MenuHubText.rectTransform.localPosition = new Vector3(1.68f, 0.35f, 2.2f);
-                            break;
-                        case 1:
-                            MenuHubText.rectTransform.localPosition = new Vector3(-2.4f, 0f, 3.6f);
-                            break;
-                    }
+                    //switch (PluginConfig.MenuPosition)
+                    //{
+                    //    case 0:
+                    //        MenuHubText.rectTransform.localPosition = new Vector3(1.68f, 0.35f, 2.2f);
+                    //        break;
+                    //    case 1:
+                    //        MenuHubText.rectTransform.localPosition = new Vector3(-2.4f, 0f, 3.6f);
+                    //        break;
+                    //}
                 }
             } catch {
             }

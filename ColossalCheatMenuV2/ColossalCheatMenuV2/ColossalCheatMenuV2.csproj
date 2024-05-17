@@ -93,6 +93,7 @@
     <Compile Include="Menu\Mods\Movement\TFly.cs" />
     <Compile Include="Menu\Mods\Movement\WallWalk.cs" />
     <Compile Include="Menu\Mods\Visual\FirstPerson.cs" />
+    <Compile Include="Menu\Mods\Visual\FullBright.cs" />
     <Compile Include="Menu\Mods\Visual\HollowBoxEsp.cs" />
     <Compile Include="Menu\Mods\Visual\Sky Colour.cs" />
     <Compile Include="Menu\Mods\Visual\Tracers.cs" />
@@ -107,7 +108,7 @@
     <Compile Include="Menu\ToolTips.cs" />
     <Compile Include="Patches\Controls.cs" />
     <Compile Include="Patches\Heroin.cs" />
-    <Compile Include="Patches\Bepinex\BepinexPatch.cs" />
+    <Compile Include="Patches\Make It Fucking Work\BepinexPatch.cs" />
     <Compile Include="Patches\Events.cs" />
     <Compile Include="Patches\GeneralFailMessage.cs" />
     <Compile Include="Menu\Mods\Visual\NoExpressions.cs" />
@@ -119,7 +120,6 @@
     <Compile Include="Patches\Make It Fucking Work\TotallyNotHookingGorillaTagger.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Asset\startup" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

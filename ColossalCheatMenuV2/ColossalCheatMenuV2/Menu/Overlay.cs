@@ -25,8 +25,8 @@ namespace Colossal.Menu.ClientHub {
 
         public static void SpawnOverlay()
         {
-            (OverlayHub, OverlayHubText) = GUICreator.CreateTextGUI("", "OverlayHub", new Vector3(-2f, -1.2f, 3.6f), Camera.main.transform, TextAnchor.UpperLeft);
-            (OverlayHubRoom, OverlayHubTextRoom) = GUICreator.CreateTextGUI("", "OverlayHubRoom", new Vector3(0f, -1.2f, 3.6f), Camera.main.transform, TextAnchor.UpperLeft);
+            (OverlayHub, OverlayHubText) = GUICreator.CreateTextGUI("", "OverlayHub", TextAnchor.LowerLeft, new Vector3(0, 0f, 4));
+            (OverlayHubRoom, OverlayHubTextRoom) = GUICreator.CreateTextGUI("", "OverlayHubRoom", TextAnchor.LowerRight, new Vector3(0, 0f, 4));
         }
 
         public void Update() {

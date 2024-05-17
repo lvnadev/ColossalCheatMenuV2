@@ -45,6 +45,7 @@ namespace Colossal.Menu
         public static bool tracers = false;
         public static bool boneesp = false;
         public static bool firstperson = false;
+        public static bool fullbright = false;
 
         // Group 3
         public static bool nofinger = false;

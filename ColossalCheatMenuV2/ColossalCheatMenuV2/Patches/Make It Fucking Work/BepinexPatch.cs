@@ -1,41 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using ExitGames.Client.Photon;
-using GorillaLocomotion;
+﻿
 using HarmonyLib;
-using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR;
-using Object = UnityEngine.Object;
-using GorillaNetworking;
 using BepInEx;
 using System.Reflection;
-using BepInEx.Configuration;
-using CommonUsages = UnityEngine.XR.CommonUsages;
-using InputDevice = UnityEngine.XR.InputDevice;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Linq;
-using System.Diagnostics;
-using Debug = UnityEngine.Debug;
-using static UnityEngine.UI.GridLayoutGroup;
-using Text = UnityEngine.UI.Text;
-using Application = UnityEngine.Application;
-using UnityEngine.UIElements;
-using GorillaLocomotion.Gameplay;
-using Mono.Cecil;
-using GorillaLocomotion.Swimming;
-using System.Text;
-using System.Collections;
-using UnityEngine.XR.Interaction.Toolkit;
-using System.Threading.Tasks;
-using Colossal.Menu;
-using Colossal;
-using System.Security.Policy;
 
 namespace Colossal.Patches {
     [BepInPlugin("ColossusYTTV.ColossalCheatMenuV2", "ColossalCheatMenuV2", "1.0.0")]

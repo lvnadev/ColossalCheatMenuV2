@@ -26,7 +26,7 @@ namespace Colossal.Menu.ClientHub {
         public static GameObject NotiHub;
         public static Text NotiHubText;
 
-        public static void SpawnNoti() => (NotiHub, NotiHubText) = GUICreator.CreateTextGUI("", "NotiHub", new Vector3(-2f, 0.85f, 3.6f), Camera.main.transform, TextAnchor.UpperLeft);
+        public static void SpawnNoti() => (NotiHub, NotiHubText) = GUICreator.CreateTextGUI("", "NotiHub", TextAnchor.UpperLeft, new Vector3(0, 0.4f, 4));
 
         private void FixedUpdate() {
             if(PluginConfig.Notifications && Menu.agreement && !PluginConfig.fullghostmode) 

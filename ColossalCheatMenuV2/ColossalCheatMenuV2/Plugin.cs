@@ -21,26 +21,16 @@ using UnityEngine.UI;
 using static UnityEngine.Random;
 using static Valve.VR.SteamVR_ExternalCamera;
 
-namespace Colossal {
-    //[BepInPlugin("org.ColossusYTTV.ColossalCheatMenuV2", "ColossalCheatMenuV2", "1.0.0")]
-    public class Plugin : MonoBehaviour {
-        
-        /*
-         * TODO:
-         * 
-         * Lock rotations with fake quest menu.
-            add movement settings page 2
-            config not scrolling
-            fix near pulse
-         */
-
+namespace Colossal 
+{
+    public class Plugin : MonoBehaviour 
+    {
         public static GameObject holder;
         public static Font gtagfont;
 
         public static float version = 5.6f;
         public static bool sussy = false;
         public static bool oculus = false;
-
 
         public void Start()
         {
@@ -70,7 +60,7 @@ namespace Colossal {
 
             gtagfont = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/UI/CodeOfConduct/COC Text").GetComponent<Text>().font;
 
-            if (gtagfont != null && holder != null)
+            if (gtagfont != null && holder != null) // Me after writing semi good code 😭 -Colossus
             {
                 Menu.Menu.LoadOnce();
                 CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start");
@@ -123,6 +113,7 @@ namespace Colossal {
                     { typeof(HitBoxes), PluginConfig.hitboxes },
                     { typeof(NearPulse), PluginConfig.NearPulse },
                     { typeof(PlayerScale), PluginConfig.PlayerScale },
+                    { typeof(FullBright), PluginConfig.fullbright },
                 };
             foreach (var kvp in componentConditions)
             {

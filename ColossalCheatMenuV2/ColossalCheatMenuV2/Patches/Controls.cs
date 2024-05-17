@@ -12,6 +12,8 @@ namespace Colossal.Patches
     //Starry wrote this so it prob sucks!!!! kisses <3
     //When Adding More ctrl+c ctrl+v
     //In If Statements Do If(LeftJoystick())
+
+    //I made it better!!! -Colossus
     internal class Controls : MonoBehaviour
     {
         public static InputDevice leftControllerOculus;
