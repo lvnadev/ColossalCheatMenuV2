@@ -17,6 +17,7 @@ namespace Colossal.Menu
 {
     public static class PluginConfig
     {
+        // Movement
         public static bool excelfly = false;
         public static bool tfly = false;
         public static bool wallwalk = false;
@@ -36,7 +37,7 @@ namespace Colossal.Menu
         public static bool NearPulse = false;
         public static bool PlayerScale = false;
 
-        // Group 2
+        // Visual
         public static bool chams = false;
         public static bool boxesp = false;
         public static bool hollowboxesp = false;
@@ -47,7 +48,7 @@ namespace Colossal.Menu
         public static bool firstperson = false;
         public static bool fullbright = false;
 
-        // Group 3
+        // Player
         public static bool nofinger = false;
         public static bool taggun = false;
         public static bool legmod = false;
@@ -60,19 +61,23 @@ namespace Colossal.Menu
         public static bool desync = false;
         public static bool hitboxes = false;
 
-        // Group 4
+        // Exploits
         public static bool breaknametags = false;
         public static bool breakmodcheckers = false;
         public static bool pccheckbypass = false;
         public static bool fakequestmenu = false;
 
-        //group 5
+        // Safety
+        public static bool Panic = false;
+        public static int antireport = 0;
+
+        // Menu
         public static bool Notifications = true;
         public static bool overlay = true;
         public static bool fullghostmode = false;
         public static bool tooltips = true;
 
-        //group 6
+        //Settings
         public static int MenuPosition = 0;
         public static int MenuColour = 0;
         public static int GhostColour = 0;
@@ -108,12 +113,19 @@ namespace Colossal.Menu
         public static string fileExtension = ".json";
         public static string fileName = "NewConfig";
 
+        public void Update()
+        {
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+            else if (Directory.GetFiles(folderPath).Length == 0)
+                SaveConfig();
+        }
         public static string[] GetConfigFileNames()
         {
             string[] result;
             try
             {
-                CustomConsole.LogToConsole("[COLOSSAL] Getting Config Files");
+                //CustomConsole.LogToConsole("[COLOSSAL] Getting Config Files");
 
                 string[] files = Directory.GetFiles(Configs.folderPath, "*" + Configs.fileExtension);
                 string[] array = new string[files.Length];
@@ -132,14 +144,6 @@ namespace Colossal.Menu
                 };
             }
             return result;
-        }
-
-        public void Start()
-        {
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-            else if (Directory.GetFiles(folderPath).Length == 0)
-                SaveConfig();
         }
         public static void SaveConfig()
         {

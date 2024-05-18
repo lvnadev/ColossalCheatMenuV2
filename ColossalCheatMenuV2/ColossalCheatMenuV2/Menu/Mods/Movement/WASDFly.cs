@@ -17,6 +17,11 @@ namespace Colossal.Mods
     {
         public static int flyspeed;
         private float X = -1;
+        public void FixedUpdate()
+        {
+            if(PluginConfig.WASDFly)
+                GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.AddForce(-Physics.gravity, ForceMode.Acceleration);
+        }
         public void Update()
         {
             if (PluginConfig.WASDFly)
@@ -43,7 +48,6 @@ namespace Colossal.Mods
                         break;
                 }
 
-                GorillaLocomotion.Player.Instance.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
                 bool key = UnityInput.Current.GetKey(KeyCode.W);
                 bool key2 = UnityInput.Current.GetKey(KeyCode.A);
                 bool key3 = UnityInput.Current.GetKey(KeyCode.S);

@@ -25,8 +25,8 @@ namespace Colossal.Menu.ClientHub {
 
         public static void SpawnOverlay()
         {
-            (OverlayHub, OverlayHubText) = GUICreator.CreateTextGUI("", "OverlayHub", TextAnchor.LowerLeft, new Vector3(0, 0f, 4));
-            (OverlayHubRoom, OverlayHubTextRoom) = GUICreator.CreateTextGUI("", "OverlayHubRoom", TextAnchor.LowerRight, new Vector3(0, 0f, 4));
+            (OverlayHub, OverlayHubText) = GUICreator.CreateTextGUI("", "OverlayHub", TextAnchor.LowerLeft, new Vector3(0, 0f, 3.6f));
+            (OverlayHubRoom, OverlayHubTextRoom) = GUICreator.CreateTextGUI("", "OverlayHubRoom", TextAnchor.LowerRight, new Vector3(0, 0f, 3.6f));
         }
 
         public void Update() {
@@ -36,13 +36,13 @@ namespace Colossal.Menu.ClientHub {
                 float fps = 1.0f / deltaTime;
 
                 if(PhotonNetwork.InRoom)
-                    OverlayHubTextRoom.text = $"<color={Menu.MenuColourString}>RoomName: </color>{PhotonNetwork.CurrentRoom.Name}\n<color={Menu.MenuColourString}>Players: </color>{PhotonNetwork.CurrentRoom.PlayerCount}";
+                    OverlayHubTextRoom.text = $"<color={Menu.MenuColour}>RoomName: </color>{PhotonNetwork.CurrentRoom.Name}\n<color={Menu.MenuColour}>Players: </color>{PhotonNetwork.CurrentRoom.PlayerCount}";
                 else 
                 {
                     if (OverlayHubTextRoom.text != null)
                         OverlayHubTextRoom.text = "";
                 }
-                OverlayHubText.text = $"<color={Menu.MenuColourString}>Ping: </color>{PhotonNetwork.GetPing()}\n<color={Menu.MenuColourString}>FPS: </color>{fps.ToString("F2")}";
+                OverlayHubText.text = $"<color={Menu.MenuColour}>Ping: </color>{PhotonNetwork.GetPing()}\n<color={Menu.MenuColour}>FPS: </color>{fps.ToString("F2")}\n<color={Menu.MenuColour}>Play Time: </color>{Plugin.playtimestring}";
             } 
             else 
             {

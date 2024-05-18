@@ -14,10 +14,12 @@ using Colossal.Patches;
 using ColossalCheatMenuV2.Menu;
 using ColossalCheatMenuV2.Mods;
 using GorillaNetworking;
+using Newtonsoft.Json.Linq;
 using Photon.Pun;
 using PlayFab;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 using static UnityEngine.Random;
 using static Valve.VR.SteamVR_ExternalCamera;
 
@@ -28,9 +30,12 @@ namespace Colossal
         public static GameObject holder;
         public static Font gtagfont;
 
-        public static float version = 5.6f;
+        public static float version = 5.7f;
         public static bool sussy = false;
         public static bool oculus = false;
+
+        public static float playtime = 0;
+        public static string playtimestring;
 
         public void Start()
         {
@@ -114,6 +119,7 @@ namespace Colossal
                     { typeof(NearPulse), PluginConfig.NearPulse },
                     { typeof(PlayerScale), PluginConfig.PlayerScale },
                     { typeof(FullBright), PluginConfig.fullbright },
+                    { typeof(Panic), PluginConfig.Panic },
                 };
             foreach (var kvp in componentConditions)
             {
@@ -126,10 +132,25 @@ namespace Colossal
                 }
                 else
                 {
-                    CustomConsole.LogToConsole("Holder is null");
+                    CustomConsole.LogToConsole("[COLOSSAL] Holder is null");
                     holder = new GameObject();
                 }
             }
+
+
+            // Playtime counter
+            playtime += Time.deltaTime;
+
+            int hours = (int)(playtime / 3600);
+            int minutes = (int)((playtime % 3600) / 60);
+            int seconds = (int)(playtime % 60);
+
+            playtimestring = "";
+            if (hours > 0)
+                playtimestring += hours.ToString("00") + ":";
+            if (minutes > 0 || hours > 0)
+                playtimestring += minutes.ToString("00") + ":";
+            playtimestring += seconds.ToString("00");
         }
 
         public void AutoUpdate()
@@ -146,12 +167,13 @@ namespace Colossal
                 {
                     try
                     {
-                        string rawData = client.GetStringAsync("https://raw.githubusercontent.com/ColossusYTTV/ColossalCheatMenuV2/main/AutoUpdate/version.txt").Result;
-                        CustomConsole.LogToConsole($"[COLOSSAL] Current version on server: {rawData}");
+                        // Version Stuff (Auto Updater)
+                        string rawDataVersion = client.GetStringAsync("https://raw.githubusercontent.com/ColossusYTTV/ColossalCheatMenuV2/main/AutoUpdate/version.txt").Result;
+                        CustomConsole.LogToConsole($"[COLOSSAL] Current version on server: {rawDataVersion}");
                         CustomConsole.LogToConsole($"[COLOSSAL] Current version on Local: {version}");
 
                         float serverVersion;
-                        if (float.TryParse(rawData, out serverVersion))
+                        if (float.TryParse(rawDataVersion, out serverVersion))
                         {
                             if (version < serverVersion)
                             {
@@ -200,18 +222,5 @@ namespace Colossal
                 CustomConsole.LogToConsole("[COLOSSAL] No matching file found.");
             }
         }
-
-        /*public void FixedUpdate() {
-            if (PhotonNetwork.InRoom) {
-                instantate += Time.deltaTime;
-            } else {
-                instantate = 0;
-                called = 0;
-            }
-
-            if (instantate >= 120) {
-                called = 0;
-            }
-        }*/
     }
 }

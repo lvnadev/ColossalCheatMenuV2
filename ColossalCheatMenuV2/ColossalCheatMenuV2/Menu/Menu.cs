@@ -32,8 +32,10 @@ using Unity.XR.OpenVR.SimpleJSON;
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 
-namespace Colossal.Menu {
-    public class MenuOption {
+namespace Colossal.Menu 
+{
+    public class MenuOption 
+    {
         public string DisplayName;
         public string _type;
         public bool AssociatedBool;
@@ -43,16 +45,12 @@ namespace Colossal.Menu {
         public string[] StringArray;
         public int stringsliderind;
     }
-    public class Menu {
+
+    public class Menu 
+    {
         public static bool GUIToggled = true;
 
-        //public static GameObject HUDObj;
-        //public static GameObject HUDObj2;
-        //static GameObject MainCamera;
-        //static Text Testtext;
-        //private static TextAnchor textAnchor = TextAnchor.UpperRight;
-        //static Material AlertText = new Material(Shader.Find("GUI/Text Shader"));
-        //static Text NotifiText;
+
         public static GameObject MenuHub;
         public static Text MenuHubText;
 
@@ -61,7 +59,6 @@ namespace Colossal.Menu {
 
 
         public static string MenuColour = "magenta";
-        public static string MenuColourString = "magenta";
         public static float menurgb = 0;
 
         public static string MenuState = "Main";
@@ -73,8 +70,8 @@ namespace Colossal.Menu {
         public static MenuOption[] Visual;
         public static MenuOption[] Player;
         public static MenuOption[] Computer;
-        public static MenuOption[] Modders;
-        public static MenuOption[] Account;
+        public static MenuOption[] Exploits;
+        public static MenuOption[] Saftey;
         public static MenuOption[] Settings;
 
         public static MenuOption[] Speed;
@@ -97,7 +94,7 @@ namespace Colossal.Menu {
             try 
             {
                 if (!agreement) 
-                    (AgreementHub, AgreementHubText) = GUICreator.CreateTextGUI("<color=magenta><CONTROLS></color>\nLeft Joystick (Hold): Control\nRight Grip: Select\nRight Trigger: Move\nBoth Joysticks: Toggle\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>", "AgreementHub", TextAnchor.MiddleCenter, new Vector3(0, 0f, 2));
+                    (AgreementHub, AgreementHubText) = GUICreator.CreateTextGUI("<color=magenta><CONTROLS></color>\nLeft Joystick Click (Hold): Control\nRight Grip: Select\nRight Trigger: Scroll\nBoth Joysticks: Toggle UI\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>", "AgreementHub", TextAnchor.MiddleCenter, new Vector3(0, 0f, 2));
                 else 
                 {
                     // Adding once the menu has been made or like whatever because it causes errors
@@ -105,6 +102,8 @@ namespace Colossal.Menu {
                         Plugin.holder.AddComponent<SpeedMod>();
                     if (Plugin.holder.GetComponent<SkyColour>() == null)
                         Plugin.holder.AddComponent<SkyColour>();
+                    if (Plugin.holder.GetComponent<AntiReport>() == null)
+                        Plugin.holder.AddComponent<AntiReport>();
 
                     // Adding here so you dont see them before you accepted the aggreement
                     if (Plugin.holder.GetComponent<Overlay>() == null)
@@ -117,7 +116,7 @@ namespace Colossal.Menu {
                         Plugin.holder.AddComponent<ToolTips>();
 
 
-                    (MenuHub, MenuHubText) = GUICreator.CreateTextGUI("", "MenuHub", TextAnchor.UpperRight, new Vector3(0, 0.4f, 4));
+                    (MenuHub, MenuHubText) = GUICreator.CreateTextGUI("", "MenuHub", TextAnchor.UpperLeft, new Vector3(0, 0.4f, 3.6f));
 
 
                     MainMenu = new MenuOption[11];
@@ -125,10 +124,9 @@ namespace Colossal.Menu {
                     MainMenu[1] = new MenuOption { DisplayName = "Visual", _type = "submenu", AssociatedString = "Visual" };
                     MainMenu[2] = new MenuOption { DisplayName = "Player", _type = "submenu", AssociatedString = "Player" };
                     MainMenu[3] = new MenuOption { DisplayName = "Computer", _type = "submenu", AssociatedString = "Computer" };
-                    MainMenu[4] = new MenuOption { DisplayName = "Modders", _type = "submenu", AssociatedString = "Modders" };
-                    MainMenu[5] = new MenuOption { DisplayName = "Account", _type = "submenu", AssociatedString = "Account" };
+                    MainMenu[4] = new MenuOption { DisplayName = "Exploits", _type = "submenu", AssociatedString = "Exploits" };
+                    MainMenu[5] = new MenuOption { DisplayName = "Saftey", _type = "submenu", AssociatedString = "Saftey" };
                     MainMenu[6] = new MenuOption { DisplayName = "Settings", _type = "submenu", AssociatedString = "Settings" };
-                    //MainMenu[8] = new MenuOption { DisplayName = "AntiCrash", _type = "toggle", AssociatedBool = true };
                     MainMenu[7] = new MenuOption { DisplayName = "Notifications", _type = "toggle", AssociatedBool = PluginConfig.Notifications };
                     MainMenu[8] = new MenuOption { DisplayName = "Overlay", _type = "toggle", AssociatedBool = PluginConfig.overlay };
                     MainMenu[9] = new MenuOption { DisplayName = "Full Ghost Mode", _type = "toggle", AssociatedBool = PluginConfig.fullghostmode };
@@ -165,7 +163,7 @@ namespace Colossal.Menu {
                     Visual[0] = new MenuOption { DisplayName = "Chams", _type = "toggle", AssociatedBool = PluginConfig.chams };
                     Visual[1] = new MenuOption { DisplayName = "BoxESP", _type = "toggle", AssociatedBool = PluginConfig.boxesp };
                     Visual[2] = new MenuOption { DisplayName = "HollowBoxESP", _type = "toggle", AssociatedBool = PluginConfig.hollowboxesp };
-                    Visual[3] = new MenuOption { DisplayName = "Sky Colour", _type = "STRINGslider", StringArray = new string[] { "Default", "Purple", "Red", "Cyan", "Green" } };
+                    Visual[3] = new MenuOption { DisplayName = "Sky Colour", _type = "STRINGslider", StringArray = new string[] { "Default", "Purple", "Red", "Cyan", "Green", "Black" } };
                     Visual[4] = new MenuOption { DisplayName = "WhyIsEveryoneLookingAtMe", _type = "toggle", AssociatedBool = PluginConfig.whyiseveryonelookingatme };
                     Visual[5] = new MenuOption { DisplayName = "No Expressions", _type = "toggle", AssociatedBool = PluginConfig.noexpressions };
                     Visual[6] = new MenuOption { DisplayName = "Tracers", _type = "toggle", AssociatedBool = PluginConfig.tracers };
@@ -188,41 +186,39 @@ namespace Colossal.Menu {
                     Player[10] = new MenuOption { DisplayName = "HitBoxes", _type = "toggle", AssociatedBool = PluginConfig.hitboxes };
                     Player[11] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
-                    Modders = new MenuOption[5];
-                    Modders[0] = new MenuOption { DisplayName = "Break NameTags", _type = "toggle", AssociatedBool = PluginConfig.breaknametags };
-                    Modders[1] = new MenuOption { DisplayName = "Break ModCheckers", _type = "toggle", AssociatedBool = PluginConfig.breakmodcheckers };
-                    Modders[2] = new MenuOption { DisplayName = "Pc Check Bypass", _type = "toggle", AssociatedBool = PluginConfig.pccheckbypass };
-                    Modders[3] = new MenuOption { DisplayName = "Fake Quest Menu", _type = "toggle", AssociatedBool = PluginConfig.fakequestmenu };
-                    Modders[4] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    Exploits = new MenuOption[5];
+                    Exploits[0] = new MenuOption { DisplayName = "Break NameTags", _type = "toggle", AssociatedBool = PluginConfig.breaknametags };
+                    Exploits[1] = new MenuOption { DisplayName = "Break ModCheckers", _type = "toggle", AssociatedBool = PluginConfig.breakmodcheckers };
+                    Exploits[2] = new MenuOption { DisplayName = "Pc Check Bypass", _type = "toggle", AssociatedBool = PluginConfig.pccheckbypass };
+                    Exploits[3] = new MenuOption { DisplayName = "Fake Quest Menu", _type = "toggle", AssociatedBool = PluginConfig.fakequestmenu };
+                    Exploits[4] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
-                    Computer = new MenuOption[8];
+                    Computer = new MenuOption[7];
                     Computer[0] = new MenuOption { DisplayName = "Disconnect", _type = "button", AssociatedString = "disconnect" };
-                    Computer[1] = new MenuOption { DisplayName = "RandomIdentity", _type = "button", AssociatedString = "randomidentity" };
-                    Computer[2] = new MenuOption { DisplayName = "Join GTC", _type = "button", AssociatedString = "join GTC" };
-                    Computer[3] = new MenuOption { DisplayName = "Join TTT", _type = "button", AssociatedString = "join TTT" };
-                    Computer[4] = new MenuOption { DisplayName = "Join YTTV", _type = "button", AssociatedString = "join YTTV" };
-                    Computer[5] = new MenuOption { DisplayName = "Modded Casual", _type = "button", AssociatedString = "moddedcasual" };
-                    Computer[6] = new MenuOption { DisplayName = "Modded Infection", _type = "button", AssociatedString = "moddedinfection" };
-                    Computer[7] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    Computer[1] = new MenuOption { DisplayName = "Join GTC", _type = "button", AssociatedString = "join GTC" };
+                    Computer[2] = new MenuOption { DisplayName = "Join TTT", _type = "button", AssociatedString = "join TTT" };
+                    Computer[3] = new MenuOption { DisplayName = "Join YTTV", _type = "button", AssociatedString = "join YTTV" };
+                    Computer[4] = new MenuOption { DisplayName = "Modded Casual", _type = "button", AssociatedString = "moddedcasual" };
+                    Computer[5] = new MenuOption { DisplayName = "Modded Infection", _type = "button", AssociatedString = "moddedinfection" };
+                    Computer[6] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
-                    Account = new MenuOption[5];
-                    Account[0] = new MenuOption { DisplayName = "Disconnect", _type = "button", AssociatedString = "disconnectplayfab" };
-                    Account[1] = new MenuOption { DisplayName = "Server: USW", _type = "button", AssociatedString = "serverusw" };
-                    Account[2] = new MenuOption { DisplayName = "Server: US", _type = "button", AssociatedString = "serverus" };
-                    Account[3] = new MenuOption { DisplayName = "Server: EU", _type = "button", AssociatedString = "servereu" };
-                    Account[4] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
+                    Saftey = new MenuOption[4];
+                    Saftey[0] = new MenuOption { DisplayName = "Panic", _type = "toggle", AssociatedBool = PluginConfig.Panic };
+                    Saftey[1] = new MenuOption { DisplayName = "AntiReport", _type = "STRINGslider", StringArray = new string[] { "Off", "Disconnect", "Reconnect", "Join Random" } };
+                    Saftey[2] = new MenuOption { DisplayName = "RandomIdentity", _type = "button", AssociatedString = "randomidentity" };
+                    Saftey[3] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
                     Settings = new MenuOption[7];
                     Settings[0] = new MenuOption { DisplayName = "Colour Settings", _type = "submenu", AssociatedString = "ColourSettings" };
                     Settings[1] = new MenuOption { DisplayName = "Mod Settings", _type = "submenu", AssociatedString = "ModSettings" };
-                    Settings[2] = new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Right", "Middle" } };
+                    Settings[2] = new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Left", "Middle", "Top Right" } };
                     Settings[3] = new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = new string[0] };
                     Settings[4] = new MenuOption { DisplayName = "Load Config", _type = "button", AssociatedString = "loadconfig" };
                     Settings[5] = new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" };
                     Settings[6] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
 
                     ColourSettings = new MenuOption[8];
-                    ColourSettings[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue", "RGB" } };
+                    ColourSettings[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
                     ColourSettings[1] = new MenuOption { DisplayName = "Ghost Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
                     ColourSettings[2] = new MenuOption { DisplayName = "Beam Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
                     ColourSettings[3] = new MenuOption { DisplayName = "ESP Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
@@ -336,10 +332,13 @@ namespace Colossal.Menu {
                         {
                             if (CurrentViewingMenu[SelectedOptionIndex].DisplayName == Settings[3].DisplayName)
                             {
-                                if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
-                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() - 1;
+                                int arrayLength = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count();
+                                // Checking if stringsliderind is within the bounds of StringArray
+                                if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind > 0)
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind--;
                                 else
-                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind - 1;
+                                    // Handle the case when stringsliderind is at the beginning of the array
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = arrayLength - 1; // or any other appropriate action
                                 inputcooldown = true;
                             }
                             else
@@ -379,10 +378,13 @@ namespace Colossal.Menu {
                         {
                             if (CurrentViewingMenu[SelectedOptionIndex].DisplayName == Settings[3].DisplayName)
                             {
-                                if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
-                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() + 1;
+                                int arrayLength = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count();
+                                // Checking if stringsliderind is within the bounds of StringArray
+                                if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind < arrayLength - 1)
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind++;
                                 else
-                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1;
+                                    // Handle the case when stringsliderind is at the end of the array
+                                    CurrentViewingMenu[SelectedOptionIndex].stringsliderind = 0; // or any other appropriate action
                                 inputcooldown = true;
                             }
                             else
@@ -544,10 +546,14 @@ namespace Colossal.Menu {
                 Player[10].AssociatedBool = PluginConfig.hitboxes;
 
                 //Modders
-                Modders[0].AssociatedBool = PluginConfig.breaknametags;
-                Modders[1].AssociatedBool = PluginConfig.breakmodcheckers;
-                Modders[2].AssociatedBool = PluginConfig.pccheckbypass;
-                Modders[3].AssociatedBool = PluginConfig.fakequestmenu;
+                Exploits[0].AssociatedBool = PluginConfig.breaknametags;
+                Exploits[1].AssociatedBool = PluginConfig.breakmodcheckers;
+                Exploits[2].AssociatedBool = PluginConfig.pccheckbypass;
+                Exploits[3].AssociatedBool = PluginConfig.fakequestmenu;
+
+                // Safety
+                Saftey[0].AssociatedBool = PluginConfig.Panic;
+                Saftey[1].stringsliderind = PluginConfig.antireport;
 
                 //Settings
                 Settings[2].stringsliderind = PluginConfig.MenuPosition;
@@ -557,6 +563,8 @@ namespace Colossal.Menu {
                 ColourSettings[2].stringsliderind = PluginConfig.BeamColour;
                 ColourSettings[3].stringsliderind = PluginConfig.ESPColour;
                 ColourSettings[4].stringsliderind = PluginConfig.GhostOpacity;
+                ColourSettings[5].stringsliderind = PluginConfig.HitBoxesOpacity;
+                ColourSettings[6].stringsliderind = PluginConfig.HitBoxesColour;
                 //Misc Settings
                 MovementSettings[0].stringsliderind = PluginConfig.WASDFlySpeed;
                 MovementSettings[1].stringsliderind = PluginConfig.FloatMonkeyAmmount;
@@ -594,7 +602,6 @@ namespace Colossal.Menu {
                             if (opt.AssociatedBool == true)
                             {
                                 ToDraw = ToDraw + $" <color={MenuColour}>[ON]</color>";
-                                //ToDraw = ToDraw + $" <color={MenuColourString}>[ON]</color>";
                             }
                             else
                                 ToDraw = ToDraw + " <color=red>[OFF]</color>";
@@ -630,10 +637,10 @@ namespace Colossal.Menu {
                             CurrentViewingMenu = Player;
                         if (option.AssociatedString == "Computer")
                             CurrentViewingMenu = Computer;
-                        if (option.AssociatedString == "Modders")
-                            CurrentViewingMenu = Modders;
-                        if (option.AssociatedString == "Account")
-                            CurrentViewingMenu = Account;
+                        if (option.AssociatedString == "Exploits")
+                            CurrentViewingMenu = Exploits;
+                        if (option.AssociatedString == "Saftey")
+                            CurrentViewingMenu = Saftey;
                         if (option.AssociatedString == "Settings")
                             CurrentViewingMenu = Settings;
 
@@ -680,8 +687,8 @@ namespace Colossal.Menu {
                                     prop.SetValue(null, !parsedBoolValue);
                                     Debug.Log($"Set boolean field '{prop.Name}' to '{!parsedBoolValue}'.");
 
-                                    CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {parsedBoolValue}");
-                                    Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {parsedBoolValue}");
+                                    CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {!parsedBoolValue}");
+                                    Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {!parsedBoolValue}");
                                 }
                             }
                         }
@@ -794,35 +801,22 @@ namespace Colossal.Menu {
                         case 4:
                             MenuColour = "blue";
                             break;
-                        case 5:
-                            menurgb += Time.deltaTime;
-
-                            MenuColourString = "magenta";
-                            if (menurgb >= 0.2f)
-                                MenuColourString = "red";
-                            if (menurgb >= 0.3f)
-                                MenuColourString = "green";
-                            if (menurgb >= 0.4f)
-                                MenuColourString = "blue";
-                            if (menurgb >= 0.5f)
-                                MenuColourString = "cyan";
-                            if (menurgb >= 0.6f)
-                                MenuColourString = "yellow";
-
-                            if (menurgb >= 0.6f)
-                                menurgb = 0;
-
+                    }
+                    switch (PluginConfig.MenuPosition)
+                    {
+                        case 0:
+                            MenuHubText.alignment = TextAnchor.UpperLeft;
+                            Notifacations.NotiHubText.alignment = TextAnchor.UpperRight;
+                            break;
+                        case 1:
+                            MenuHubText.alignment = TextAnchor.MiddleCenter;
+                            Notifacations.NotiHubText.alignment = TextAnchor.UpperLeft;
+                            break;
+                        case 2:
+                            MenuHubText.alignment = TextAnchor.UpperRight;
+                            Notifacations.NotiHubText.alignment = TextAnchor.UpperLeft;
                             break;
                     }
-                    //switch (PluginConfig.MenuPosition)
-                    //{
-                    //    case 0:
-                    //        MenuHubText.rectTransform.localPosition = new Vector3(1.68f, 0.35f, 2.2f);
-                    //        break;
-                    //    case 1:
-                    //        MenuHubText.rectTransform.localPosition = new Vector3(-2.4f, 0f, 3.6f);
-                    //        break;
-                    //}
                 }
             } catch {
             }

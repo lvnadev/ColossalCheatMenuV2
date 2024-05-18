@@ -111,6 +111,24 @@ namespace Colossal.Mods
                         gameObject2.GetComponent<MeshRenderer>().material.color = Color.green;
                     }
                     break;
+                case 5:
+                    if (gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject.GetComponent<MeshRenderer>().material.color != Color.black)
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.color = Color.black;
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.color != Color.black)
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.color = Color.black;
+                    }
+                    break;
                 default:
                     return;
             }

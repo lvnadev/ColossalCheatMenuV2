@@ -83,7 +83,7 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nIncreases how far you can tag from",
         };
 
-        public static string[] Moddertips = new string[]
+        public static string[] Exploittips = new string[]
         {
             $"<color={Menu.MenuColour}>Passive</color>\nBreaks nametag mods",
             $"<color={Menu.MenuColour}>Passive</color>\nBreaks modcheck mods",
@@ -94,7 +94,6 @@ namespace Colossal.Menu
         public static string[] Computertips = new string[]
         {
             $"<color={Menu.MenuColour}>Passive</color>\nDisconnects from room",
-            $"<color={Menu.MenuColour}>Passive</color>\nRandomly changes name",
             $"<color={Menu.MenuColour}>Passive</color>\nJoins code GTC",
             $"<color={Menu.MenuColour}>Passive</color>\nJoins code TTT",
             $"<color={Menu.MenuColour}>Passive</color>\nJoins code YTTV",
@@ -102,12 +101,11 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nSets gamemode to modded",
         };
 
-        public static string[] Accounttips = new string[]
+        public static string[] Safetytips = new string[]
         {
-            $"<color={Menu.MenuColour}>Passive</color>\nDisconnect from playfab",
-            $"<color={Menu.MenuColour}>Passive</color>\nChange server region",
-            $"<color={Menu.MenuColour}>Passive</color>\nChange server region",
-            $"<color={Menu.MenuColour}>Passive</color>\nChange server region",
+            $"<color={Menu.MenuColour}>All Face Buttons</color>\nDisables Everything",
+            $"<color={Menu.MenuColour}>Passive</color>\nAntiReport lmao",
+            $"<color={Menu.MenuColour}>Passive</color>\nRandomly changes name",
         };
 
         public static string[] Settingstips = new string[]
@@ -189,12 +187,12 @@ namespace Colossal.Menu
                     return Visualtips;
                 case "Player":
                     return Playertips;
-                case "Modders":
-                    return Moddertips;
+                case "Exploits":
+                    return Exploittips;
                 case "Computer":
                     return Computertips;
-                case "Account":
-                    return Accounttips;
+                case "Safety":
+                    return Safetytips;
                 case "Settings":
                     return Settingstips;
                 case "ColourSettings":

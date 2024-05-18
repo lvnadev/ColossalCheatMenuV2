@@ -93,7 +93,6 @@ namespace Colossal.Mods
                         break;
                     case 5:
                         color = new Color32(0, 0, 255, opacity);
-
                         break;
                     default:
                         color = new Color32(255, 255, 255, 255);
@@ -107,6 +106,7 @@ namespace Colossal.Mods
 
                     visualizerL.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
 
+                    visualizerL.transform.SetParent(GorillaLocomotion.Player.Instance.leftControllerTransform);
                     visualizerL.transform.position = GorillaLocomotion.Player.Instance.leftControllerTransform.transform.position;
                 }
                 if (visualizerR == null)
@@ -116,21 +116,18 @@ namespace Colossal.Mods
 
                     visualizerR.GetComponent<Renderer>().material.shader = Shader.Find("GUI/Text Shader");
 
-                    visualizerR.transform.position = GorillaLocomotion.Player.Instance.leftControllerTransform.transform.position;
+                    visualizerR.transform.SetParent(GorillaLocomotion.Player.Instance.rightControllerTransform);
+                    visualizerR.transform.position = GorillaLocomotion.Player.Instance.rightControllerTransform.transform.position;
                 }
 
                 if (visualizerL != null)
                 {
                     visualizerL.GetComponent<Renderer>().material.color = color;
-
-                    visualizerL.transform.SetParent(GorillaLocomotion.Player.Instance.leftControllerTransform);
                     visualizerL.transform.localScale = new Vector3(ammount, ammount, ammount);
                 }
                 if (visualizerR != null)
                 {
                     visualizerR.GetComponent<Renderer>().material.color = color;
-
-                    visualizerR.transform.SetParent(GorillaLocomotion.Player.Instance.rightControllerTransform);
                     visualizerR.transform.localScale = new Vector3(ammount, ammount, ammount);
                 }
             }
