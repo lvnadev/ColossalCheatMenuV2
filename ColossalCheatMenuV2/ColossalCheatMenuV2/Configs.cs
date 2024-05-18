@@ -67,15 +67,15 @@ namespace Colossal.Menu
         public static bool pccheckbypass = false;
         public static bool fakequestmenu = false;
 
-        // Safety
-        public static bool Panic = false;
-        public static int antireport = 0;
-
         // Menu
         public static bool Notifications = true;
         public static bool overlay = true;
         public static bool fullghostmode = false;
         public static bool tooltips = true;
+
+        // Safety
+        public static bool Panic = false;
+        public static int antireport = 0;
 
         //Settings
         public static int MenuPosition = 0;
@@ -197,7 +197,7 @@ namespace Colossal.Menu
                             }
                             prop.SetValue(null, parsedValue); // Set value directly
 
-                            CustomConsole.LogToConsole($"Set {prop.FieldType} '{prop.Name}' to '{parsedValue}'.");
+                            //CustomConsole.LogToConsole($"Set {prop.FieldType} '{prop.Name}' to '{parsedValue}'.");
                         }
                     }
 

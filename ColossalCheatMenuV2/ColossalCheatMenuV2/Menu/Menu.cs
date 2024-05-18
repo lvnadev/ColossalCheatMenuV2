@@ -360,7 +360,7 @@ namespace Colossal.Menu
 
                                             prop.SetValue(null, newValue);
 
-                                            CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
+                                            //CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
                                         }
                                         else
                                         {
@@ -443,12 +443,15 @@ namespace Colossal.Menu
                         {
                             if (ControllerInputPoller.instance.rightGrab && !Menu.inputcooldown)
                             {
-                                if(CurrentViewingMenu[SelectedOptionIndex].DisplayName == Settings[3].DisplayName)
+                                if (CurrentViewingMenu[SelectedOptionIndex].DisplayName == Settings[3].DisplayName)
                                 {
-                                    if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind == 0)
-                                        CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count() + 1;
+                                    int arrayLength = CurrentViewingMenu[SelectedOptionIndex].StringArray.Count();
+                                    // Checking if stringsliderind is within the bounds of StringArray
+                                    if (CurrentViewingMenu[SelectedOptionIndex].stringsliderind < arrayLength - 1)
+                                        CurrentViewingMenu[SelectedOptionIndex].stringsliderind++;
                                     else
-                                        CurrentViewingMenu[SelectedOptionIndex].stringsliderind = CurrentViewingMenu[SelectedOptionIndex].stringsliderind + 1;
+                                        // Handle the case when stringsliderind is at the end of the array
+                                        CurrentViewingMenu[SelectedOptionIndex].stringsliderind = 0; // or any other appropriate action
                                     inputcooldown = true;
                                 }
                                 else
@@ -470,7 +473,7 @@ namespace Colossal.Menu
 
                                                 prop.SetValue(null, newValue);
 
-                                                CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
+                                                //CustomConsole.LogToConsole($"\nIncremented {CurrentViewingMenu[SelectedOptionIndex].DisplayName} : {newValue}");
                                             }
                                             else
                                             {
@@ -685,7 +688,7 @@ namespace Colossal.Menu
                                 {
                                     // Toggle the boolean value in PluginConfig based on the display name of the MenuOption
                                     prop.SetValue(null, !parsedBoolValue);
-                                    Debug.Log($"Set boolean field '{prop.Name}' to '{!parsedBoolValue}'.");
+                                   // Debug.Log($"Set boolean field '{prop.Name}' to '{!parsedBoolValue}'.");
 
                                     CustomConsole.LogToConsole($"\nToggled {option.DisplayName} : {!parsedBoolValue}");
                                     Notifacations.SendNotification($"<color={MenuColour}>[TOGGLED]</color> {option.DisplayName} : {!parsedBoolValue}");
