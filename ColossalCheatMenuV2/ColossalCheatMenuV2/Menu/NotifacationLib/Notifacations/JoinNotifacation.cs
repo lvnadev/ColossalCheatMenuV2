@@ -17,7 +17,7 @@ namespace Colossal.Menu.ClientHub.Notifacation {
         {
             base.OnPlayerEnteredRoom(newPlayer);
 
-            if (!notifiedPlayers.Contains(newPlayer) && PluginConfig.noti)
+            if (!notifiedPlayers.Contains(newPlayer) && PluginConfig.Notifications)
             {
                 notifiedPlayers.Add(newPlayer);
                 Notifacations.SendNotification($"<color=cyan>[JOIN]</color> Name: {newPlayer.NickName}");

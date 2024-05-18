@@ -57,7 +57,7 @@ namespace Colossal.Mods
                                 GorillaTagger.Instance.offlineVRRig.rightHandTransform.position = vrrig.transform.position;
                                 GorillaTagger.Instance.offlineVRRig.transform.position = vrrig.transform.position + new Vector3(0f, -2.5f, 0f);
 
-                                if (PluginConfig.csghostclient)
+                                if (!PluginConfig.fullghostmode)
                                 {
                                     if (radiusLine == null)
                                     {

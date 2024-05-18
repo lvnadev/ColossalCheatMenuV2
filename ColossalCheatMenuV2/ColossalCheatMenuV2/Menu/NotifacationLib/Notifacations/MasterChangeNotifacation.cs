@@ -19,11 +19,11 @@ namespace Colossal.Menu.ClientHub.Notifacation {
         {
             base.OnMasterClientSwitched(newMasterClient);
 
-            if (PluginConfig.noti)
+            if (PluginConfig.Notifications)
             {
                 if (mastername != newMasterClient.NickName)
                 {
-                    Notifacations.SendNotification($"<color=greem>[MASTER]</color> Changed, Name: {newMasterClient.NickName}");
+                    Notifacations.SendNotification($"<color=green>[MASTER]</color> Changed, Name: {newMasterClient.NickName}");
                     mastername = newMasterClient.NickName;
                 }
             }

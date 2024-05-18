@@ -20,16 +20,16 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Submenu</color>\nModders mods",
             $"<color={Menu.MenuColour}>Submenu</color>\nAccount mods",
             $"<color={Menu.MenuColour}>Submenu</color>\nMenu settings",
-            $"<color={Menu.MenuColour}>Passive</color>\nSwitches menu controls",
             $"<color={Menu.MenuColour}>Passive</color>\nToggles noti",
             $"<color={Menu.MenuColour}>Passive</color>\nToggles overlay",
-            $"<color={Menu.MenuColour}>Passive</color>\nToggles all colossal visuals",
+            $"<color={Menu.MenuColour}>Passive</color>\nToggles all visuals (Screen share proof)",
+            $"<color={Menu.MenuColour}>Passive</color>\nToggles tooltips",
         };
 
         public static string[] Movementtips = new string[]
         {
             $"<color={Menu.MenuColour}>Primary Buttons</color>\nFly Like IronMan",
-            $"<color={Menu.MenuColour}>L Secondary & L Joystick</color>\nFly in your hands direction",
+            $"<color={Menu.MenuColour}>L Secondary & R Joystick</color>\nFly in your right hands direction",
             $"<color={Menu.MenuColour}>R Grip</color>\nPoint palms towards walls to stick",
             $"<color={Menu.MenuColour}>Submenu</color>\nDisplays Speed Options",
             $"<color={Menu.MenuColour}>R Grip & L Grip</color>\nJump on air",
@@ -43,12 +43,16 @@ namespace Colossal.Menu
         {
             $"<color={Menu.MenuColour}>Passive</color>\nSpeed up time",
             $"<color={Menu.MenuColour}>R Secondary</color>\nScale gravity",
+            $"<color={Menu.MenuColour}>L Or R Grip</color>\nClimb Gorillas",
+            $"<color={Menu.MenuColour}>Passive</color>\nFly away from tagged players",
+            $"<color={Menu.MenuColour}>R Joystick > L Trigger & R Trigger</color>\nScale yourself",
         };
         public static string[] Speedtips = new string[]
         {
             $"<color={Menu.MenuColour}>Passive</color>\nAdds a speed boost",
             $"<color={Menu.MenuColour}>L Grip</color>\nAdds a speed boost",
             $"<color={Menu.MenuColour}>R Grip</color>\nAdds a speed boost",
+            $"<color={Menu.MenuColour}>R Grip</color>\nAdds a speed boost when near infected",
         };
 
         public static string[] Visualtips = new string[]
@@ -61,6 +65,7 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nTurn off facial features",
             $"<color={Menu.MenuColour}>Passive</color>\nPoints tracers at monkies",
             $"<color={Menu.MenuColour}>Passive</color>\nHighlight monkies through walls",
+            $"<color={Menu.MenuColour}>Passive</color>\nMakes computer view first person",
         };
 
         public static string[] Playertips = new string[]
@@ -75,20 +80,20 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nTags all monkies",
             $"<color={Menu.MenuColour}>L Grip</color>\nFreeze ss rig and move",
             $"<color={Menu.MenuColour}>Passive</color>\nDesyncs hitbox and visual position",
+            $"<color={Menu.MenuColour}>Passive</color>\nIncreases how far you can tag from",
         };
 
-        public static string[] Moddertips = new string[]
+        public static string[] Exploittips = new string[]
         {
             $"<color={Menu.MenuColour}>Passive</color>\nBreaks nametag mods",
             $"<color={Menu.MenuColour}>Passive</color>\nBreaks modcheck mods",
             $"<color={Menu.MenuColour}>Passive</color>\nDisables Igloo to pass a PC check",
-            $"<color={Menu.MenuColour}>Passive</color>\nMoves hands like quest menu is open",
+            $"<color={Menu.MenuColour}>Passive</color>\nFakes having your quest menu open",
         };
 
         public static string[] Computertips = new string[]
         {
             $"<color={Menu.MenuColour}>Passive</color>\nDisconnects from room",
-            $"<color={Menu.MenuColour}>Passive</color>\nRandomly changes name",
             $"<color={Menu.MenuColour}>Passive</color>\nJoins code GTC",
             $"<color={Menu.MenuColour}>Passive</color>\nJoins code TTT",
             $"<color={Menu.MenuColour}>Passive</color>\nJoins code YTTV",
@@ -96,18 +101,17 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nSets gamemode to modded",
         };
 
-        public static string[] Accounttips = new string[]
+        public static string[] Safetytips = new string[]
         {
-            $"<color={Menu.MenuColour}>Passive</color>\nDisconnect from playfab",
-            $"<color={Menu.MenuColour}>Passive</color>\nChange server region",
-            $"<color={Menu.MenuColour}>Passive</color>\nChange server region",
-            $"<color={Menu.MenuColour}>Passive</color>\nChange server region",
+            $"<color={Menu.MenuColour}>All Face Buttons</color>\nDisables Everything",
+            $"<color={Menu.MenuColour}>Passive</color>\nAntiReport lmao",
+            $"<color={Menu.MenuColour}>Passive</color>\nRandomly changes name",
         };
 
         public static string[] Settingstips = new string[]
         {
             $"<color={Menu.MenuColour}>Submenu</color>\nMenu Colour options",
-            $"<color={Menu.MenuColour}>Submenu</color>\nMisc menu options",
+            $"<color={Menu.MenuColour}>Submenu</color>\nMod options",
             $"<color={Menu.MenuColour}>Passive</color>\nMenu position",
             $"<color={Menu.MenuColour}>Passive</color>\nConfig to load",
             $"<color={Menu.MenuColour}>Passive</color>\nLoad selected config",
@@ -121,18 +125,31 @@ namespace Colossal.Menu
             $"<color={Menu.MenuColour}>Passive</color>\nESP colour",
             $"<color={Menu.MenuColour}>Passive</color>\nExtra rig opacity",
         };
-        public static string[] SettingsMisctips = new string[]
+        public static string[] SettingsMovement = new string[]
         {
             $"<color={Menu.MenuColour}>Passive</color>\nWASD speed",
             $"<color={Menu.MenuColour}>Passive</color>\nGravity ammount",
-            $"<color={Menu.MenuColour}>Passive</color>\nAura distance",
             $"<color={Menu.MenuColour}>Passive</color>\nWall walk strength",
             $"<color={Menu.MenuColour}>Passive</color>\nGame speed",
-            $"<color={Menu.MenuColour}>Passive</color>\nCamera Mod FOV",
             $"<color={Menu.MenuColour}>Passive</color>\nExcel Fly Speed",
+            $"<color={Menu.MenuColour}>Passive</color>\nSpeed boost ammount",
+            $"<color={Menu.MenuColour}>Passive</color>\nSpeed boost ammount",
+            $"<color={Menu.MenuColour}>Passive</color>\nSpeed boost ammount",
+            $"<color={Menu.MenuColour}>Passive</color>\nNear speed boost ammount",
+            $"<color={Menu.MenuColour}>Passive</color>\nNear speed boost distance",
+        };
+        public static string[] SettingsVisual = new string[]
+        {
+            $"<color={Menu.MenuColour}>Passive</color>\nCamera Mod FOV",
             $"<color={Menu.MenuColour}>Passive</color>\nTracer Position",
             $"<color={Menu.MenuColour}>Passive</color>\nTracer Beam Size",
         };
+        public static string[] SettingsPlayer = new string[]
+        {
+            $"<color={Menu.MenuColour}>Passive</color>\nAura distance",
+            $"<color={Menu.MenuColour}>Passive</color>\nHow far you can tag from",
+        };
+
 
         public static GameObject HUDObj;
         public static GameObject HUDObj2;
@@ -170,25 +187,29 @@ namespace Colossal.Menu
                     return Visualtips;
                 case "Player":
                     return Playertips;
-                case "Modders":
-                    return Moddertips;
+                case "Exploits":
+                    return Exploittips;
                 case "Computer":
                     return Computertips;
-                case "Account":
-                    return Accounttips;
+                case "Safety":
+                    return Safetytips;
                 case "Settings":
                     return Settingstips;
                 case "ColourSettings":
                     return SettingsColourtips;
-                case "MiscSettings":
-                    return SettingsMisctips;
+                case "MovementSettings":
+                    return SettingsMovement;
+                case "VisualSettings":
+                    return SettingsVisual;
+                case "PlayerSettings":
+                    return SettingsPlayer;
                 default:
                     return null;
             }
         }
         public static void HandToolTips(string category, int selectedIndex)
         {
-            if (Menu.GUIToggled && PluginConfig.tooltips)
+            if (Menu.GUIToggled && PluginConfig.tooltips && !PluginConfig.fullghostmode)
             {
                 if(Menu.agreement)
                 {

@@ -23,7 +23,7 @@ namespace Colossal.Menu
             GameObject ghost = GameObject.Instantiate(GorillaTagger.Instance.offlineVRRig.gameObject);
             var vrrig = ghost.GetComponent<VRRig>();
 
-            switch (Menu.ColourSettings[4].stringsliderind)
+            switch (PluginConfig.GhostOpacity)
             {
                 case 0:
                     opacity = 100;
@@ -44,7 +44,7 @@ namespace Colossal.Menu
                     opacity = 0;
                     break;
             }
-            switch (Menu.ColourSettings[1].stringsliderind)
+            switch (PluginConfig.GhostColour)
             {
                 case 0:
                     ghostColor = new Color32(204, 51, 255, opacity);
@@ -72,11 +72,12 @@ namespace Colossal.Menu
 
             GameObject.Destroy(vrrig.GetComponent<Rigidbody>());
 
-            if (!PluginConfig.csghostclient)
+            if (PluginConfig.fullghostmode)
             {
                 vrrig.mainSkin.enabled = false;
                 vrrig.headMesh.active = false;
                 vrrig.showName = false;
+                vrrig.handTapSound = null;
             }
             else
             {
@@ -88,6 +89,7 @@ namespace Colossal.Menu
                     vrrig.mainSkin.enabled = true;
                 if(!vrrig.showName)
                     vrrig.showName = true;
+                vrrig.handTapSound = null;
             }
 
 

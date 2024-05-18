@@ -52,23 +52,32 @@ namespace Colossal.Mods
                     case 2:
                         pos = GorillaTagger.Instance.headCollider.transform.position + (Vector3.up * 0.2f);
                         break;
+                    case 3:
+                        pos = GorillaTagger.Instance.headCollider.transform.position + GorillaTagger.Instance.headCollider.transform.forward / 2;
+                        break;
                 }
                 switch (PluginConfig.TracerSize)
                 {
                     case 0:
-                        size = 0.01f;
+                        size = 0.002f;
                         break;
                     case 1:
-                        size = 0.025f;
+                        size = 0.01f;
                         break;
                     case 2:
-                        size = 0.05f;
+                        size = 0.025f;
                         break;
                     case 3:
-                        size = 0.065f;
+                        size = 0.05f;
                         break;
                     case 4:
+                        size = 0.065f;
+                        break;
+                    case 5:
                         size = 0.08f;
+                        break;
+                    case 6:
+                        size = 0.1f;
                         break;
                 }
 

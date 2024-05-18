@@ -17,7 +17,7 @@ namespace Colossal.Mods
             if (PluginConfig.upsidedownmonkey)
             {
                 GorillaLocomotion.Player.Instance.PlayerRotationOverride = Quaternion.Euler(0f, 0f, 180f);
-                GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * (Time.deltaTime * (20f / Time.deltaTime)), ForceMode.Acceleration);
+                GorillaLocomotion.Player.Instance.bodyCollider.attachedRigidbody.AddForce(Vector3.up * (Time.deltaTime * ((-Physics.gravity.y * 2) / Time.deltaTime)), ForceMode.Acceleration); // think this is more accurate
             }
             else
             {

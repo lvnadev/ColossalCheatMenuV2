@@ -11,39 +11,45 @@ using Colossal.Menu.ClientHub;
 using Colossal.Menu.ClientHub.Notifacation;
 using Colossal.Mods;
 using Colossal.Patches;
+using ColossalCheatMenuV2.Menu;
+using ColossalCheatMenuV2.Mods;
 using GorillaNetworking;
+using Newtonsoft.Json.Linq;
 using Photon.Pun;
 using PlayFab;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 using static UnityEngine.Random;
 using static Valve.VR.SteamVR_ExternalCamera;
 
-namespace Colossal {
-    //[BepInPlugin("org.ColossusYTTV.ColossalCheatMenuV2", "ColossalCheatMenuV2", "1.0.0")]
-    public class Plugin : MonoBehaviour {
-        //public static int called = 0;
-        //public static float instantate = 0;
-
-        public static float reporttimer = 0;
-
-
-        public static GameObject hud;
+namespace Colossal 
+{
+    public class Plugin : MonoBehaviour 
+    {
         public static GameObject holder;
+        public static Font gtagfont;
 
+<<<<<<< HEAD
         public static float version = 5.6f;
+=======
+        public static float version = 5.7f;
+>>>>>>> Dev
         public static bool sussy = false;
         public static bool oculus = false;
 
+        public static float playtime = 0;
+        public static string playtimestring;
+
         public void Start()
         {
-            Debug.Log("[COLOSSAL] Plugin Start Call");
+            CustomConsole.LogToConsole("[COLOSSAL] Plugin Start Call");
 
 
             AutoUpdate();
 
 
-            Debug.Log("[COLOSSAL] Spawned Holder");
+            CustomConsole.LogToConsole("[COLOSSAL] Spawned Holder");
             holder = new GameObject();
             holder.name = "Holder";
             holder.AddComponent<Boards>();
@@ -52,35 +58,33 @@ namespace Colossal {
             holder.AddComponent<LeaveNotifacation>();
             holder.AddComponent<MasterChangeNotifacation>();
             holder.AddComponent<Configs>();
+            holder.AddComponent<Controls>();
+            holder.AddComponent<GUICreator>();
 
 
             string[] oculusDlls = Directory.GetFiles(Environment.CurrentDirectory, "OculusXRPlugin.dll", SearchOption.AllDirectories);
             if (oculusDlls.Length > 0)
                 oculus = true;
 
-            if (!oculus)
+
+            gtagfont = GameObject.Find("Environment Objects/LocalObjects_Prefab/TreeRoom/TreeRoomInteractables/UI/CodeOfConduct/COC Text").GetComponent<Text>().font;
+
+            if (gtagfont != null && holder != null) // Me after writing semi good code 😭 -Colossus
             {
                 Menu.Menu.LoadOnce();
-                CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start functions");
+                CustomConsole.LogToConsole("[COLOSSAL] Loaded menu start");
 
-                CustomConsole.LogToConsole("[COLOSSAL] Getting configs");
-                Configs.GetConfigFileNames();
+                Overlay.SpawnOverlay();
+                CustomConsole.LogToConsole("[COLOSSAL] Loaded overlay");
 
-                hud = GameObject.Find("CLIENT_HUB");
-            }
-            else
-            {
-                // Doing this for now because I am to lazy to fix fucking inputs 😭
-                CustomConsole.LogToConsole("[COLOSSAL] YOU ARE PLAYING ON OCLULUS. PLEASE LAUNCH ON THE STEAM PORT OF THE GAME!");
-
-                Menu.Menu.LoadOnceOculus();
+                Notifacations.SpawnNoti();
+                CustomConsole.LogToConsole("[COLOSSAL] Loaded noti");
             }
         }
-        public void Update() {
-            if(!oculus)
-            {
-                Menu.Menu.Load();
-                Dictionary<Type, bool> componentConditions = new Dictionary<Type, bool>
+        public void Update() 
+        {
+            Menu.Menu.Load();
+            Dictionary<Type, bool> componentConditions = new Dictionary<Type, bool>
                 {
                     { typeof(CustomConsole), true },
                     { typeof(ThisGuyIsUsingColossal), true },
@@ -114,24 +118,43 @@ namespace Colossal {
                     { typeof(Tracers), PluginConfig.tracers },
                     { typeof(BoneESP), PluginConfig.boneesp },
                     { typeof(firstperson), PluginConfig.firstperson },
-
+                    { typeof(ClimbableGorillas), PluginConfig.ClimbableGorillas },
+                    { typeof(HitBoxes), PluginConfig.hitboxes },
+                    { typeof(NearPulse), PluginConfig.NearPulse },
+                    { typeof(PlayerScale), PluginConfig.PlayerScale },
+                    { typeof(FullBright), PluginConfig.fullbright },
+                    { typeof(Panic), PluginConfig.Panic },
                 };
-                foreach (var kvp in componentConditions)
+            foreach (var kvp in componentConditions)
+            {
+                if (holder != null)
                 {
-                    if (holder != null)
+                    if (kvp.Value && holder.GetComponent(kvp.Key) == null)
                     {
-                        if (kvp.Value && holder.GetComponent(kvp.Key) == null)
-                        {
-                            holder.AddComponent(kvp.Key);
-                        }
+                        holder.AddComponent(kvp.Key);
                     }
-                    else
-                    {
-                        CustomConsole.LogToConsole("Holder is null");
-                        holder = new GameObject();
-                    }
-                } 
+                }
+                else
+                {
+                    CustomConsole.LogToConsole("[COLOSSAL] Holder is null");
+                    holder = new GameObject();
+                }
             }
+
+
+            // Playtime counter
+            playtime += Time.deltaTime;
+
+            int hours = (int)(playtime / 3600);
+            int minutes = (int)((playtime % 3600) / 60);
+            int seconds = (int)(playtime % 60);
+
+            playtimestring = "";
+            if (hours > 0)
+                playtimestring += hours.ToString("00") + ":";
+            if (minutes > 0 || hours > 0)
+                playtimestring += minutes.ToString("00") + ":";
+            playtimestring += seconds.ToString("00");
         }
 
         public void AutoUpdate()
@@ -148,12 +171,13 @@ namespace Colossal {
                 {
                     try
                     {
-                        string rawData = client.GetStringAsync("https://raw.githubusercontent.com/ColossusYTTV/ColossalCheatMenuV2/main/AutoUpdate/version.txt").Result;
-                        CustomConsole.LogToConsole($"[COLOSSAL] Current version on server: {rawData}");
+                        // Version Stuff (Auto Updater)
+                        string rawDataVersion = client.GetStringAsync("https://raw.githubusercontent.com/ColossusYTTV/ColossalCheatMenuV2/main/AutoUpdate/version.txt").Result;
+                        CustomConsole.LogToConsole($"[COLOSSAL] Current version on server: {rawDataVersion}");
                         CustomConsole.LogToConsole($"[COLOSSAL] Current version on Local: {version}");
 
                         float serverVersion;
-                        if (float.TryParse(rawData, out serverVersion))
+                        if (float.TryParse(rawDataVersion, out serverVersion))
                         {
                             if (version < serverVersion)
                             {
@@ -202,18 +226,5 @@ namespace Colossal {
                 CustomConsole.LogToConsole("[COLOSSAL] No matching file found.");
             }
         }
-
-        /*public void FixedUpdate() {
-            if (PhotonNetwork.InRoom) {
-                instantate += Time.deltaTime;
-            } else {
-                instantate = 0;
-                called = 0;
-            }
-
-            if (instantate >= 120) {
-                called = 0;
-            }
-        }*/
     }
 }

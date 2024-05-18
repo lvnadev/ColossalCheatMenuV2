@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colossal.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,95 +15,122 @@ namespace Colossal.Mods
         private new GameObject gameObject;
         private GameObject gameObject2;
 
+        private Material original;
+        private Material original2;
+
         public void Start()
         {
-            this.gameObject = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky/newsky (1)");
-            this.gameObject2 = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky");
+            gameObject = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky/newsky (1)");
+            gameObject2 = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky");
+
+            original = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky/newsky (1)").GetComponent<Renderer>().material;
+            original2 = GameObject.Find("Environment Objects/LocalObjects_Prefab/Standard Sky").GetComponent<Renderer>().material;
         }
         public void Update()
         {
-            if (Menu.Menu.Visual[3].stringsliderind != 0)
+            switch (PluginConfig.skycolour)
             {
-                switch (Menu.Menu.Visual[3].stringsliderind)
-                {
-                    case 1:
-                        if (this.gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
-                        {
-                            this.gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        }
-                        if (this.gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
-                        {
-                            this.gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        }
-                        if (this.gameObject.GetComponent<MeshRenderer>().material.color != Color.magenta)
-                        {
-                            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.magenta;
-                        }
-                        if (this.gameObject2.GetComponent<MeshRenderer>().material.color != Color.magenta)
-                        {
-                            this.gameObject2.GetComponent<MeshRenderer>().material.color = Color.magenta;
-                            return;
-                        }
-                        break;
-                    case 2:
-                        if (this.gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
-                        {
-                            this.gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        }
-                        if (this.gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
-                        {
-                            this.gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        }
-                        if (this.gameObject.GetComponent<MeshRenderer>().material.color != Color.red)
-                        {
-                            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
-                        }
-                        if (this.gameObject2.GetComponent<MeshRenderer>().material.color != Color.red)
-                        {
-                            this.gameObject2.GetComponent<MeshRenderer>().material.color = Color.red;
-                            return;
-                        }
-                        break;
-                    case 3:
-                        if (this.gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
-                        {
-                            this.gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        }
-                        if (this.gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
-                        {
-                            this.gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        }
-                        if (this.gameObject.GetComponent<MeshRenderer>().material.color != Color.cyan)
-                        {
-                            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
-                        }
-                        if (this.gameObject2.GetComponent<MeshRenderer>().material.color != Color.cyan)
-                        {
-                            this.gameObject2.GetComponent<MeshRenderer>().material.color = Color.cyan;
-                            return;
-                        }
-                        break;
-                    case 4:
-                        if (this.gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
-                        {
-                            this.gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        }
-                        if (this.gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
-                        {
-                            this.gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
-                        }
-                        if (this.gameObject.GetComponent<MeshRenderer>().material.color != Color.green)
-                        {
-                            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
-                        }
-                        if (this.gameObject2.GetComponent<MeshRenderer>().material.color != Color.green)
-                        {
-                            this.gameObject2.GetComponent<MeshRenderer>().material.color = Color.green;
-                        }
-                        break;
-                    default:
+                case 0:
+                    if (gameObject.GetComponent<MeshRenderer>().material != original)
+                        gameObject.GetComponent<MeshRenderer>().material = original;
+                    if (gameObject2.GetComponent<MeshRenderer>().material != original2)
+                        gameObject2.GetComponent<MeshRenderer>().material = original2;
+                    break;
+                case 1:
+                    if (gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject.GetComponent<MeshRenderer>().material.color != Color.magenta)
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.color = Color.magenta;
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.color != Color.magenta)
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.color = Color.magenta;
                         return;
-                }
+                    }
+                    break;
+                case 2:
+                    if (gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject.GetComponent<MeshRenderer>().material.color != Color.red)
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.color != Color.red)
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.color = Color.red;
+                        return;
+                    }
+                    break;
+                case 3:
+                    if (gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject.GetComponent<MeshRenderer>().material.color != Color.cyan)
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.color != Color.cyan)
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.color = Color.cyan;
+                        return;
+                    }
+                    break;
+                case 4:
+                    if (gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject.GetComponent<MeshRenderer>().material.color != Color.green)
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.color != Color.green)
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.color = Color.green;
+                    }
+                    break;
+                case 5:
+                    if (gameObject.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.shader != Shader.Find("GorillaTag/UberShader"))
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.shader = Shader.Find("GorillaTag/UberShader");
+                    }
+                    if (gameObject.GetComponent<MeshRenderer>().material.color != Color.black)
+                    {
+                        gameObject.GetComponent<MeshRenderer>().material.color = Color.black;
+                    }
+                    if (gameObject2.GetComponent<MeshRenderer>().material.color != Color.black)
+                    {
+                        gameObject2.GetComponent<MeshRenderer>().material.color = Color.black;
+                    }
+                    break;
+                default:
+                    return;
             }
         }
     }

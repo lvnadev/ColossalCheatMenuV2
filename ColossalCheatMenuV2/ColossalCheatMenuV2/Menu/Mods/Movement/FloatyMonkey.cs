@@ -19,7 +19,7 @@ namespace Colossal.Mods
         {
             if (PluginConfig.FloatyMonkey)
             {
-                switch (Menu.Menu.MiscSettings[1].stringsliderind)
+                switch (PluginConfig.FloatMonkeyAmmount)
                 {
                     case 0:
                         ammount = 1.1f;
@@ -70,7 +70,8 @@ namespace Colossal.Mods
                         ammount = 4f;
                         break;
                     case 16:
-                        ammount = 10;
+                        //ammount = 10;
+                        ammount = -Physics.gravity.y; // think this is more accurate
                         break;
                 }
 

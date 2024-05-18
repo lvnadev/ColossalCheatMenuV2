@@ -41,39 +41,41 @@ namespace Colossal.Mods
                 //        break;
                 //}
 
-                if (this.pointer == null)
+                if (pointer == null)
                 {
-                    this.pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    UnityEngine.Object.Destroy(this.pointer.GetComponent<Rigidbody>());
-                    UnityEngine.Object.Destroy(this.pointer.GetComponent<SphereCollider>());
-                    this.pointer.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                    this.pointer.GetComponent<Renderer>().material = Boards.boardmat;
+                    pointer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    UnityEngine.Object.Destroy(pointer.GetComponent<Rigidbody>());
+                    UnityEngine.Object.Destroy(pointer.GetComponent<SphereCollider>());
+                    pointer.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                    pointer.GetComponent<Renderer>().material = Boards.boardmat;
                 }
-                RaycastHit raycastHit;
-                Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position - GorillaTagger.Instance.rightHandTransform.up, -GorillaTagger.Instance.rightHandTransform.up, out raycastHit);
-                this.pointer.transform.position = raycastHit.point;
+                
+
                 RaycastHit raycastHit2;
-                Physics.Raycast(GorillaLocomotion.Player.Instance.rightControllerTransform.position - GorillaLocomotion.Player.Instance.rightControllerTransform.up, -GorillaLocomotion.Player.Instance.rightControllerTransform.up, out raycastHit2);
+                LayerMask combinedLayerMask = GorillaLocomotion.Player.Instance.locomotionEnabledLayers | 16384;
+                Physics.Raycast(GorillaLocomotion.Player.Instance.rightControllerTransform.position - GorillaLocomotion.Player.Instance.rightControllerTransform.up, -GorillaLocomotion.Player.Instance.rightControllerTransform.up, out raycastHit2, float.PositiveInfinity, combinedLayerMask);
+                pointer.transform.position = raycastHit2.point;
+
                 if (SteamVR_Actions.gorillaTag_RightJoystickClick.GetState(SteamVR_Input_Sources.RightHand))
                 {
-                    if (this.radiusLine == null)
+                    if (radiusLine == null)
                     {
-                        this.lineMaterial = new Material(Shader.Find("Sprites/Default"));
-                        this.radiusLine = new GameObject("RadiusLine")
+                        lineMaterial = new Material(Shader.Find("Sprites/Default"));
+                        radiusLine = new GameObject("RadiusLine")
                         {
                             transform =
                             {
-                                parent = this.pointer.transform
+                                parent = pointer.transform
                             }
                         }.AddComponent<LineRenderer>();
-                        this.radiusLine.positionCount = 2;
-                        this.radiusLine.startWidth = 0.05f;
-                        this.radiusLine.endWidth = 0.05f;
-                        this.radiusLine.material = this.lineMaterial;
+                        radiusLine.positionCount = 2;
+                        radiusLine.startWidth = 0.05f;
+                        radiusLine.endWidth = 0.05f;
+                        radiusLine.material = lineMaterial;
                     }
-                    this.radiusLine.SetPosition(0, raycastHit2.point);
-                    this.radiusLine.SetPosition(1, GorillaLocomotion.Player.Instance.rightControllerTransform.position);
-                    this.radiusLine.GetPosition(0);
+                    radiusLine.SetPosition(0, raycastHit2.point);
+                    radiusLine.SetPosition(1, GorillaLocomotion.Player.Instance.rightControllerTransform.position);
+                    radiusLine.GetPosition(0);
                     if (DisableRig.disablerig)
                     {
                         DisableRig.disablerig = false;
@@ -86,19 +88,19 @@ namespace Colossal.Mods
                 {
                     DisableRig.disablerig = true;
                 }
-                if (this.radiusLine != null)
+                if (radiusLine != null)
                 {
-                    UnityEngine.Object.Destroy(this.radiusLine);
-                    this.radiusLine = null;
+                    UnityEngine.Object.Destroy(radiusLine);
+                    radiusLine = null;
                     return;
                 }
             }
             else
             {
                 UnityEngine.Object.Destroy(holder.GetComponent<TagGun>());
-                if (this.pointer != null)
+                if (pointer != null)
                 {
-                    UnityEngine.Object.Destroy(this.pointer);
+                    UnityEngine.Object.Destroy(pointer);
                 }
             }
         }

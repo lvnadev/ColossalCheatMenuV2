@@ -10,13 +10,15 @@ using BepInEx;
 namespace Colossal.Patches
 {
     [HarmonyPatch(typeof(GorillaComputer), "GeneralFailureMessage")]
-    internal class Heroin : MonoBehaviour
+    internal class Heroin
     {
         public static void Postfix(string failMessage)
         {
-            if (failMessage.ToLower().Contains("ACCOUNT"))
+            CustomConsole.LogToConsole($"[COLOSSAL] GeneralFailureMessage Patch : {failMessage}");
+
+            if (failMessage.Contains("ACCOUNT"))
             {
-                Debug.Log("[COLOSSAL] Updating boards for banned account");
+                CustomConsole.LogToConsole("[COLOSSAL] Updating boards for banned account");
 
                 int reasonIndex = failMessage.IndexOf("REASON: ");
                 if (reasonIndex != -1)
@@ -33,16 +35,18 @@ namespace Colossal.Patches
                             if (!failMessage.Contains("INDEFINITELY"))
                             {
                                 GorillaComputer.instance.UpdateFailureText("Some mad herion addict moderator has banned you.\n\nTheir shitty fucking reason:\n" + reason);
+                                GorillaComputer.instance.UpdateScreen();
                                 return;
                             }
                             GorillaComputer.instance.UpdateFailureText("Lemming cut off your dick (Bad Ending).\n\nTheir shitty fucking reason:\n" + reason);
+                            GorillaComputer.instance.UpdateScreen();
                         }
                     }
                 }
             }
-            else if (failMessage.ToLower().Contains("IP"))
+            if (failMessage.Contains("IP"))
             {
-                Debug.Log("[COLOSSAL] Updating boards for banned ip");
+                CustomConsole.LogToConsole("[COLOSSAL] Updating boards for banned ip");
 
                 int reasonIndex = failMessage.IndexOf("REASON: ");
                 if (reasonIndex != -1)
@@ -59,9 +63,11 @@ namespace Colossal.Patches
                             if (!failMessage.Contains("INDEFINITELY"))
                             {
                                 GorillaComputer.instance.UpdateFailureText("Your PP, I mean IP is to long SHIT BANNED YOUR IP IS BANNED\n\nTheir shitty fucking reason:\n" + reason);
+                                GorillaComputer.instance.UpdateScreen();
                                 return;
                             }
                             GorillaComputer.instance.UpdateFailureText("Lemming cut off your dick (Good Ending).\n\nTheir shitty fucking reason:\n" + reason);
+                            GorillaComputer.instance.UpdateScreen();
                         }
                     }
                 }
@@ -69,6 +75,7 @@ namespace Colossal.Patches
             if (GorillaComputer.instance == null)
             {
                 GorillaComputer.instance.UpdateFailureText("Something about computer no worky\n\ncall tech support");
+                GorillaComputer.instance.UpdateScreen();
             }
         }
     }

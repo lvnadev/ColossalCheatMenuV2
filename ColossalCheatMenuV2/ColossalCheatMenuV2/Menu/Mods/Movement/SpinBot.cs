@@ -18,35 +18,33 @@ namespace Colossal.Mods
         private GameObject ghost;
         public void Update()
         {
-            //if (PluginConfig.SpinBot)
-            //{
-            //    if (ghost == null)
-            //        ghost = GhostManager.SpawnGhost();
+            if (PluginConfig.SpinBot)
+            {
+                //if (ghost == null)
+                //    ghost = GhostManager.SpawnGhost();
 
-            //    if (ghost != null)
-            //    {
-            //        if (DisableRig.disablerig)
-            //            DisableRig.disablerig = false;
+                //if (ghost != null)
+                //{
+                //    if (DisableRig.disablerig)
+                //        DisableRig.disablerig = false;
 
-            //        //Spinning SS rig
-            //        GorillaTagger.Instance.offlineVRRig.transform.position = ghost.transform.position;
-            //        GorillaTagger.Instance.offlineVRRig.transform.Rotate(0, 0, 50 * Time.deltaTime);
+                //    VRRig vrrig = ghost.GetComponent<VRRig>();
+                //    vrrig.mainSkin.material.color = GhostManager.ghostColor;
+                //    vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
 
-            //        //Spinning CS rig
-            //        VRRig vrrig = ghost.GetComponent<VRRig>();
-            //        vrrig.mainSkin.material.color = GhostManager.ghostColor;
-            //        vrrig.mainSkin.material.shader = Shader.Find("GUI/Text Shader");
+                //    ghost.transform.Rotate(Vector3.up * 150 * Time.deltaTime);
+                //}
+            }
+            else
+            {
+                //GorillaTagger.Instance.offlineVRRig.transform.SetParent(null);
 
-            //        //ghost.transform.Rotate(0, 0, 50 * Time.deltaTime);
-            //    }
-            //}
-            //else
-            //{
-            //   if (ghost != null)
-            //        GhostManager.DestroyGhost(ghost);
+                //if (ghost != null)
+                //    GhostManager.DestroyGhost(ghost);
 
-            //    Destroy(GorillaTagger.Instance.GetComponent<SpinBot>());
-            //}
+                Destroy(GorillaTagger.Instance.GetComponent<SpinBot>());
+            }
+
         }
     }
 }
