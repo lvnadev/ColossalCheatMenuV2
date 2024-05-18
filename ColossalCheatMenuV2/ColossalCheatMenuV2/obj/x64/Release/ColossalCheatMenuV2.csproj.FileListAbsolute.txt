@@ -660,7 +660,6 @@ C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\Colossal
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.pdb
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\AA.Mothership.dll
 <<<<<<< HEAD
-=======
 C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\ColossalCheatMenuV2.dll
 C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\ColossalCheatMenuV2.pdb
 C:\Users\xxyos\OneDrive\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Assembly-CSharp.dll
@@ -809,8 +808,6 @@ Z:\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\C
 Z:\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\Colossal.5E68BF29.Up2Date
 Z:\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.dll
 Z:\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\obj\x64\Release\ColossalCheatMenuV2.pdb
-<<<<<<< HEAD
-=======
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\ColossalCheatMenuV2.dll.config
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Microsoft.Extensions.DependencyModel.dll
@@ -841,4 +838,3 @@ C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\Colossal
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Veldrid.MetalBindings.pdb
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Veldrid.OpenGLBindings.pdb
 C:\Users\tiltl\Documents\GitHub\ColossalCheatMenuV2\ColossalCheatMenuV2\ColossalCheatMenuV2\bin\x64\Release\Veldrid.SPIRV.xml
->>>>>>> Dev

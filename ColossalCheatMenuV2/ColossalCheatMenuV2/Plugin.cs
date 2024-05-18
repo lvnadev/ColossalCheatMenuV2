@@ -30,11 +30,8 @@ namespace Colossal
         public static GameObject holder;
         public static Font gtagfont;
 
-<<<<<<< HEAD
-        public static float version = 5.6f;
-=======
         public static float version = 5.7f;
->>>>>>> Dev
+
         public static bool sussy = false;
         public static bool oculus = false;
 
