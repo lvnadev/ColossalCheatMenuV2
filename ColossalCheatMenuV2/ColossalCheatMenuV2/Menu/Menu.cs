@@ -25,7 +25,6 @@ using System.Runtime.Remoting.Messaging;
 using Colossal.Patches;
 using PlayFab.ClientModels;
 using static UnityEngine.Random;
-using Colossal.Patches;
 using ColossalCheatMenuV2.Menu;
 using Newtonsoft.Json;
 using Unity.XR.OpenVR.SimpleJSON;
@@ -90,188 +89,230 @@ namespace Colossal.Menu
         public static bool menutogglecooldown = false;
         public static bool agreement = false;
 
-        public static void LoadOnce() {
-            try 
+        public static void LoadOnce()
+        {
+            try
             {
-                if (!agreement) 
-                    (AgreementHub, AgreementHubText) = GUICreator.CreateTextGUI("<color=magenta><CONTROLS></color>\nLeft Joystick Click (Hold): Control\nRight Grip: Select\nRight Trigger: Scroll\nBoth Joysticks: Toggle UI\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>", "AgreementHub", TextAnchor.MiddleCenter, new Vector3(0, 0f, 2));
-                else 
+                if (!agreement)
+                    CreateAgreementGUI();
+                else
                 {
-                    // Adding once the menu has been made or like whatever because it causes errors
-                    if (Plugin.holder.GetComponent<SpeedMod>() == null)
-                        Plugin.holder.AddComponent<SpeedMod>();
-                    if (Plugin.holder.GetComponent<SkyColour>() == null)
-                        Plugin.holder.AddComponent<SkyColour>();
-                    if (Plugin.holder.GetComponent<AntiReport>() == null)
-                        Plugin.holder.AddComponent<AntiReport>();
-
-                    // Adding here so you dont see them before you accepted the aggreement
-                    if (Plugin.holder.GetComponent<Overlay>() == null)
-                        Plugin.holder.AddComponent<Overlay>();
-
-                    if (Plugin.holder.GetComponent<Notifacations>() == null)
-                        Plugin.holder.AddComponent<Notifacations>();
-
-                    if (Plugin.holder.GetComponent<ToolTips>() == null)
-                        Plugin.holder.AddComponent<ToolTips>();
-
-
-                    (MenuHub, MenuHubText) = GUICreator.CreateTextGUI("", "MenuHub", TextAnchor.UpperLeft, new Vector3(0, 0.4f, 3.6f));
-
-
-                    MainMenu = new MenuOption[11];
-                    MainMenu[0] = new MenuOption { DisplayName = "Movement", _type = "submenu", AssociatedString = "Movement" };
-                    MainMenu[1] = new MenuOption { DisplayName = "Visual", _type = "submenu", AssociatedString = "Visual" };
-                    MainMenu[2] = new MenuOption { DisplayName = "Player", _type = "submenu", AssociatedString = "Player" };
-                    MainMenu[3] = new MenuOption { DisplayName = "Computer", _type = "submenu", AssociatedString = "Computer" };
-                    MainMenu[4] = new MenuOption { DisplayName = "Exploits", _type = "submenu", AssociatedString = "Exploits" };
-                    MainMenu[5] = new MenuOption { DisplayName = "Saftey", _type = "submenu", AssociatedString = "Saftey" };
-                    MainMenu[6] = new MenuOption { DisplayName = "Settings", _type = "submenu", AssociatedString = "Settings" };
-                    MainMenu[7] = new MenuOption { DisplayName = "Notifications", _type = "toggle", AssociatedBool = PluginConfig.Notifications };
-                    MainMenu[8] = new MenuOption { DisplayName = "Overlay", _type = "toggle", AssociatedBool = PluginConfig.overlay };
-                    MainMenu[9] = new MenuOption { DisplayName = "Full Ghost Mode", _type = "toggle", AssociatedBool = PluginConfig.fullghostmode };
-                    MainMenu[10] = new MenuOption { DisplayName = "Tool Tips", _type = "toggle", AssociatedBool = PluginConfig.tooltips };
-
-                    Movement = new MenuOption[12];
-                    Movement[0] = new MenuOption { DisplayName = "ExcelFly", _type = "toggle", AssociatedBool = PluginConfig.excelfly };
-                    Movement[1] = new MenuOption { DisplayName = "TFly", _type = "toggle", AssociatedBool = PluginConfig.tfly };
-                    Movement[2] = new MenuOption { DisplayName = "WallWalk", _type = "toggle", AssociatedBool = PluginConfig.wallwalk };
-                    Movement[3] = new MenuOption { DisplayName = "Speed", _type = "submenu", AssociatedString = "Speed" };
-                    Movement[4] = new MenuOption { DisplayName = "Platforms", _type = "toggle", AssociatedBool = PluginConfig.platforms };
-                    Movement[5] = new MenuOption { DisplayName = "UpsideDown Monkey", _type = "toggle", AssociatedBool = PluginConfig.upsidedownmonkey };
-                    Movement[6] = new MenuOption { DisplayName = "WateryAir", _type = "toggle", AssociatedBool = PluginConfig.wateryair };
-                    Movement[7] = new MenuOption { DisplayName = "LongArms", _type = "toggle", AssociatedBool = PluginConfig.longarms };
-                    Movement[8] = new MenuOption { DisplayName = "[BROKEN] SpinBot", _type = "toggle", AssociatedBool = PluginConfig.SpinBot };
-                    Movement[9] = new MenuOption { DisplayName = "WASDFly", _type = "toggle", AssociatedBool = PluginConfig.WASDFly };
-                    Movement[10] = new MenuOption { DisplayName = "Next ->", _type = "submenu", AssociatedString = "Movement2" };
-                    Movement[11] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-                    Movement2 = new MenuOption[6];
-                    Movement2[0] = new MenuOption { DisplayName = "Timer", _type = "toggle", AssociatedBool = PluginConfig.Timer };
-                    Movement2[1] = new MenuOption { DisplayName = "FloatyMonkey", _type = "toggle", AssociatedBool = PluginConfig.FloatyMonkey };
-                    Movement2[2] = new MenuOption { DisplayName = "Climbable Gorillas", _type = "toggle", AssociatedBool = PluginConfig.ClimbableGorillas };
-                    Movement2[3] = new MenuOption { DisplayName = "Near Pulse", _type = "toggle", AssociatedBool = PluginConfig.NearPulse };
-                    Movement2[4] = new MenuOption { DisplayName = "Player Scale", _type = "toggle", AssociatedBool = PluginConfig.PlayerScale };
-                    Movement2[5] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-                    Speed = new MenuOption[5];
-                    Speed[0] = new MenuOption { DisplayName = "Speed", _type = "toggle", AssociatedBool = PluginConfig.speed };
-                    Speed[1] = new MenuOption { DisplayName = "Speed (LG)", _type = "toggle", AssociatedBool = PluginConfig.speedlg };
-                    Speed[2] = new MenuOption { DisplayName = "Speed (RG)", _type = "toggle", AssociatedBool = PluginConfig.speedrg };
-                    Speed[3] = new MenuOption { DisplayName = "Near Speed", _type = "toggle", AssociatedBool = PluginConfig.nearspeed };
-                    Speed[4] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    Visual = new MenuOption[11];
-                    Visual[0] = new MenuOption { DisplayName = "Chams", _type = "toggle", AssociatedBool = PluginConfig.chams };
-                    Visual[1] = new MenuOption { DisplayName = "BoxESP", _type = "toggle", AssociatedBool = PluginConfig.boxesp };
-                    Visual[2] = new MenuOption { DisplayName = "HollowBoxESP", _type = "toggle", AssociatedBool = PluginConfig.hollowboxesp };
-                    Visual[3] = new MenuOption { DisplayName = "Sky Colour", _type = "STRINGslider", StringArray = new string[] { "Default", "Purple", "Red", "Cyan", "Green", "Black" } };
-                    Visual[4] = new MenuOption { DisplayName = "WhyIsEveryoneLookingAtMe", _type = "toggle", AssociatedBool = PluginConfig.whyiseveryonelookingatme };
-                    Visual[5] = new MenuOption { DisplayName = "No Expressions", _type = "toggle", AssociatedBool = PluginConfig.noexpressions };
-                    Visual[6] = new MenuOption { DisplayName = "Tracers", _type = "toggle", AssociatedBool = PluginConfig.tracers };
-                    Visual[7] = new MenuOption { DisplayName = "BoneESP", _type = "toggle", AssociatedBool = PluginConfig.boneesp };
-                    Visual[8] = new MenuOption { DisplayName = "First Person", _type = "toggle", AssociatedBool = PluginConfig.firstperson };
-                    Visual[9] = new MenuOption { DisplayName = "Full Bright", _type = "toggle", AssociatedBool = PluginConfig.fullbright };
-                    Visual[10] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    Player = new MenuOption[12];
-                    Player[0] = new MenuOption { DisplayName = "NoFinger", _type = "toggle", AssociatedBool = PluginConfig.nofinger };
-                    Player[1] = new MenuOption { DisplayName = "TagGun", _type = "toggle", AssociatedBool = PluginConfig.taggun };
-                    Player[2] = new MenuOption { DisplayName = "[BROKEN] LegMod", _type = "toggle", AssociatedBool = PluginConfig.legmod };
-                    Player[3] = new MenuOption { DisplayName = "CreeperMonkey", _type = "toggle", AssociatedBool = PluginConfig.creepermonkey };
-                    Player[4] = new MenuOption { DisplayName = "GhostMonkey", _type = "toggle", AssociatedBool = PluginConfig.ghostmonkey };
-                    Player[5] = new MenuOption { DisplayName = "InvisMonkey", _type = "toggle", AssociatedBool = PluginConfig.invismonkey };
-                    Player[6] = new MenuOption { DisplayName = "TagAura", _type = "toggle", AssociatedBool = PluginConfig.tagaura };
-                    Player[7] = new MenuOption { DisplayName = "TagAll", _type = "toggle", AssociatedBool = PluginConfig.tagall };
-                    Player[8] = new MenuOption { DisplayName = "[BROKEN] FreezeMonke", _type = "toggle", AssociatedBool = PluginConfig.freezemonkey };
-                    Player[9] = new MenuOption { DisplayName = "Desync", _type = "toggle", AssociatedBool = PluginConfig.desync };
-                    Player[10] = new MenuOption { DisplayName = "HitBoxes", _type = "toggle", AssociatedBool = PluginConfig.hitboxes };
-                    Player[11] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    Exploits = new MenuOption[5];
-                    Exploits[0] = new MenuOption { DisplayName = "Break NameTags", _type = "toggle", AssociatedBool = PluginConfig.breaknametags };
-                    Exploits[1] = new MenuOption { DisplayName = "Break ModCheckers", _type = "toggle", AssociatedBool = PluginConfig.breakmodcheckers };
-                    Exploits[2] = new MenuOption { DisplayName = "Pc Check Bypass", _type = "toggle", AssociatedBool = PluginConfig.pccheckbypass };
-                    Exploits[3] = new MenuOption { DisplayName = "Fake Quest Menu", _type = "toggle", AssociatedBool = PluginConfig.fakequestmenu };
-                    Exploits[4] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    Computer = new MenuOption[7];
-                    Computer[0] = new MenuOption { DisplayName = "Disconnect", _type = "button", AssociatedString = "disconnect" };
-                    Computer[1] = new MenuOption { DisplayName = "Join GTC", _type = "button", AssociatedString = "join GTC" };
-                    Computer[2] = new MenuOption { DisplayName = "Join TTT", _type = "button", AssociatedString = "join TTT" };
-                    Computer[3] = new MenuOption { DisplayName = "Join YTTV", _type = "button", AssociatedString = "join YTTV" };
-                    Computer[4] = new MenuOption { DisplayName = "Modded Casual", _type = "button", AssociatedString = "moddedcasual" };
-                    Computer[5] = new MenuOption { DisplayName = "Modded Infection", _type = "button", AssociatedString = "moddedinfection" };
-                    Computer[6] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    Saftey = new MenuOption[4];
-                    Saftey[0] = new MenuOption { DisplayName = "Panic", _type = "toggle", AssociatedBool = PluginConfig.Panic };
-                    Saftey[1] = new MenuOption { DisplayName = "AntiReport", _type = "STRINGslider", StringArray = new string[] { "Off", "Disconnect", "Reconnect", "Join Random" } };
-                    Saftey[2] = new MenuOption { DisplayName = "RandomIdentity", _type = "button", AssociatedString = "randomidentity" };
-                    Saftey[3] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    Settings = new MenuOption[7];
-                    Settings[0] = new MenuOption { DisplayName = "Colour Settings", _type = "submenu", AssociatedString = "ColourSettings" };
-                    Settings[1] = new MenuOption { DisplayName = "Mod Settings", _type = "submenu", AssociatedString = "ModSettings" };
-                    Settings[2] = new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Left", "Middle", "Top Right" } };
-                    Settings[3] = new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = new string[0] };
-                    Settings[4] = new MenuOption { DisplayName = "Load Config", _type = "button", AssociatedString = "loadconfig" };
-                    Settings[5] = new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" };
-                    Settings[6] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    ColourSettings = new MenuOption[8];
-                    ColourSettings[0] = new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
-                    ColourSettings[1] = new MenuOption { DisplayName = "Ghost Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
-                    ColourSettings[2] = new MenuOption { DisplayName = "Beam Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
-                    ColourSettings[3] = new MenuOption { DisplayName = "ESP Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
-                    ColourSettings[4] = new MenuOption { DisplayName = "Ghost Opacity", _type = "STRINGslider", StringArray = new string[] { "100%", "80%", "60%", "30%", "20%", "0%" } };
-                    ColourSettings[5] = new MenuOption { DisplayName = "HitBoxes Opacity", _type = "STRINGslider", StringArray = new string[] { "100%", "80%", "60%", "30%", "20%", "0%" } };
-                    ColourSettings[6] = new MenuOption { DisplayName = "HitBoxes Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } };
-                    ColourSettings[7] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    ModSettings = new MenuOption[4];
-                    ModSettings[0] = new MenuOption { DisplayName = "Movement Settings", _type = "submenu", AssociatedString = "MovementSettings" };
-                    ModSettings[1] = new MenuOption { DisplayName = "Visual Settings", _type = "submenu", AssociatedString = "VisualSettings" };
-                    ModSettings[2] = new MenuOption { DisplayName = "Player Settings", _type = "submenu", AssociatedString = "PlayerSettings" };
-                    ModSettings[3] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    MovementSettings = new MenuOption[13];
-                    MovementSettings[0] = new MenuOption { DisplayName = "WASD Fly Speed", _type = "STRINGslider", StringArray = new string[] { "5", "7", "10", "13", "16" } };
-                    MovementSettings[1] = new MenuOption { DisplayName = "FloatMonkey Ammount", _type = "STRINGslider", StringArray = new string[] { "1.1", "1.2", "1.4", "1.6", "1.8", "2", "2.2", "2.4", "2.6", "2.8", "3", "3.2", "3.4", "3.6", "3.8", "4", "Anti Grav" } };
-                    MovementSettings[2] = new MenuOption { DisplayName = "WallWalk Ammount", _type = "STRINGslider", StringArray = new string[] { "6.8", "7", "7.5", "7.8", "8", "8.5", "8.8", "9", "9.5", "9.8" } };
-                    MovementSettings[3] = new MenuOption { DisplayName = "Timer Speed", _type = "STRINGslider", StringArray = new string[] { "1.03x", "1.06x", "1.09x", "1.1x", "1.13x", "1.16x", "1.19x", "1.2x", "1.23x", "1.26", "1.29", "1.3x", "2x", "3x", "4x", "5x" } };
-                    MovementSettings[4] = new MenuOption { DisplayName = "ExcelFly Speed", _type = "STRINGslider", StringArray = new string[] { "Super Slow", "Slow", "Medium", "Fast", "Super Fast" } };
-                    MovementSettings[5] = new MenuOption { DisplayName = "Speed Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } }; //quick "Fix" but apperantly anything above was detected... -Lars
-                    MovementSettings[6] = new MenuOption { DisplayName = "Speed (LG) Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
-                    MovementSettings[7] = new MenuOption { DisplayName = "Speed (RG) Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
-                    MovementSettings[8] = new MenuOption { DisplayName = "Near Speed Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } };//, "8.8", "9", "No Limit" } };
-                    MovementSettings[9] = new MenuOption { DisplayName = "Near Speed Distance", _type = "STRINGslider", StringArray = new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" } };
-                    MovementSettings[10] = new MenuOption { DisplayName = "Near Pulse Distance", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } };
-                    MovementSettings[11] = new MenuOption { DisplayName = "Near Pulse Ammount", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } };
-                    MovementSettings[12] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    VisualSettings = new MenuOption[4];
-                    VisualSettings[0] = new MenuOption { DisplayName = "First Person FOV", _type = "STRINGslider", StringArray = new string[] { "60", "70", "80", "90", "100", "110", "120", "130", "140" } };
-                    VisualSettings[1] = new MenuOption { DisplayName = "Tracer Position", _type = "STRINGslider", StringArray = new string[] { "RHand", "LHand", "Head", "Screen" } };
-                    VisualSettings[2] = new MenuOption { DisplayName = "Tracer Size", _type = "STRINGslider", StringArray = new string[] { "Extremely Small", "Super Small", "Small", "Medium", "Large", "Giant", "Huge" } };
-                    VisualSettings[3] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-                    PlayerSettings = new MenuOption[3];
-                    PlayerSettings[0] = new MenuOption { DisplayName = "TagAura Ammount", _type = "STRINGslider", StringArray = new string[] { "Really Close", "Close", "Legit", "Semi Legit", "Semi Blatant", "Blatant", "Rage" } };
-                    PlayerSettings[1] = new MenuOption { DisplayName = "HitBoxes Radius", _type = "STRINGslider", StringArray = new string[] { "Really Close", "Close", "Legit", "Semi Legit", "Semi Blatant", "Blatant", "Rage" } };
-                    PlayerSettings[2] = new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" };
-
-
+                    AddMissingComponents();
+                    CreateMenuGUI();
+                    InitializeMenuOptions();
                     MenuState = "Main";
                     CurrentViewingMenu = MainMenu;
+                    UpdateMenuState(new MenuOption(), null, null);
+                    CustomConsole.LogToConsole("[COLOSSAL] Updated Menu State");
                 }
-
-                UpdateMenuState(new MenuOption(), null, null);
-
-                CustomConsole.LogToConsole("[COLOSSAL] Updated Menu State");
             }
-            catch (Exception ex) {
-                CustomConsole.LogToConsole("[COLOSSAL] " + ex.ToString());
+            catch (Exception ex)
+            {
+                CustomConsole.LogToConsole($"[COLOSSAL] {ex}");
             }
-            
+        }
+
+        private static void CreateAgreementGUI()
+        {
+            (AgreementHub, AgreementHubText) = GUICreator.CreateTextGUI(
+                "<color=magenta><CONTROLS></color>\nLeft Joystick Click (Hold): Control\nRight Grip: Select\nRight Trigger: Scroll\nBoth Joysticks: Toggle UI\n\n<color=magenta><CONTROLS (PC)></color>\nEnterKey: Select\nArrowKey (Up): Move Up\nArrowKey (Down): Move Down\n\n<color=cyan>Press Both Joysticks Or Enter...</color>",
+                "AgreementHub", TextAnchor.MiddleCenter, new Vector3(0, 0f, 2));
+        }
+
+        private static void AddMissingComponents()
+        {
+            AddComponentIfMissing<SpeedMod>();
+            AddComponentIfMissing<SkyColour>();
+            AddComponentIfMissing<AntiReport>();
+            AddComponentIfMissing<Overlay>();
+            AddComponentIfMissing<Notifacations>();
+            AddComponentIfMissing<ToolTips>();
+        }
+
+        private static void AddComponentIfMissing<T>() where T : Component
+        {
+            if (Plugin.holder.GetComponent<T>() == null)
+                Plugin.holder.AddComponent<T>();
+        }
+
+        private static void CreateMenuGUI()
+        {
+            (MenuHub, MenuHubText) = GUICreator.CreateTextGUI("", "MenuHub", TextAnchor.UpperLeft, new Vector3(0, 0.4f, 3.6f));
+        }
+
+        private static void InitializeMenuOptions()
+        {
+            MainMenu = new MenuOption[]
+            {
+        new MenuOption { DisplayName = "Movement", _type = "submenu", AssociatedString = "Movement" },
+        new MenuOption { DisplayName = "Visual", _type = "submenu", AssociatedString = "Visual" },
+        new MenuOption { DisplayName = "Player", _type = "submenu", AssociatedString = "Player" },
+        new MenuOption { DisplayName = "Computer", _type = "submenu", AssociatedString = "Computer" },
+        new MenuOption { DisplayName = "Exploits", _type = "submenu", AssociatedString = "Exploits" },
+        new MenuOption { DisplayName = "Saftey", _type = "submenu", AssociatedString = "Saftey" },
+        new MenuOption { DisplayName = "Settings", _type = "submenu", AssociatedString = "Settings" },
+        new MenuOption { DisplayName = "Notifications", _type = "toggle", AssociatedBool = PluginConfig.Notifications },
+        new MenuOption { DisplayName = "Overlay", _type = "toggle", AssociatedBool = PluginConfig.overlay },
+        new MenuOption { DisplayName = "Full Ghost Mode", _type = "toggle", AssociatedBool = PluginConfig.fullghostmode },
+        new MenuOption { DisplayName = "Tool Tips", _type = "toggle", AssociatedBool = PluginConfig.tooltips }
+            };
+
+            Movement = new MenuOption[]
+            {
+        new MenuOption { DisplayName = "ExcelFly", _type = "toggle", AssociatedBool = PluginConfig.excelfly },
+        new MenuOption { DisplayName = "TFly", _type = "toggle", AssociatedBool = PluginConfig.tfly },
+        new MenuOption { DisplayName = "WallWalk", _type = "toggle", AssociatedBool = PluginConfig.wallwalk },
+        new MenuOption { DisplayName = "Speed", _type = "submenu", AssociatedString = "Speed" },
+        new MenuOption { DisplayName = "Platforms", _type = "toggle", AssociatedBool = PluginConfig.platforms },
+        new MenuOption { DisplayName = "UpsideDown Monkey", _type = "toggle", AssociatedBool = PluginConfig.upsidedownmonkey },
+        new MenuOption { DisplayName = "WateryAir", _type = "toggle", AssociatedBool = PluginConfig.wateryair },
+        new MenuOption { DisplayName = "LongArms", _type = "toggle", AssociatedBool = PluginConfig.longarms },
+        new MenuOption { DisplayName = "[BROKEN] SpinBot", _type = "toggle", AssociatedBool = PluginConfig.SpinBot },
+        new MenuOption { DisplayName = "WASDFly", _type = "toggle", AssociatedBool = PluginConfig.WASDFly },
+        new MenuOption { DisplayName = "Next ->", _type = "submenu", AssociatedString = "Movement2" },
+        new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            Movement2 = new MenuOption[]
+            {
+        new MenuOption { DisplayName = "Timer", _type = "toggle", AssociatedBool = PluginConfig.Timer },
+        new MenuOption { DisplayName = "FloatyMonkey", _type = "toggle", AssociatedBool = PluginConfig.FloatyMonkey },
+        new MenuOption { DisplayName = "Climbable Gorillas", _type = "toggle", AssociatedBool = PluginConfig.ClimbableGorillas },
+        new MenuOption { DisplayName = "Near Pulse", _type = "toggle", AssociatedBool = PluginConfig.NearPulse },
+        new MenuOption { DisplayName = "Player Scale", _type = "toggle", AssociatedBool = PluginConfig.PlayerScale },
+        new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            Speed = new MenuOption[]
+            {
+        new MenuOption { DisplayName = "Speed", _type = "toggle", AssociatedBool = PluginConfig.speed },
+        new MenuOption { DisplayName = "Speed (LG)", _type = "toggle", AssociatedBool = PluginConfig.speedlg },
+        new MenuOption { DisplayName = "Speed (RG)", _type = "toggle", AssociatedBool = PluginConfig.speedrg },
+        new MenuOption { DisplayName = "Near Speed", _type = "toggle", AssociatedBool = PluginConfig.nearspeed },
+        new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            Visual = new MenuOption[]
+            {
+        new MenuOption { DisplayName = "Chams", _type = "toggle", AssociatedBool = PluginConfig.chams },
+        new MenuOption { DisplayName = "BoxESP", _type = "toggle", AssociatedBool = PluginConfig.boxesp },
+        new MenuOption { DisplayName = "HollowBoxESP", _type = "toggle", AssociatedBool = PluginConfig.hollowboxesp },
+        new MenuOption { DisplayName = "Sky Colour", _type = "STRINGslider", StringArray = new string[] { "Default", "Purple", "Red", "Cyan", "Green", "Black" } },
+        new MenuOption { DisplayName = "WhyIsEveryoneLookingAtMe", _type = "toggle", AssociatedBool = PluginConfig.whyiseveryonelookingatme },
+        new MenuOption { DisplayName = "No Expressions", _type = "toggle", AssociatedBool = PluginConfig.noexpressions },
+        new MenuOption { DisplayName = "Tracers", _type = "toggle", AssociatedBool = PluginConfig.tracers },
+       new MenuOption { DisplayName = "BoneESP", _type = "toggle", AssociatedBool = PluginConfig.boneesp },
+       new MenuOption { DisplayName = "First Person", _type = "toggle", AssociatedBool = PluginConfig.firstperson },
+       new MenuOption { DisplayName = "Full Bright", _type = "toggle", AssociatedBool = PluginConfig.fullbright },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+   };
+
+            Player = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "NoFinger", _type = "toggle", AssociatedBool = PluginConfig.nofinger },
+       new MenuOption { DisplayName = "TagGun", _type = "toggle", AssociatedBool = PluginConfig.taggun },
+       new MenuOption { DisplayName = "[BROKEN] LegMod", _type = "toggle", AssociatedBool = PluginConfig.legmod },
+       new MenuOption { DisplayName = "CreeperMonkey", _type = "toggle", AssociatedBool = PluginConfig.creepermonkey },
+       new MenuOption { DisplayName = "GhostMonkey", _type = "toggle", AssociatedBool = PluginConfig.ghostmonkey },
+       new MenuOption { DisplayName = "InvisMonkey", _type = "toggle", AssociatedBool = PluginConfig.invismonkey },
+       new MenuOption { DisplayName = "TagAura", _type = "toggle", AssociatedBool = PluginConfig.tagaura },
+       new MenuOption { DisplayName = "TagAll", _type = "toggle", AssociatedBool = PluginConfig.tagall },
+       new MenuOption { DisplayName = "[BROKEN] FreezeMonke", _type = "toggle", AssociatedBool = PluginConfig.freezemonkey },
+       new MenuOption { DisplayName = "Desync", _type = "toggle", AssociatedBool = PluginConfig.desync },
+       new MenuOption { DisplayName = "HitBoxes", _type = "toggle", AssociatedBool = PluginConfig.hitboxes },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            Exploits = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "Break NameTags", _type = "toggle", AssociatedBool = PluginConfig.breaknametags },
+       new MenuOption { DisplayName = "Break ModCheckers", _type = "toggle", AssociatedBool = PluginConfig.breakmodcheckers },
+       new MenuOption { DisplayName = "Pc Check Bypass", _type = "toggle", AssociatedBool = PluginConfig.pccheckbypass },
+       new MenuOption { DisplayName = "Fake Quest Menu", _type = "toggle", AssociatedBool = PluginConfig.fakequestmenu },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            Computer = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "Disconnect", _type = "button", AssociatedString = "disconnect" },
+       new MenuOption { DisplayName = "Join GTC", _type = "button", AssociatedString = "join GTC" },
+       new MenuOption { DisplayName = "Join TTT", _type = "button", AssociatedString = "join TTT" },
+       new MenuOption { DisplayName = "Join YTTV", _type = "button", AssociatedString = "join YTTV" },
+       new MenuOption { DisplayName = "Modded Casual", _type = "button", AssociatedString = "moddedcasual" },
+       new MenuOption { DisplayName = "Modded Infection", _type = "button", AssociatedString = "moddedinfection" },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            Saftey = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "Panic", _type = "toggle", AssociatedBool = PluginConfig.Panic },
+       new MenuOption { DisplayName = "AntiReport", _type = "STRINGslider", StringArray = new string[] { "Off", "Disconnect", "Reconnect", "Join Random" } },
+       new MenuOption { DisplayName = "RandomIdentity", _type = "button", AssociatedString = "randomidentity" },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            Settings = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "Colour Settings", _type = "submenu", AssociatedString = "ColourSettings" },
+       new MenuOption { DisplayName = "Mod Settings", _type = "submenu", AssociatedString = "ModSettings" },
+       new MenuOption { DisplayName = "MenuPosition", _type = "STRINGslider", StringArray = new string[] { "Top Left", "Middle", "Top Right" } },
+       new MenuOption { DisplayName = "Config", _type = "STRINGslider", StringArray = new string[0] },
+       new MenuOption { DisplayName = "Load Config", _type = "button", AssociatedString = "loadconfig" },
+       new MenuOption { DisplayName = "Save Config", _type = "button", AssociatedString = "saveconfig" },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            ColourSettings = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "MenuColour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } },
+       new MenuOption { DisplayName = "Ghost Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } },
+       new MenuOption { DisplayName = "Beam Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } },
+       new MenuOption { DisplayName = "ESP Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } },
+       new MenuOption { DisplayName = "Ghost Opacity", _type = "STRINGslider", StringArray = new string[] { "100%", "80%", "60%", "30%", "20%", "0%" } },
+       new MenuOption { DisplayName = "HitBoxes Opacity", _type = "STRINGslider", StringArray = new string[] { "100%", "80%", "60%", "30%", "20%", "0%" } },
+       new MenuOption { DisplayName = "HitBoxes Colour", _type = "STRINGslider", StringArray = new string[] { "Purple", "Red", "Yellow", "Green", "Blue" } },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            ModSettings = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "Movement Settings", _type = "submenu", AssociatedString = "MovementSettings" },
+       new MenuOption { DisplayName = "Visual Settings", _type = "submenu", AssociatedString = "VisualSettings" },
+       new MenuOption { DisplayName = "Player Settings", _type = "submenu", AssociatedString = "PlayerSettings" },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            MovementSettings = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "WASD Fly Speed", _type = "STRINGslider", StringArray = new string[] { "5", "7", "10", "13", "16" } },
+       new MenuOption { DisplayName = "FloatMonkey Ammount", _type = "STRINGslider", StringArray = new string[] { "1.1", "1.2", "1.4", "1.6", "1.8", "2", "2.2", "2.4", "2.6", "2.8", "3", "3.2", "3.4", "3.6", "3.8", "4", "Anti Grav" } },
+       new MenuOption { DisplayName = "WallWalk Ammount", _type = "STRINGslider", StringArray = new string[] { "6.8", "7", "7.5", "7.8", "8", "8.5", "8.8", "9", "9.5", "9.8" } },
+       new MenuOption { DisplayName = "Timer Speed", _type = "STRINGslider", StringArray = new string[] { "1.03x", "1.06x", "1.09x", "1.1x", "1.13x", "1.16x", "1.19x", "1.2x", "1.23x", "1.26", "1.29", "1.3x", "2x", "3x", "4x", "5x" } },
+       new MenuOption { DisplayName = "ExcelFly Speed", _type = "STRINGslider", StringArray = new string[] { "Super Slow", "Slow", "Medium", "Fast", "Super Fast" } },
+       new MenuOption { DisplayName = "Speed Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } },
+       new MenuOption { DisplayName = "Speed (LG) Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } },
+       new MenuOption { DisplayName = "Speed (RG) Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } },
+       new MenuOption { DisplayName = "Near Speed Ammount", _type = "STRINGslider", StringArray = new string[] { "7", "7.2", "7.4", "7.6", "7.8", "8", "8.2", "8.4", "8.6" } },
+       new MenuOption { DisplayName = "Near Speed Distance", _type = "STRINGslider", StringArray = new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" } },
+       new MenuOption { DisplayName = "Near Pulse Distance", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } },
+       new MenuOption { DisplayName = "Near Pulse Ammount", _type = "STRINGslider", StringArray = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" } },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+   };
+
+            VisualSettings = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "First Person FOV", _type = "STRINGslider", StringArray = new string[] { "60", "70", "80", "90", "100", "110", "120", "130", "140" } },
+       new MenuOption { DisplayName = "Tracer Position", _type = "STRINGslider", StringArray = new string[] { "RHand", "LHand", "Head", "Screen" } },
+       new MenuOption { DisplayName = "Tracer Size", _type = "STRINGslider", StringArray = new string[] { "Extremely Small", "Super Small", "Small", "Medium", "Large", "Giant", "Huge" } },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
+
+            PlayerSettings = new MenuOption[]
+            {
+       new MenuOption { DisplayName = "TagAura Ammount", _type = "STRINGslider", StringArray = new string[] { "Really Close", "Close", "Legit", "Semi Legit", "Semi Blatant", "Blatant", "Rage" } },
+       new MenuOption { DisplayName = "HitBoxes Radius", _type = "STRINGslider", StringArray = new string[] { "Really Close", "Close", "Legit", "Semi Legit", "Semi Blatant", "Blatant", "Rage" } },
+       new MenuOption { DisplayName = "<- Back", _type = "submenu", AssociatedString = "Back" }
+            };
         }
         public static void Load() {
             if (!agreement)
